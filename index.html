@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Champions Suri - Dashboard Tempo Real</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            background: #0A1628;
+            color: #ffffff;
+        }
+
+        /* Mode Indicator Badge */
+        .mode-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0, 240, 255, 0.2);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mode-indicator.sdr-mode {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .mode-icon {
+            font-size: 16px;
+        }
+
+        .mode-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pause Button */
+        .pause-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background: rgba(0, 240, 255, 0.2);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .pause-button:hover {
+            background: rgba(0, 240, 255, 0.3);
+            border-color: rgba(0, 240, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .pause-button.paused {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Content Container for Transitions */
+        .content-container {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .content-container.fading {
+            opacity: 0;
+        }
+
+        /* Background Container */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        /* Animated Gradient Mesh */
+        .gradient-mesh {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #0A1628 0%, #1E3A5F 50%, #0A1628 100%);
+            animation: meshMove 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes meshMove {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5%, -5%) rotate(5deg); }
+            100% { transform: translate(5%, 5%) rotate(-5deg); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 240, 255, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+            animation: floatParticle 15s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 12s; }
+        .particle:nth-child(2) { left: 20%; top: 80%; animation-delay: 2s; animation-duration: 18s; }
+        .particle:nth-child(3) { left: 30%; top: 40%; animation-delay: 4s; animation-duration: 15s; }
+        .particle:nth-child(4) { left: 40%; top: 60%; animation-delay: 1s; animation-duration: 20s; }
+        .particle:nth-child(5) { left: 50%; top: 30%; animation-delay: 3s; animation-duration: 14s; }
+        .particle:nth-child(6) { left: 60%; top: 70%; animation-delay: 5s; animation-duration: 16s; }
+        .particle:nth-child(7) { left: 70%; top: 50%; animation-delay: 2s; animation-duration: 19s; }
+        .particle:nth-child(8) { left: 80%; top: 20%; animation-delay: 4s; animation-duration: 13s; }
+        .particle:nth-child(9) { left: 90%; top: 80%; animation-delay: 1s; animation-duration: 17s; }
+        .particle:nth-child(10) { left: 15%; top: 50%; animation-delay: 3s; animation-duration: 21s; }
+        .particle:nth-child(11) { left: 25%; top: 15%; animation-delay: 0s; background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
+        .particle:nth-child(12) { left: 35%; top: 85%; animation-delay: 2s; background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
+        .particle:nth-child(13) { left: 45%; top: 25%; animation-delay: 4s; background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
+        .particle:nth-child(14) { left: 55%; top: 65%; animation-delay: 1s; background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
+        .particle:nth-child(15) { left: 65%; top: 45%; animation-delay: 3s; background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
+        .particle:nth-child(16) { left: 75%; top: 75%; animation-delay: 5s; background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+        .particle:nth-child(17) { left: 85%; top: 35%; animation-delay: 2s; background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+        .particle:nth-child(18) { left: 95%; top: 55%; animation-delay: 4s; background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+        .particle:nth-child(19) { left: 5%; top: 65%; animation-delay: 1s; background: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.8); }
+        .particle:nth-child(20) { left: 12%; top: 90%; animation-delay: 3s; background: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.8); }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            25% { transform: translateY(-100px) translateX(50px); opacity: 0.8; }
+            50% { transform: translateY(-200px) translateX(-30px); opacity: 0.5; }
+            75% { transform: translateY(-100px) translateX(-80px); opacity: 0.9; }
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Glow Orbs */
+        .glow-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: orbFloat 15s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.4) 0%, transparent 70%);
+            top: 10%;
+            left: 20%;
+            animation-duration: 20s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+            top: 60%;
+            right: 10%;
+            animation-duration: 25s;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            bottom: 20%;
+            left: 50%;
+            animation-duration: 18s;
+            animation-delay: 10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -80px) scale(1.1); }
+            66% { transform: translate(-80px, 100px) scale(0.9); }
+        }
+
+        /* Header */
+        .epic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: linear-gradient(180deg, rgba(10, 22, 40, 0.95) 0%, rgba(30, 58, 95, 0.8) 100%);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .suri-logo {
+            height: 40px;
+            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+        }
+
+        /* MTD Metrics Header - INCREASED SIZE AGAIN */
+        .mtd-metrics-header {
+            width: 100%;
+            padding: 12px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .mtd-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px 18px;
+            max-width: 1200px;
+        }
+
+        .mtd-metric-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 14px 18px; /* INCREASED from 12px 16px */
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .mtd-metric-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .mtd-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px; /* INCREASED from 12px */
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .mtd-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px; /* INCREASED from 20px */
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .mtd-value.cyan-glow {
+            color: #00F0FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+        }
+
+        .mtd-value.green-glow {
+            color: #10B981;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+        }
+
+        .mtd-value.orange-glow {
+            color: #F97316;
+            text-shadow: 0 0 10px rgba(249, 115, 22, 0.6);
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-top: 6px;
+            letter-spacing: 1px;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: rgba(220, 38, 38, 0.15);
+            border: 2px solid #DC2626;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+        }
+
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            background: #DC2626;
+            border-radius: 50%;
+            animation: pulse-red 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px #DC2626;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px #DC2626; }
+            50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px #DC2626; }
+        }
+
+        .live-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #DC2626;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .live-time {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 1px;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: grid;
+            grid-template-columns: 75% 25%;
+            gap: 12px;
+            padding: 12px;
+            max-width: 1920px;
+            margin: 0 auto;
+            height: calc(100vh - 200px);
+        }
+
+        /* Two-Column Table Grid - EQUAL COLUMNS */
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* EQUAL COLUMNS */
+            gap: 15px;
+            height: 100%;
+        }
+
+        .table-column {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Championship Table */
+        .championship-table.compact {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            height: fit-content;
+        }
+
+        .championship-table.compact thead {
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .championship-table.compact thead th {
+            font-size: 11px; /* REDUCED for TICKET column */
+            padding: 6px 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            text-align: center;
+            color: #00D4FF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .championship-table.compact th .icon {
+            font-size: 13px;
+            margin-right: 4px;
+        }
+
+        .championship-table.compact tbody td {
+            padding: 8px 4px; /* REDUCED for TICKET column */
+            font-size: 12px; /* REDUCED for TICKET column */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .championship-table.compact tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .championship-table.compact tbody tr:hover {
+            background: rgba(0, 240, 255, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Zone Styling - Top 5 Green */
+        .championship-table.compact tbody tr:nth-child(-n+5) {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(0, 240, 255, 0.1));
+            border-left: 3px solid #10B981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Bottom 4 Red - CORRECTED for both modes */
+        .championship-table.compact tbody tr.bottom-4-danger {
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)) !important;
+            border-left: 4px solid #EF4444 !important;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important;
+        }
+
+        .championship-table.compact .player-cell {
+            max-width: 120px; /* REDUCED for TICKET column */
+            text-align: left;
+        }
+
+        .championship-table.compact .player-name {
+            font-size: 12px; /* REDUCED for TICKET column */
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .championship-table.compact .player-nickname {
+            font-size: 10px; /* REDUCED for TICKET column */
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
+        .championship-table.compact .points-cell {
+            font-size: 16px; /* REDUCED for TICKET column */
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: #00D4FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .championship-table.compact .position-cell {
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .championship-table.compact .position-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px; /* REDUCED for TICKET column */
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00D4FF, #8B5CF6);
+            color: #ffffff;
+            font-weight: 700;
+            margin-right: 4px;
+        }
+
+        .championship-table.compact .team-badge {
+            width: 8px; /* REDUCED for TICKET column */
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 3px;
+        }
+
+        /* Team Badge Colors - Updated for TITANS */
+        .team-badge.team-TITANS {
+            background: #8B5CF6;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        .team-badge.team-MAORI {
+            background: #10B981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Team Badge Colors - SDR Teams (corrected name) */
+        .team-badge.team-EAGLES {
+            background: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .team-badge.team-PROCURANDO-DEMO {
+            background: #B026FF;
+            box-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+        }
+
+        .championship-table.compact .team-cell {
+            font-weight: 600;
+            text-align: left;
+            font-size: 10px; /* REDUCED for TICKET column */
+        }
+
+        .championship-table.compact .conversion-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 3px 6px;
+            text-align: center;
+        }
+
+        .championship-table.compact .conversion-bar.high {
+            background: linear-gradient(90deg, rgba(34, 197, 94, 0.3), rgba(34, 197, 94, 0.1));
+            color: #22C55E;
+        }
+
+        .championship-table.compact .conversion-bar.medium {
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.1));
+            color: #FBBF24;
+        }
+
+        .championship-table.compact .conversion-bar.low {
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));
+            color: #EF4444;
+        }
+
+        /* Sidebar */
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Ranking por Times */
+        .ranking-times-card {
+            padding: 5px;
+        }
+
+        .ranking-times-card .card-title {
+            font-size: 13px;
+            margin-bottom: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-align: center;
+            color: #00D4FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .ranking-times-card .icon-glow {
+            font-size: 15px;
+            margin-right: 8px;
+        }
+
+        .time-card {
+            padding: 5px;
+            margin-bottom: 3px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .time-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .time-card.first-place {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .time-card.second-place {
+            background: linear-gradient(135deg, rgba(192, 192, 192, 0.15), rgba(169, 169, 169, 0.1));
+            border: 2px solid #C0C0C0;
+            box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+        }
+
+        .time-card.third-place {
+            background: linear-gradient(135deg, rgba(205, 127, 50, 0.15), rgba(184, 115, 51, 0.1));
+            border: 2px solid #CD7F32;
+            box-shadow: 0 0 15px rgba(205, 127, 50, 0.3);
+        }
+
+        .position-medal {
+            font-size: 18px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .team-badge-large {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .titans-glow { background: #8B5CF6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
+        .maori-glow { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+        .eagles-glow { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .procurando-glow { background: #B026FF; box-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
+
+        .team-name {
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+        }
+
+        .team-count {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .team-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .team-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-score-big {
+            text-align: right;
+        }
+
+        .score-number {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: #00D4FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .score-avg {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Destaques - INCREASED SIZE */
+        .destaques-card {
+            padding: 8px; /* INCREASED from 5px */
+        }
+
+        .destaques-card .card-title {
+            font-size: 14px; /* INCREASED from 13px */
+            margin-bottom: 8px; /* INCREASED from 5px */
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-align: center;
+            color: #00D4FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .destaques-card .icon-glow {
+            font-size: 16px; /* INCREASED from 15px */
+            margin-right: 8px;
+        }
+
+        .destaque-item.compact {
+            padding: 8px 10px; /* INCREASED from 3px 5px */
+            margin: 4px 0; /* INCREASED from 2px 0 */
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 3px solid;
+            transition: all 0.3s ease;
+            min-height: 45px; /* NEW: Minimum height */
+        }
+
+        .destaque-item.compact:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .destaque-item.gold-glow {
+            border-color: #FBBF24;
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.1), transparent);
+        }
+
+        .destaque-item.green-glow {
+            border-color: #10B981;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), transparent);
+        }
+
+        .destaque-item.blue-glow {
+            border-color: #3B82F6;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+        }
+
+        .destaque-item.purple-glow {
+            border-color: #A855F7;
+            background: linear-gradient(90deg, rgba(168, 85, 247, 0.1), transparent);
+        }
+
+        .destaque-icon {
+            font-size: 18px; /* INCREASED from 16px */
+            margin-right: 6px;
+        }
+
+        .destaque-content {
+            flex: 1;
+        }
+
+        .destaque-label {
+            font-size: 11px; /* INCREASED from 9px */
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .destaque-value {
+            font-size: 13px; /* INCREASED from 11px */
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+        }
+
+        .points-badge, .money-badge, .count-badge, .percent-badge {
+            font-size: 10px; /* INCREASED from 9px */
+            padding: 3px 6px; /* INCREASED from 2px 4px */
+            border-radius: 12px;
+            margin-left: 4px;
+            background: rgba(0, 240, 255, 0.2);
+            color: #00D4FF;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            padding: 6px;
+            font-size: 10px;
+            background: rgba(10, 22, 40, 0.8);
+            margin-top: 8px;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .formula, .perigo-rebaixamento, .suri-branding {
+            text-align: center;
+        }
+
+        .formula h3, .perigo-rebaixamento h3 {
+            font-size: 12px;
+            font-family: 'Orbitron', sans-serif;
+            color: #00D4FF;
+            margin-bottom: 3px;
+        }
+
+        .formula p, .perigo-rebaixamento p {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .perigo-rebaixamento {
+            padding: 6px;
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid #DC2626;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+        }
+
+        .rebaixamento-positions {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 5px;
+        }
+
+        .position-danger {
+            font-size: 10px;
+            padding: 3px 6px;
+            background: #DC2626;
+            color: #ffffff;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .suri-branding a {
+            color: #00D4FF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .suri-branding a:hover {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .main-container {
+                grid-template-columns: 70% 30%;
+            }
+            
+            .mtd-metrics-grid {
+                gap: 8px 15px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sidebar-section {
+                flex-direction: row;
+                gap: 20px;
+            }
+            
+            .ranking-times-card,
+            .destaques-card {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .two-column-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar-section {
+                flex-direction: column;
+            }
+            
+            .epic-header {
+                padding: 15px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .mtd-metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px 10px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mode Indicator Badge -->
+    <div class="mode-indicator" id="modeIndicator">
+        <span class="mode-icon">👥</span>
+        <span class="mode-text" id="modeText">CLOSER</span>
+    </div>
+
+    <!-- Pause Button -->
+    <div class="pause-button" id="pauseButton">⏸️</div>
+
+    <!-- Content Container for Transitions -->
+    <div class="content-container" id="contentContainer">
+        <!-- Animated Background -->
+        <div class="background-container">
+            <div class="gradient-mesh"></div>
+            <div class="particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="grid-overlay"></div>
+            <div class="glow-orbs">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="epic-header">
+            <div class="logo-container">
+                <img src="https://cdn.prod.website-files.com/5f99af040fc8a6ae400fc29d/6673221b3ce01287894e61e3_suri_logo.png" alt="SURI" class="suri-logo">
+            </div>
+            
+            <div class="title-section">
+                <div class="mtd-metrics-header">
+                    <div class="mtd-metrics-grid">
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">MTD ontem</div>
+                            <div class="mtd-value" id="mtd-ontem">34,95%</div>
+                        </div>
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">MTD Hoje</div>
+                            <div class="mtd-value cyan-glow" id="mtd-hoje">34,08%</div>
+                        </div>
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">Meta mensal</div>
+                            <div class="mtd-value" id="meta-mensal">R$ 300.038,53</div>
+                        </div>
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">Realizado mensal</div>
+                            <div class="mtd-value green-glow" id="realizado-mensal">R$ 31.124,25</div>
+                        </div>
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">% realizado mensal</div>
+                            <div class="mtd-value orange-glow" id="perc-realizado-mensal">10,37%</div>
+                        </div>
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">Meta semanal</div>
+                            <div class="mtd-value" id="meta-semanal">R$ 91.859,33</div>
+                        </div>
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">Realizado semanal</div>
+                            <div class="mtd-value green-glow" id="realizado-semanal">R$ 18.127,35</div>
+                        </div>
+                        <div class="mtd-metric-item">
+                            <div class="mtd-label">% realizado semanal</div>
+                            <div class="mtd-value orange-glow" id="perc-realizado-semanal">19,73%</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="subtitle" id="subtitle">Vamos com tudo! Cada chamada é uma oportunidade de ouro! 🚀</p>
+            </div>
+            
+            <div class="live-indicator">
+                <span class="live-dot"></span>
+                <span class="live-text">AO VIVO</span>
+                <span class="live-time" id="lastUpdate">00:00:00</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-container">
+            <!-- Table Section (75%) -->
+            <div class="table-section">
+                <div class="two-column-grid">
+                    <!-- Column 1: Players 1-9 (Closer) / 1-7 (SDR) -->
+                    <div class="table-column">
+                        <table class="championship-table compact">
+                            <thead>
+                                <tr id="tableHeader1">
+                                    <th>#</th>
+                                    <th>Jogador</th>
+                                    <th>Time</th>
+                                    <th><span class="icon">🎯</span> PTS</th>
+                                    <th><span class="icon" id="stat1Icon">💵</span> <span id="stat1Label">R$</span></th>
+                                    <th><span class="icon" id="stat2Icon">🤝</span> <span id="stat2Label">Reun</span></th>
+                                    <th><span class="icon" id="stat3Icon">🎁</span> <span id="stat3Label">Vend</span></th>
+                                    <th><span class="icon" id="stat4Icon">🎫</span> <span id="stat4Label">Ticket</span></th>
+                                    <th><span class="icon" id="stat5Icon">📊</span> <span id="stat5Label">Conv</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableColumn1">
+                                <!-- Players will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Column 2: Players 10-18 (Closer) / 8-13 (SDR) -->
+                    <div class="table-column">
+                        <table class="championship-table compact">
+                            <thead>
+                                <tr id="tableHeader2">
+                                    <th>#</th>
+                                    <th>Jogador</th>
+                                    <th>Time</th>
+                                    <th><span class="icon">🎯</span> PTS</th>
+                                    <th><span class="icon" id="stat1Icon2">💵</span> <span id="stat1Label2">R$</span></th>
+                                    <th><span class="icon" id="stat2Icon2">🤝</span> <span id="stat2Label2">Reun</span></th>
+                                    <th><span class="icon" id="stat3Icon2">🎁</span> <span id="stat3Label2">Vend</span></th>
+                                    <th><span class="icon" id="stat4Icon2">🎫</span> <span id="stat4Label2">Ticket</span></th>
+                                    <th><span class="icon" id="stat5Icon2">📊</span> <span id="stat5Label2">Conv</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableColumn2">
+                                <!-- Players will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar Section (25%) -->
+            <div class="sidebar-section">
+                <!-- Ranking por Times -->
+                <div class="ranking-times-card glass-card">
+                    <h2 class="card-title">
+                        <span class="icon-glow">👥</span>
+                        Ranking por Times
+                    </h2>
+                    
+                    <div id="teamRankings">
+                        <!-- Team rankings will be populated dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Destaques -->
+                <div class="destaques-card glass-card">
+                    <h2 class="card-title">
+                        <span class="icon-glow">⭐</span>
+                        Destaques
+                    </h2>
+                    
+                    <div id="highlights">
+                        <!-- Highlights will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="formula" id="formula">
+                    <h3>Formulação dos Pontos</h3>
+                    <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
+                </div>
+                
+                <div class="perigo-rebaixamento">
+                    <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
+                    <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! 🔥</p>
+                    <div class="rebaixamento-positions" id="relegationPositions">
+                        <!-- Dynamic relegation positions -->
+                    </div>
+                </div>
+                
+                <div class="suri-branding">
+                    Powered by <a href="https://www.suri.ai" target="_blank">SURI</a> - Inteligência Artificial para Vendas
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Global variables
+        let currentMode = 'closer'; // Start with Closer
+        let switchInterval = 45000; // 45 seconds
+        let currentPlayers = [];
+        let isPaused = false;
+        let autoSwitchTimer = null;
+        let autoRefreshTimer = null;
+        let currentMotivationalPhraseIndex = 0;
+        
+        // Motivational phrases array
+        const motivationalPhrases = [
+            "Vamos com tudo! Cada chamada é uma oportunidade de ouro! 🚀",
+            "Foco no topo! O sucesso está a uma venda de distância! 💪",
+            "Sua dedicação transforma metas em conquistas! 🏆",
+            "Persistência é o caminho para a vitória! 🔥",
+            "Cada 'não' te aproxima do próximo 'sim'! 💎",
+            "Excelência em vendas começa com você! ⭐",
+            "Determinação é sua maior força! 💪",
+            "O impossível é só uma questão de perspectiva! 🌟",
+            "Seja a mudança que você quer ver nos resultados! 🎯",
+            "Sua energia contagiante conquista clientes! ⚡",
+            "Cada ligação é uma nova chance de brilhar! ✨",
+            "Supere seus limites e conquiste o mundo! 🌍",
+            "A excelência não é um ato, mas um hábito! 🏅",
+            "Transforme desafios em oportunidades! 🔄",
+            "Você tem o poder de fazer a diferença! 💫",
+            "Cada meta alcançada é um novo ponto de partida! 🎪",
+            "Seja protagonista da sua própria história de sucesso! 📖",
+            "A determinação é a chave do sucesso! 🔑",
+            "Conquiste cada cliente com sua paixão! ❤️",
+            "Você nasceu para vencer! 👑"
+        ];
+        
+        // Data URLs
+        const DATA_SOURCES = {
+            closer: {
+                players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
+                mtd: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1112498764'
+            },
+            sdr: {
+                players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=337038684',
+                mtd: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1235747938'
+            }
+        };
+
+        // Parse CSV line handling quoted values
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        // Parse CSV data with FINAL CORRECTED TICKET and CONVERSION order for CLOSER
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const players = [];
+            
+            // Start from line 1 (skip header at line 0)
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const cols = parseCSVLine(line);
+                
+                // Verify we have enough columns and valid data
+                if (cols.length >= 9 && cols[1] && cols[8]) {
+                    if (currentMode === 'closer') {
+                        // CLOSER - FINAL CORRECTION: Ensure proper mapping
+                        const player = {
+                            rank: parseInt(cols[0]) || (i),
+                            name: cols[1].trim(),
+                            nickname: cols[2].trim(),
+                            team: cols[3].trim(),
+                            revenue: cols[4].trim(),
+                            meetings: parseInt(cols[5]) || 0,
+                            sales: parseInt(cols[6]) || 0,
+                            conversion: cols[7] ? cols[7].trim() : '0%', // CONVERSION is column 7 (% CONVERSÃO)
+                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00', // TICKET is column 8
+                            points: parseFloat(cols[9]) || 0
+                        };
+                        players.push(player);
+                    } else {
+                        // SDR mode (unchanged)
+                        const player = {
+                            rank: parseInt(cols[0]) || (i),
+                            name: cols[1].trim(),
+                            nickname: cols[2].trim(),
+                            team: cols[3].trim(),
+                            sales: parseInt(cols[4]) || 0, // QTD DE VENDAS
+                            meetings: parseInt(cols[5]) || 0, // AGENDAMENTO
+                            shows: parseInt(cols[6]) || 0, // SHOWS
+                            noshow: cols[7].trim(), // NO-SHOW
+                            points: parseFloat(cols[8]) || 0
+                        };
+                        players.push(player);
+                    }
+                }
+            }
+            
+            // Sort by rank ascending
+            return players.sort((a, b) => a.rank - b.rank);
+        }
+
+        // Fetch MTD metrics - CORRECTED FOR SDR
+        async function fetchMTDMetrics() {
+            try {
+                const url = DATA_SOURCES[currentMode].mtd + `&_=${Date.now()}`;
+                const response = await fetch(url);
+                const csvText = await response.text();
+                
+                const lines = csvText.trim().split('\n');
+                if (lines.length < 2) return;
+                
+                let values = [];
+                
+                // Parse row 2 (values)
+                const row2 = lines[1];
+                let currentValue = '';
+                let insideQuotes = false;
+                
+                for (let i = 0; i < row2.length; i++) {
+                    const char = row2[i];
+                    if (char === '"') {
+                        insideQuotes = !insideQuotes;
+                    } else if (char === ',' && !insideQuotes) {
+                        values.push(currentValue.trim());
+                        currentValue = '';
+                    } else {
+                        currentValue += char;
+                    }
+                }
+                values.push(currentValue.trim());
+                
+                // Ensure we have proper values and handle empty/invalid values
+                if (values.length >= 8) {
+                    // Use actual parsed values, but ensure they're not empty
+                    for (let i = 0; i < values.length; i++) {
+                        if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') {
+                            // Provide fallback values
+                            if (currentMode === 'sdr') {
+                                const sdrFallbacks = ['55,99%', '47,82%', '1.344', '752', '55,95%', '467', '229', '49,04%'];
+                                values[i] = sdrFallbacks[i] || '0';
+                            } else {
+                                const closerFallbacks = ['34,95%', '34,08%', 'R$ 300.038,53', 'R$ 31.124,25', '10,37%', 'R$ 91.859,33', 'R$ 18.127,35', '19,73%'];
+                                values[i] = closerFallbacks[i] || '0';
+                            }
+                        }
+                    }
+                }
+                
+                // Update DOM
+                document.getElementById('mtd-ontem').textContent = values[0] || (currentMode === 'sdr' ? '55,99%' : '34,95%');
+                document.getElementById('mtd-hoje').textContent = values[1] || (currentMode === 'sdr' ? '47,82%' : '34,08%');
+                document.getElementById('meta-mensal').textContent = values[2] || (currentMode === 'sdr' ? '1.344' : 'R$ 300.038,53');
+                document.getElementById('realizado-mensal').textContent = values[3] || (currentMode === 'sdr' ? '752' : 'R$ 31.124,25');
+                document.getElementById('perc-realizado-mensal').textContent = values[4] || (currentMode === 'sdr' ? '55,95%' : '10,37%');
+                document.getElementById('meta-semanal').textContent = values[5] || (currentMode === 'sdr' ? '467' : 'R$ 91.859,33');
+                document.getElementById('realizado-semanal').textContent = values[6] || (currentMode === 'sdr' ? '229' : 'R$ 18.127,35');
+                document.getElementById('perc-realizado-semanal').textContent = values[7] || (currentMode === 'sdr' ? '49,04%' : '19,73%');
+                
+                // Update colors dynamically
+                updateMetricColors();
+                
+            } catch (error) {
+                console.error('Error fetching MTD metrics:', error);
+                // Use fallback values on error
+                if (currentMode === 'sdr') {
+                    document.getElementById('mtd-ontem').textContent = '55,99%';
+                    document.getElementById('mtd-hoje').textContent = '47,82%';
+                    document.getElementById('meta-mensal').textContent = '1.344';
+                    document.getElementById('realizado-mensal').textContent = '752';
+                    document.getElementById('perc-realizado-mensal').textContent = '55,95%';
+                    document.getElementById('meta-semanal').textContent = '467';
+                    document.getElementById('realizado-semanal').textContent = '229';
+                    document.getElementById('perc-realizado-semanal').textContent = '49,04%';
+                }
+            }
+        }
+
+        function updateMetricColors() {
+            // % realizado mensal
+            const percMensal = document.getElementById('perc-realizado-mensal');
+            const valueMensal = parseFloat(percMensal.textContent.replace(',', '.').replace('%', ''));
+            percMensal.className = 'mtd-value';
+            if (valueMensal < 30) percMensal.classList.add('orange-glow');
+            else if (valueMensal < 70) percMensal.classList.add('cyan-glow');
+            else percMensal.classList.add('green-glow');
+            
+            // % realizado semanal
+            const percSemanal = document.getElementById('perc-realizado-semanal');
+            const valueSemanal = parseFloat(percSemanal.textContent.replace(',', '.').replace('%', ''));
+            percSemanal.className = 'mtd-value';
+            if (valueSemanal < 30) percSemanal.classList.add('orange-glow');
+            else if (valueSemanal < 70) percSemanal.classList.add('cyan-glow');
+            else percSemanal.classList.add('green-glow');
+        }
+
+        // Fetch data from Google Sheets
+        async function fetchPlayerData() {
+            try {
+                const url = DATA_SOURCES[currentMode].players + `&_=${Date.now()}`;
+                const response = await fetch(url);
+                const csvText = await response.text();
+                return parseCSV(csvText);
+            } catch (error) {
+                console.error('Error fetching player data:', error);
+                return null;
+            }
+        }
+
+        // Update mode indicator
+        function updateModeIndicator() {
+            const indicator = document.getElementById('modeIndicator');
+            const modeText = document.getElementById('modeText');
+            
+            if (currentMode === 'sdr') {
+                indicator.classList.add('sdr-mode');
+                modeText.textContent = 'SDR';
+            } else {
+                indicator.classList.remove('sdr-mode');
+                modeText.textContent = 'CLOSER';
+            }
+        }
+
+        // Update motivational phrase
+        function updateMotivationalPhrase() {
+            const subtitle = document.getElementById('subtitle');
+            subtitle.style.opacity = '0';
+            
+            setTimeout(() => {
+                subtitle.textContent = motivationalPhrases[currentMotivationalPhraseIndex];
+                currentMotivationalPhraseIndex = (currentMotivationalPhraseIndex + 1) % motivationalPhrases.length;
+                subtitle.style.opacity = '1';
+            }, 400);
+        }
+
+        // Update table headers based on mode
+        function updateTableHeaders() {
+            if (currentMode === 'closer') {
+                // CLOSER headers (with TICKET column)
+                document.getElementById('stat1Icon').textContent = '💵';
+                document.getElementById('stat1Label').textContent = 'R$';
+                document.getElementById('stat2Icon').textContent = '🤝';
+                document.getElementById('stat2Label').textContent = 'Reun';
+                document.getElementById('stat3Icon').textContent = '🎁';
+                document.getElementById('stat3Label').textContent = 'Vend';
+                document.getElementById('stat4Icon').textContent = '🎫';
+                document.getElementById('stat4Label').textContent = 'Ticket';
+                document.getElementById('stat5Icon').textContent = '📊';
+                document.getElementById('stat5Label').textContent = 'Conv';
+                
+                document.getElementById('stat1Icon2').textContent = '💵';
+                document.getElementById('stat1Label2').textContent = 'R$';
+                document.getElementById('stat2Icon2').textContent = '🤝';
+                document.getElementById('stat2Label2').textContent = 'Reun';
+                document.getElementById('stat3Icon2').textContent = '🎁';
+                document.getElementById('stat3Label2').textContent = 'Vend';
+                document.getElementById('stat4Icon2').textContent = '🎫';
+                document.getElementById('stat4Label2').textContent = 'Ticket';
+                document.getElementById('stat5Icon2').textContent = '📊';
+                document.getElementById('stat5Label2').textContent = 'Conv';
+                
+                // Show the 5th column for CLOSER
+                const headers = document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)');
+                headers.forEach(h => h.style.display = 'table-cell');
+                const cells = document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)');
+                cells.forEach(c => c.style.display = 'table-cell');
+            } else {
+                // SDR headers (4 columns only)
+                document.getElementById('stat1Icon').textContent = '🎁';
+                document.getElementById('stat1Label').textContent = 'Vendas';
+                document.getElementById('stat2Icon').textContent = '📅';
+                document.getElementById('stat2Label').textContent = 'Agend';
+                document.getElementById('stat3Icon').textContent = '📺';
+                document.getElementById('stat3Label').textContent = 'Shows';
+                document.getElementById('stat4Icon').textContent = '🚫';
+                document.getElementById('stat4Label').textContent = 'No-show';
+                
+                document.getElementById('stat1Icon2').textContent = '🎁';
+                document.getElementById('stat1Label2').textContent = 'Vendas';
+                document.getElementById('stat2Icon2').textContent = '📅';
+                document.getElementById('stat2Label2').textContent = 'Agend';
+                document.getElementById('stat3Icon2').textContent = '📺';
+                document.getElementById('stat3Label2').textContent = 'Shows';
+                document.getElementById('stat4Icon2').textContent = '🚫';
+                document.getElementById('stat4Label2').textContent = 'No-show';
+                
+                // Hide the 5th column for SDR
+                const headers = document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)');
+                headers.forEach(h => h.style.display = 'none');
+                const cells = document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)');
+                cells.forEach(c => c.style.display = 'none');
+            }
+        }
+
+        // Render table rows with FINAL CORRECTED TICKET and CONVERSION for CLOSER + BOTTOM 4 RED
+        function renderTableRows(players, startPosition) {
+            return players.map((player, index) => {
+                const position = startPosition + index;
+                let zoneIcon = '';
+                let rowClass = '';
+                
+                // Top 5 (positions 1-5)
+                if (position <= 5) {
+                    zoneIcon = '🏆';
+                }
+                // Bottom 4 logic - CORRECTED FOR BOTH MODES
+                else {
+                    const totalPlayers = currentPlayers.length;
+                    if (position >= (totalPlayers - 3)) { // Last 4 positions
+                        zoneIcon = '⚠️';
+                        rowClass = 'bottom-4-danger'; // UNIFIED CLASS for both modes
+                    }
+                }
+                
+                // Team color and class
+                let teamColor = '#8B5CF6';
+                let teamClass = '';
+                
+                if (currentMode === 'closer') {
+                    if (player.team.toUpperCase().includes('TITANS')) {
+                        teamColor = '#8B5CF6';
+                        teamClass = 'team-TITANS';
+                    } else if (player.team.toUpperCase().includes('MAORI')) {
+                        teamColor = '#10B981';
+                        teamClass = 'team-MAORI';
+                    }
+                } else {
+                    if (player.team.toUpperCase().includes('EAGLES')) {
+                        teamColor = '#FFD700';
+                        teamClass = 'team-EAGLES';
+                    } else if (player.team.toUpperCase().includes('PROCURANDO')) {
+                        teamColor = '#B026FF';
+                        teamClass = 'team-PROCURANDO-DEMO';
+                    }
+                }
+                
+                let stat1, stat2, stat3, stat4, stat5 = '';
+                
+                if (currentMode === 'closer') {
+                    stat1 = player.revenue;
+                    stat2 = player.meetings;
+                    stat3 = player.sales;
+                    stat4 = player.ticket; // FINAL CORRECTION: TICKET is now correct from column 8
+                    stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`; // FINAL CORRECTION: CONVERSION is now correct from column 7
+                } else {
+                    stat1 = player.sales;
+                    stat2 = player.meetings;
+                    stat3 = player.shows;
+                    stat4 = `<div class="conversion-bar low"><span>${player.noshow}</span></div>`;
+                    stat5 = ''; // No 5th column for SDR
+                }
+                
+                const fifthColumn = currentMode === 'closer' ? `<td class="conversion-cell">${stat5}</td>` : '';
+                
+                return `
+                    <tr class="${rowClass}">
+                        <td class="position-cell">
+                            <div class="position-badge">${position}</div>
+                            ${zoneIcon}
+                        </td>
+                        <td class="player-cell">
+                            <div class="player-name">${player.name}</div>
+                            <div class="player-nickname">${player.nickname}</div>
+                        </td>
+                        <td class="team-cell">
+                            <span class="team-badge ${teamClass}" style="background-color: ${teamColor}"></span>
+                            ${player.team}
+                        </td>
+                        <td class="points-cell">${Math.round(player.points)}</td>
+                        <td class="revenue-cell">${stat1}</td>
+                        <td class="meetings-cell">${stat2}</td>
+                        <td class="sales-cell">${stat3}</td>
+                        <td class="ticket-cell">${stat4}</td>
+                        ${fifthColumn}
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Update table with new data
+        function updateTable(players) {
+            const column1 = document.getElementById('tableColumn1');
+            const column2 = document.getElementById('tableColumn2');
+            
+            if (!column1 || !column2 || !players) return;
+            
+            currentPlayers = players;
+            
+            // Split players based on mode
+            let col1Players, col2Players;
+            
+            if (currentMode === 'closer') {
+                // 1-9 in column1, 10-18 in column2
+                col1Players = players.slice(0, 9);
+                col2Players = players.slice(9, 18);
+            } else {
+                // 1-7 in column1, 8-13 in column2 for SDR
+                col1Players = players.slice(0, 7);
+                col2Players = players.slice(7, 13);
+            }
+            
+            // Render columns
+            column1.innerHTML = renderTableRows(col1Players, 1);
+            column2.innerHTML = renderTableRows(col2Players, currentMode === 'closer' ? 10 : 8);
+            
+            updateDestaques(players);
+            updateRankingTimes(players);
+            updatePerigoRebaixamento(players);
+        }
+
+        // Update Destaques based on mode - WITH MAIOR TICKET
+        function updateDestaques(players) {
+            if (!players || players.length === 0) return;
+            
+            const highlightsContainer = document.getElementById('highlights');
+            let highlightsHTML = '';
+            
+            if (currentMode === 'closer') {
+                // Top Performer
+                const topPlayer = players[0];
+                highlightsHTML += `
+                    <div class="destaque-item compact gold-glow">
+                        <div class="destaque-icon">👑</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Top Performer</div>
+                            <div class="destaque-value">${topPlayer.nickname} <span class="points-badge">${Math.round(topPlayer.points)} pts</span></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Maior Receita
+                const topRevenue = players.reduce((max, p) => {
+                    const rev = parseFloat(p.revenue.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+                    const maxRev = parseFloat(max.revenue.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+                    return rev > maxRev ? p : max;
+                });
+                highlightsHTML += `
+                    <div class="destaque-item compact green-glow">
+                        <div class="destaque-icon">💰</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Maior Receita</div>
+                            <div class="destaque-value">${topRevenue.nickname} <span class="money-badge">${topRevenue.revenue}</span></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Maior Ticket (NEW - replaces "Mais Reuniões")
+                const topTicket = players.reduce((max, p) => {
+                    const ticket = parseFloat(p.ticket.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+                    const maxTicket = parseFloat(max.ticket.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+                    return ticket > maxTicket ? p : max;
+                });
+                highlightsHTML += `
+                    <div class="destaque-item compact purple-glow">
+                        <div class="destaque-icon">🎫</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Maior Ticket</div>
+                            <div class="destaque-value">${topTicket.nickname} <span class="money-badge">${topTicket.ticket}</span></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Mais Vendas
+                const topSales = players.reduce((max, p) => 
+                    p.sales > max.sales ? p : max
+                );
+                highlightsHTML += `
+                    <div class="destaque-item compact blue-glow">
+                        <div class="destaque-icon">🏆</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Mais Vendas</div>
+                            <div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Melhor Conversão - CORRECTED: Only considers conversion %
+                const topConversion = players.reduce((max, p) => {
+                    const conv = parseFloat(p.conversion.replace('%', '').replace(',', '.')) || 0;
+                    const maxConv = parseFloat(max.conversion.replace('%', '').replace(',', '.')) || 0;
+                    return conv > maxConv ? p : max;
+                });
+                highlightsHTML += `
+                    <div class="destaque-item compact purple-glow">
+                        <div class="destaque-icon">📈</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Melhor Conversão</div>
+                            <div class="destaque-value">${topConversion.nickname} <span class="percent-badge">${topConversion.conversion}</span></div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // SDR mode
+                // Top Performer
+                const topPlayer = players[0];
+                highlightsHTML += `
+                    <div class="destaque-item compact gold-glow">
+                        <div class="destaque-icon">👑</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Top Performer</div>
+                            <div class="destaque-value">${topPlayer.nickname} <span class="points-badge">${Math.round(topPlayer.points)} pts</span></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Maior Qtd Vendas
+                const topSales = players.reduce((max, p) => 
+                    p.sales > max.sales ? p : max
+                );
+                highlightsHTML += `
+                    <div class="destaque-item compact green-glow">
+                        <div class="destaque-icon">🎁</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Maior Qtd Vendas</div>
+                            <div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Mais Shows
+                const topShows = players.reduce((max, p) => 
+                    p.shows > max.shows ? p : max
+                );
+                highlightsHTML += `
+                    <div class="destaque-item compact blue-glow">
+                        <div class="destaque-icon">📺</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Mais Shows</div>
+                            <div class="destaque-value">${topShows.nickname} <span class="count-badge">${topShows.shows}</span></div>
+                        </div>
+                    </div>
+                `;
+                
+                // Mais Agendamentos
+                const topMeetings = players.reduce((max, p) => 
+                    p.meetings > max.meetings ? p : max
+                );
+                highlightsHTML += `
+                    <div class="destaque-item compact purple-glow">
+                        <div class="destaque-icon">📅</div>
+                        <div class="destaque-content">
+                            <div class="destaque-label">Mais Agendamentos</div>
+                            <div class="destaque-value">${topMeetings.nickname} <span class="count-badge">${topMeetings.meetings}</span></div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            highlightsContainer.innerHTML = highlightsHTML;
+        }
+
+        // Update Ranking por Times - TITANS + "Procurando Demo" + ORDERED BY AVG
+        function updateRankingTimes(players) {
+            if (!players || players.length === 0) return;
+            
+            const teams = {};
+            
+            // Initialize teams based on mode
+            if (currentMode === 'closer') {
+                teams['TITANS'] = { points: 0, count: 0, color: 'titans-glow' };
+                teams['MAORI'] = { points: 0, count: 0, color: 'maori-glow' };
+                // Removed VIPERS and SURICATS, added TITANS
+            } else {
+                teams['EAGLES'] = { points: 0, count: 0, color: 'eagles-glow' };
+                teams['Procurando Demo'] = { points: 0, count: 0, color: 'procurando-glow' }; // CORRECTED NAME
+            }
+            
+            // Calculate team stats
+            players.forEach(p => {
+                const teamName = p.team.toUpperCase().trim();
+                let foundTeam = null;
+                
+                for (const [key, value] of Object.entries(teams)) {
+                    const teamKey = key.toUpperCase().replace(/\s+/g, '');
+                    const playerTeamSimplified = teamName.replace(/\s+/g, '');
+                    
+                    // Enhanced matching for teams
+                    if (playerTeamSimplified.includes(teamKey) || 
+                        teamKey.includes(playerTeamSimplified) ||
+                        (teamKey === 'PROCURANDODEMO' && playerTeamSimplified.includes('PROCURANDO'))) {
+                        foundTeam = key;
+                        break;
+                    }
+                }
+                
+                if (foundTeam) {
+                    teams[foundTeam].points += p.points;
+                    teams[foundTeam].count += 1;
+                }
+            });
+            
+            // Sort teams by AVG (not total points)
+            const sortedTeams = Object.entries(teams)
+                .sort(([,a], [,b]) => {
+                    const avgA = a.count > 0 ? a.points / a.count : 0;
+                    const avgB = b.count > 0 ? b.points / b.count : 0;
+                    return avgB - avgA; // Descending order by AVG
+                });
+            
+            let rankingHTML = '';
+            
+            sortedTeams.forEach(([teamName, teamData], index) => {
+                const placeClass = ['first-place', 'second-place', 'third-place'][index] || 'third-place';
+                const medal = ['🥇', '🥈', '🥉'][index] || '🏆';
+                const avg = teamData.count > 0 ? (teamData.points / teamData.count).toFixed(1) : '0.0';
+                
+                rankingHTML += `
+                    <div class="time-card ${placeClass}">
+                        <div class="position-medal">${medal}</div>
+                        <div class="team-info">
+                            <div class="team-badge-large ${teamData.color}"></div>
+                            <div class="team-details">
+                                <div class="team-name">${teamName}</div>
+                                <div class="team-count">⚡ ${teamData.count} jogadores</div>
+                            </div>
+                        </div>
+                        <div class="team-score-big">
+                            <div class="score-number">${Math.round(teamData.points)}</div>
+                            <div class="score-avg">↗️ Avg: ${avg}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('teamRankings').innerHTML = rankingHTML;
+        }
+
+        // Update Perigo de Rebaixamento
+        function updatePerigoRebaixamento(players) {
+            if (!players || players.length === 0) return;
+            
+            const totalPlayers = players.length;
+            const relegationStart = totalPlayers - 3; // Last 4 positions
+            
+            let positionsHTML = '';
+            for (let i = 0; i < 4; i++) {
+                const pos = relegationStart + i;
+                const label = i < 2 ? 'RISCO' : (i === 2 ? 'PERIGO' : 'CRÍTICO');
+                positionsHTML += `<div class="position-danger">${pos}º ${label}</div>`;
+            }
+            
+            document.getElementById('relegationPositions').innerHTML = positionsHTML;
+        }
+
+        // Update timestamp
+        function updateTimestamp() {
+            document.getElementById('lastUpdate').textContent = 
+                new Date().toLocaleTimeString('pt-BR');
+        }
+
+        // Pause/Resume functionality
+        function togglePause() {
+            const pauseButton = document.getElementById('pauseButton');
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                pauseButton.textContent = '▶️';
+                pauseButton.classList.add('paused');
+                if (autoSwitchTimer) {
+                    clearInterval(autoSwitchTimer);
+                    autoSwitchTimer = null;
+                }
+            } else {
+                pauseButton.textContent = '⏸️';
+                pauseButton.classList.remove('paused');
+                autoSwitchTimer = setInterval(switchModeWithTransition, switchInterval);
+            }
+        }
+
+        // Switch mode with transition
+        async function switchModeWithTransition() {
+            const contentContainer = document.getElementById('contentContainer');
+            
+            // Fade out
+            contentContainer.classList.add('fading');
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Switch mode
+            currentMode = currentMode === 'closer' ? 'sdr' : 'closer';
+            
+            // Update motivational phrase
+            updateMotivationalPhrase();
+            
+            // Update mode indicator and headers
+            updateModeIndicator();
+            updateTableHeaders();
+            
+            // Load new data
+            await loadCurrentModeData();
+            
+            // Fade in
+            contentContainer.classList.remove('fading');
+        }
+
+        // Load data for current mode
+        async function loadCurrentModeData() {
+            await fetchMTDMetrics();
+            const data = await fetchPlayerData();
+            if (data && data.length > 0) {
+                updateTable(data);
+                updateTimestamp();
+            }
+        }
+
+        // Auto-refresh function
+        async function autoRefresh() {
+            if (!document.getElementById('contentContainer').classList.contains('fading')) {
+                await loadCurrentModeData();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial load
+            updateModeIndicator();
+            updateTableHeaders();
+            loadCurrentModeData();
+            
+            // Add click event to mode indicator badge
+            document.getElementById('modeIndicator').addEventListener('click', function() {
+                if (!isPaused) {
+                    switchModeWithTransition();
+                }
+            });
+            
+            // Add click event to pause button
+            document.getElementById('pauseButton').addEventListener('click', togglePause);
+            
+            // Auto-switch every 45 seconds
+            autoSwitchTimer = setInterval(switchModeWithTransition, switchInterval);
+            
+            // Auto-refresh every 10 seconds
+            autoRefreshTimer = setInterval(autoRefresh, 10000);
+            
+            // Update timestamp every second
+            setInterval(updateTimestamp, 1000);
+        });
+    </script>
+</body>
+</html>
