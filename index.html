@@ -745,12 +745,12 @@
                                     <th>#</th>
                                     <th>Jogador</th>
                                     <th>Time</th>
-                                    <th><span class="icon"></span> PTS</th>
                                     <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
                                     <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
                                     <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
                                     <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
                                     <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
+                                    <th><span class="icon"></span> PTS</th>
                                 </tr>
                             </thead>
                             <tbody id="tableColumn1"></tbody>
@@ -763,12 +763,12 @@
                                     <th>#</th>
                                     <th>Jogador</th>
                                     <th>Time</th>
-                                    <th><span class="icon"></span> PTS</th>
                                     <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
                                     <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
                                     <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
                                     <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
                                     <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
+                                    <th><span class="icon"></span> PTS</th>
                                 </tr>
                             </thead>
                             <tbody id="tableColumn2"></tbody>
@@ -1160,12 +1160,12 @@
                             <span class="team-badge ${teamClass}" style="background-color:${teamColor}"></span>
                             ${player.team}
                         </td>
-                        <td class="points-cell">${Math.round(player.points)}</td>
                         <td class="revenue-cell">${stat1}</td>
                         <td class="meetings-cell">${stat2}</td>
                         <td class="sales-cell">${stat3}</td>
                         <td class="ticket-cell">${stat4}</td>
                         ${fifthColumn}
+                        <td class="points-cell">${Math.round(player.points)}</td>
                     </tr>`;
             }).join('');
         }
