@@ -359,6 +359,13 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
+        
+        .championship-table.compact tbody tr.top-5-safe {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(0, 240, 255, 0.1));
+            border-left: 3px solid #10B981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+        
 /* Larguras fixas e iguais para todas as colunas */
 .championship-table.compact th:nth-child(1),
 .championship-table.compact td:nth-child(1) { width: 52px; min-width: 52px; }
@@ -394,13 +401,7 @@
             transform: scale(1.02);
             box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
         }
-
-        .championship-table.compact tbody tr:nth-child(-n+5) {
-            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(0, 240, 255, 0.1));
-            border-left: 3px solid #10B981;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-        }
-
+        
         .championship-table.compact tbody tr.bottom-4-danger {
             background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)) !important;
             border-left: 4px solid #EF4444 !important;
@@ -1127,6 +1128,7 @@
 
                 if (position <= 5) {
                     zoneIcon = '🏆';
+                    rowClass = 'top-5-safe';
                 } else if (position > (totalPlayers - 4)) {
                     zoneIcon = '⚠️';
                     rowClass = 'bottom-4-danger';
