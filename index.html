@@ -673,10 +673,11 @@
         .podio-view {
             display: none;
             padding: 20px 40px;
-            height: calc(100vh - 160px);
+            height: 100vh;
+            fwidth: 100%;
             flex-direction: column;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
         }
 
         .podio-view.active { display: flex; }
@@ -709,7 +710,10 @@
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 40px;
+            gap: 80px;
+            width: 100%;
+            max-width: 900px
+            margin: 0 auto;
         }
 
         /* Cada coluna do pódio */
@@ -866,7 +870,7 @@
             </div>
         </div>
 
-        <header class="epic-header">
+        <header class="epic-header"> id="mainHeader">
             <div class="logo-container">
                 <img src="https://cdn.prod.website-files.com/5f99af040fc8a6ae400fc29d/6673221b3ce01287894e61e3_suri_logo.png" alt="SURI" class="suri-logo">
             </div>
@@ -1259,11 +1263,13 @@
         function showTableView()  {
             document.getElementById('tableView').style.display = 'block';
             document.getElementById('podioView').classList.remove('active');
+            document.getElementById('mainHeader').style.display = 'flex';
         }
 
         function showPodioView() {
             document.getElementById('tableView').style.display = 'none';
             document.getElementById('podioView').classList.add('active');
+            document.getElementById('mainHeader').style.display = 'none';
             renderPodio();
         }
 
