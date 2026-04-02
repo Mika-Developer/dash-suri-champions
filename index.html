@@ -1015,7 +1015,6 @@
             <div class="live-indicator">
                 <span class="live-dot"></span>
                 <span class="live-text">AO VIVO</span>
-                <span class="live-time" id="lastUpdate">00:00:00</span>
             </div>
         </header>
 
@@ -1782,12 +1781,6 @@
             document.getElementById('relegationPositions').innerHTML = positionsHTML;
         }
 
-        // Update timestamp
-        function updateTimestamp() {
-            document.getElementById('lastUpdate').textContent = 
-                new Date().toLocaleTimeString('pt-BR');
-        }
-
         // Pause/Resume functionality
         function togglePause() {
             const pauseButton = document.getElementById('pauseButton');
@@ -1873,8 +1866,6 @@
             // Auto-refresh every 10 seconds
             autoRefreshTimer = setInterval(autoRefresh, 10000);
             
-            // Update timestamp every second
-            setInterval(updateTimestamp, 1000);
         });
     </script>
 </body>
