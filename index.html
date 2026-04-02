@@ -257,7 +257,7 @@
             filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
         }
 
-        /* MTD Metrics Header - INCREASED SIZE AGAIN */
+        /* MTD Metrics Header */
         .mtd-metrics-header {
             width: 100%;
             padding: 12px 0;
@@ -278,7 +278,7 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            padding: 14px 18px; /* INCREASED from 12px 16px */
+            padding: 14px 18px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
@@ -294,7 +294,7 @@
 
         .mtd-label {
             font-family: 'Inter', sans-serif;
-            font-size: 13px; /* INCREASED from 12px */
+            font-size: 13px;
             color: rgba(255, 255, 255, 0.6);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -304,7 +304,7 @@
 
         .mtd-value {
             font-family: 'Orbitron', sans-serif;
-            font-size: 22px; /* INCREASED from 20px */
+            font-size: 22px;
             font-weight: 700;
             color: #ffffff;
             text-align: center;
@@ -372,14 +372,6 @@
             letter-spacing: 2px;
         }
 
-        .live-time {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 1px;
-        }
-
         /* Main Container */
         .main-container {
             display: grid;
@@ -391,10 +383,10 @@
             height: calc(100vh - 200px);
         }
 
-        /* Two-Column Table Grid - EQUAL COLUMNS */
+        /* Two-Column Table Grid */
         .two-column-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* EQUAL COLUMNS */
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             height: 100%;
         }
@@ -422,7 +414,7 @@
         }
 
         .championship-table.compact thead th {
-            font-size: 11px; /* REDUCED for TICKET column */
+            font-size: 11px;
             padding: 6px 4px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 600;
@@ -439,8 +431,8 @@
         }
 
         .championship-table.compact tbody td {
-            padding: 8px 4px; /* REDUCED for TICKET column */
-            font-size: 12px; /* REDUCED for TICKET column */
+            padding: 8px 4px;
+            font-size: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
@@ -462,7 +454,7 @@
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
 
-        /* Bottom 4 Red - CORRECTED for both modes */
+        /* Bottom 4 Red */
         .championship-table.compact tbody tr.bottom-4-danger {
             background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)) !important;
             border-left: 4px solid #EF4444 !important;
@@ -470,24 +462,24 @@
         }
 
         .championship-table.compact .player-cell {
-            max-width: 120px; /* REDUCED for TICKET column */
+            max-width: 120px;
             text-align: left;
         }
 
         .championship-table.compact .player-name {
-            font-size: 12px; /* REDUCED for TICKET column */
+            font-size: 12px;
             font-weight: 600;
             color: #ffffff;
         }
 
         .championship-table.compact .player-nickname {
-            font-size: 10px; /* REDUCED for TICKET column */
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.6);
             font-style: italic;
         }
 
         .championship-table.compact .points-cell {
-            font-size: 16px; /* REDUCED for TICKET column */
+            font-size: 16px;
             font-weight: 700;
             font-family: 'Orbitron', sans-serif;
             color: #00D4FF;
@@ -499,28 +491,76 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        .championship-table.compact .position-badge {
+        /* =============================================
+           NOVO: Position Cell com Foto
+        ============================================= */
+        .position-wrapper {
             display: inline-flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            width: 26px; /* REDUCED for TICKET column */
-            height: 26px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00D4FF, #8B5CF6);
-            color: #ffffff;
-            font-weight: 700;
-            margin-right: 4px;
+            gap: 2px;
         }
 
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .player-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            border: 2px solid rgba(0, 240, 255, 0.5);
+            display: block;
+        }
+
+        /* Borda dourada para top 5 */
+        .avatar-top5 {
+            border-color: #10B981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+        }
+
+        /* Borda vermelha para zona de perigo */
+        .avatar-danger {
+            border-color: #EF4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        }
+
+        .position-number {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: linear-gradient(135deg, #00D4FF, #8B5CF6);
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            z-index: 2;
+        }
+
+        .zone-icon {
+            font-size: 11px;
+            line-height: 1;
+        }
+        /* ============================================= */
+
         .championship-table.compact .team-badge {
-            width: 8px; /* REDUCED for TICKET column */
+            width: 8px;
             height: 8px;
             border-radius: 50%;
             display: inline-block;
             margin-right: 3px;
         }
 
-        /* Team Badge Colors - Updated for TITANS */
         .team-badge.team-TITANS {
             background: #8B5CF6;
             box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
@@ -531,7 +571,6 @@
             box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
         }
 
-        /* Team Badge Colors - SDR Teams (corrected name) */
         .team-badge.team-EAGLES {
             background: #FFD700;
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
@@ -545,7 +584,7 @@
         .championship-table.compact .team-cell {
             font-weight: 600;
             text-align: left;
-            font-size: 10px; /* REDUCED for TICKET column */
+            font-size: 10px;
         }
 
         .championship-table.compact .conversion-bar {
@@ -705,14 +744,14 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Destaques - INCREASED SIZE */
+        /* Destaques */
         .destaques-card {
-            padding: 8px; /* INCREASED from 5px */
+            padding: 8px;
         }
 
         .destaques-card .card-title {
-            font-size: 14px; /* INCREASED from 13px */
-            margin-bottom: 8px; /* INCREASED from 5px */
+            font-size: 14px;
+            margin-bottom: 8px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             text-align: center;
@@ -721,20 +760,20 @@
         }
 
         .destaques-card .icon-glow {
-            font-size: 16px; /* INCREASED from 15px */
+            font-size: 16px;
             margin-right: 8px;
         }
 
         .destaque-item.compact {
-            padding: 8px 10px; /* INCREASED from 3px 5px */
-            margin: 4px 0; /* INCREASED from 2px 0 */
+            padding: 8px 10px;
+            margin: 4px 0;
             border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
             border-left: 3px solid;
             transition: all 0.3s ease;
-            min-height: 45px; /* NEW: Minimum height */
+            min-height: 45px;
         }
 
         .destaque-item.compact:hover {
@@ -763,7 +802,7 @@
         }
 
         .destaque-icon {
-            font-size: 18px; /* INCREASED from 16px */
+            font-size: 18px;
             margin-right: 6px;
         }
 
@@ -772,7 +811,7 @@
         }
 
         .destaque-label {
-            font-size: 11px; /* INCREASED from 9px */
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -780,15 +819,15 @@
         }
 
         .destaque-value {
-            font-size: 13px; /* INCREASED from 11px */
+            font-size: 13px;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             color: #ffffff;
         }
 
         .points-badge, .money-badge, .count-badge, .percent-badge {
-            font-size: 10px; /* INCREASED from 9px */
-            padding: 3px 6px; /* INCREASED from 2px 4px */
+            font-size: 10px;
+            padding: 3px 6px;
             border-radius: 12px;
             margin-left: 4px;
             background: rgba(0, 240, 255, 0.2);
@@ -871,7 +910,6 @@
             .main-container {
                 grid-template-columns: 70% 30%;
             }
-            
             .mtd-metrics-grid {
                 gap: 8px 15px;
             }
@@ -882,12 +920,10 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
             .sidebar-section {
                 flex-direction: row;
                 gap: 20px;
             }
-            
             .ranking-times-card,
             .destaques-card {
                 flex: 1;
@@ -898,22 +934,18 @@
             .two-column-grid {
                 grid-template-columns: 1fr;
             }
-            
             .sidebar-section {
                 flex-direction: column;
             }
-            
             .epic-header {
                 padding: 15px;
                 flex-direction: column;
                 gap: 15px;
             }
-            
             .mtd-metrics-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 8px 10px;
             }
-            
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -924,12 +956,12 @@
 <body>
     <!-- Mode Indicator Badge -->
     <div class="mode-indicator" id="modeIndicator">
-        <span class="mode-icon">👥</span>
+        <span class="mode-icon"></span>
         <span class="mode-text" id="modeText">CLOSER</span>
     </div>
 
     <!-- Pause Button -->
-    <div class="pause-button" id="pauseButton">⏸️</div>
+    <div class="pause-button" id="pauseButton"></div>
 
     <!-- Content Container for Transitions -->
     <div class="content-container" id="contentContainer">
@@ -1023,7 +1055,6 @@
             <!-- Table Section (75%) -->
             <div class="table-section">
                 <div class="two-column-grid">
-                    <!-- Column 1: Players 1-9 (Closer) / 1-7 (SDR) -->
                     <div class="table-column">
                         <table class="championship-table compact">
                             <thead>
@@ -1031,21 +1062,18 @@
                                     <th>#</th>
                                     <th>Jogador</th>
                                     <th>Time</th>
-                                    <th><span class="icon">🎯</span> PTS</th>
-                                    <th><span class="icon" id="stat1Icon">💵</span> <span id="stat1Label">R$</span></th>
-                                    <th><span class="icon" id="stat2Icon">🤝</span> <span id="stat2Label">Reun</span></th>
-                                    <th><span class="icon" id="stat3Icon">🎁</span> <span id="stat3Label">Vend</span></th>
-                                    <th><span class="icon" id="stat4Icon">🎫</span> <span id="stat4Label">Ticket</span></th>
-                                    <th><span class="icon" id="stat5Icon">📊</span> <span id="stat5Label">Conv</span></th>
+                                    <th><span class="icon"></span> PTS</th>
+                                    <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
+                                    <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
+                                    <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
+                                    <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
+                                    <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
                                 </tr>
                             </thead>
-                            <tbody id="tableColumn1">
-                                <!-- Players will be loaded here -->
-                            </tbody>
+                            <tbody id="tableColumn1"></tbody>
                         </table>
                     </div>
                     
-                    <!-- Column 2: Players 10-18 (Closer) / 8-13 (SDR) -->
                     <div class="table-column">
                         <table class="championship-table compact">
                             <thead>
@@ -1053,17 +1081,15 @@
                                     <th>#</th>
                                     <th>Jogador</th>
                                     <th>Time</th>
-                                    <th><span class="icon">🎯</span> PTS</th>
-                                    <th><span class="icon" id="stat1Icon2">💵</span> <span id="stat1Label2">R$</span></th>
-                                    <th><span class="icon" id="stat2Icon2">🤝</span> <span id="stat2Label2">Reun</span></th>
-                                    <th><span class="icon" id="stat3Icon2">🎁</span> <span id="stat3Label2">Vend</span></th>
-                                    <th><span class="icon" id="stat4Icon2">🎫</span> <span id="stat4Label2">Ticket</span></th>
-                                    <th><span class="icon" id="stat5Icon2">📊</span> <span id="stat5Label2">Conv</span></th>
+                                    <th><span class="icon"></span> PTS</th>
+                                    <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
+                                    <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
+                                    <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
+                                    <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
+                                    <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
                                 </tr>
                             </thead>
-                            <tbody id="tableColumn2">
-                                <!-- Players will be loaded here -->
-                            </tbody>
+                            <tbody id="tableColumn2"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1071,28 +1097,20 @@
             
             <!-- Sidebar Section (25%) -->
             <div class="sidebar-section">
-                <!-- Ranking por Times -->
                 <div class="ranking-times-card glass-card">
                     <h2 class="card-title">
-                        <span class="icon-glow">👥</span>
+                        <span class="icon-glow"></span>
                         Ranking por Times
                     </h2>
-                    
-                    <div id="teamRankings">
-                        <!-- Team rankings will be populated dynamically -->
-                    </div>
+                    <div id="teamRankings"></div>
                 </div>
                 
-                <!-- Destaques -->
                 <div class="destaques-card glass-card">
                     <h2 class="card-title">
-                        <span class="icon-glow">⭐</span>
+                        <span class="icon-glow"></span>
                         Destaques
                     </h2>
-                    
-                    <div id="highlights">
-                        <!-- Highlights will be populated dynamically -->
-                    </div>
+                    <div id="highlights"></div>
                 </div>
             </div>
         </div>
@@ -1101,16 +1119,14 @@
         <footer>
             <div class="footer-content">
                 <div class="formula" id="formula">
-                    <h3>Formulação dos Pontos</h3>
+                    <h3>Fórmula dos Pontos</h3>
                     <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
                 </div>
                 
                 <div class="perigo-rebaixamento">
                     <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
-                    <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! 🔥</p>
-                    <div class="rebaixamento-positions" id="relegationPositions">
-                        <!-- Dynamic relegation positions -->
-                    </div>
+                    <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! ⬇️</p>
+                    <div class="rebaixamento-positions" id="relegationPositions"></div>
                 </div>
                 
                 <div class="suri-branding">
@@ -1122,39 +1138,98 @@
 
     <script>
         // Global variables
-        let currentMode = 'closer'; // Start with Closer
-        let switchInterval = 45000; // 45 seconds
+        let currentMode = 'closer';
+        let switchInterval = 45000;
         let currentPlayers = [];
         let isPaused = false;
         let autoSwitchTimer = null;
         let autoRefreshTimer = null;
         let currentMotivationalPhraseIndex = 0;
-        
-        // Motivational phrases array
+
+        // =============================================
+        // MAPA DE FOTOS DOS CLOSERS
+        // =============================================
+        const CLOSER_PHOTOS = {
+            'Alex Uchôa':           'https://drive.google.com/uc?export=view&id=19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
+            'Alex Uch\u00f4a':      'https://drive.google.com/uc?export=view&id=19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
+            'Amanda Ribeiro':       'https://drive.google.com/uc?export=view&id=1zJft4i-3pZ_ASY0a1YE2AZt1P8GnEdsk',
+            'André Queiroz':        'https://drive.google.com/uc?export=view&id=1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
+            'Andre Queiroz':        'https://drive.google.com/uc?export=view&id=1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
+            'Brena Carvalho':       'https://drive.google.com/uc?export=view&id=150nv2Csf3V3UQsNL8lfLPZS4R41woFHh',
+            'Clailton Nascimento':  'https://drive.google.com/uc?export=view&id=11iTMXwG6K32AV-pSdlnr_oyw5LcnckPb',
+            'Emerson Rocha':        'https://drive.google.com/uc?export=view&id=1e0n_M3AGh1-MqK1aFm8RmxcS-JnJ2fq3',
+            'Gleice Moraes':        'https://drive.google.com/uc?export=view&id=1y4qetBRh6leCZ3gzz-jQmnuac0-J4_bP',
+            'Jéssika Lima':         'https://drive.google.com/uc?export=view&id=1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
+            'Jessika Lima':         'https://drive.google.com/uc?export=view&id=1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
+            'João Victor':          'https://drive.google.com/uc?export=view&id=1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
+            'Joao Victor':          'https://drive.google.com/uc?export=view&id=1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
+            'Jossiane':             'https://drive.google.com/uc?export=view&id=1N4lCr55HU8oHOV2__EogHqZ78G3X-NSm',
+            'Lucas Machado':        'https://drive.google.com/uc?export=view&id=1r0HUosc_S3USRbwmvsl1lWc-gD6Ftdb6',
+            'Patricio Felix':       'https://drive.google.com/uc?export=view&id=146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
+            'Patrício Felix':       'https://drive.google.com/uc?export=view&id=146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
+            'Rafael Lima':          'https://drive.google.com/uc?export=view&id=1wMT6AqUWGBQ431cx8Dvubu_WryAUGOVL'
+        };
+
+        // Fallback: iniciais quando não há foto
+        function getPlayerPhoto(name) {
+            // Tenta match exato
+            if (CLOSER_PHOTOS[name]) return CLOSER_PHOTOS[name];
+            // Tenta match parcial (primeiro nome)
+            const firstName = name.split(' ')[0].toLowerCase();
+            for (const key of Object.keys(CLOSER_PHOTOS)) {
+                if (key.toLowerCase().startsWith(firstName)) return CLOSER_PHOTOS[key];
+            }
+            return null;
+        }
+
+        // Gera avatar com iniciais como fallback
+        function getAvatarHTML(name, position, totalPlayers) {
+            const photoUrl = currentMode === 'closer' ? getPlayerPhoto(name) : null;
+            const isTop5 = position <= 5;
+            const isDanger = position >= (totalPlayers - 3);
+            const avatarClass = isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '');
+
+            if (photoUrl) {
+                return `<img 
+                    class="player-avatar ${avatarClass}" 
+                    src="${photoUrl}" 
+                    alt="${name}"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                >
+                <div class="player-avatar ${avatarClass}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">
+                    ${name.charAt(0)}
+                </div>`;
+            } else {
+                return `<div class="player-avatar ${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">
+                    ${name.charAt(0)}
+                </div>`;
+            }
+        }
+        // =============================================
+
         const motivationalPhrases = [
             "Vamos com tudo! Cada chamada é uma oportunidade de ouro! 🚀",
-            "Foco no topo! O sucesso está a uma venda de distância! 💪",
-            "Sua dedicação transforma metas em conquistas! 🏆",
-            "Persistência é o caminho para a vitória! 🔥",
-            "Cada 'não' te aproxima do próximo 'sim'! 💎",
-            "Excelência em vendas começa com você! ⭐",
-            "Determinação é sua maior força! 💪",
-            "O impossível é só uma questão de perspectiva! 🌟",
-            "Seja a mudança que você quer ver nos resultados! 🎯",
-            "Sua energia contagiante conquista clientes! ⚡",
-            "Cada ligação é uma nova chance de brilhar! ✨",
+            "Foco no topo! O sucesso está a uma venda de distância! 🎯",
+            "Sua dedicação transforma metas em conquistas! 💪",
+            "Persistência é o caminho para a vitória! 🏆",
+            "Cada 'não' te aproxima do próximo 'sim'! ⚡",
+            "Excelência em vendas começa com você! 🌟",
+            "Determinação é sua maior força! 💥",
+            "O impossível é só uma questão de perspectiva! 🔥",
+            "Seja a mudança que você quer ver nos resultados! ✨",
+            "Sua energia contagiante conquista clientes! 🎪",
+            "Cada ligação é uma nova chance de brilhar! 💫",
             "Supere seus limites e conquiste o mundo! 🌍",
-            "A excelência não é um ato, mas um hábito! 🏅",
-            "Transforme desafios em oportunidades! 🔄",
-            "Você tem o poder de fazer a diferença! 💫",
-            "Cada meta alcançada é um novo ponto de partida! 🎪",
-            "Seja protagonista da sua própria história de sucesso! 📖",
-            "A determinação é a chave do sucesso! 🔑",
+            "A excelência não é um ato, mas um hábito! 🎖️",
+            "Transforme desafios em oportunidades! 🚀",
+            "Você tem o poder de fazer a diferença! ⭐",
+            "Cada meta alcançada é um novo ponto de partida! 🏁",
+            "Seja protagonista da sua própria história de sucesso! 🎬",
+            "A determinação é a chave do sucesso! 🗝️",
             "Conquiste cada cliente com sua paixão! ❤️",
-            "Você nasceu para vencer! 👑"
+            "Você nasceu para vencer! 🥇"
         ];
-        
-        // Data URLs
+
         const DATA_SOURCES = {
             closer: {
                 players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
@@ -1166,15 +1241,12 @@
             }
         };
 
-        // Parse CSV line handling quoted values
         function parseCSVLine(line) {
             const result = [];
             let current = '';
             let inQuotes = false;
-            
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
-                
                 if (char === '"') {
                     inQuotes = !inQuotes;
                 } else if (char === ',' && !inQuotes) {
@@ -1188,22 +1260,15 @@
             return result;
         }
 
-        // Parse CSV data with FINAL CORRECTED TICKET and CONVERSION order for CLOSER
         function parseCSV(csv) {
             const lines = csv.split('\n');
             const players = [];
-            
-            // Start from line 1 (skip header at line 0)
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i].trim();
                 if (!line) continue;
-                
                 const cols = parseCSVLine(line);
-                
-                // Verify we have enough columns and valid data
                 if (cols.length >= 9 && cols[1] && cols[8]) {
                     if (currentMode === 'closer') {
-                        // CLOSER - FINAL CORRECTION: Ensure proper mapping
                         const player = {
                             rank: parseInt(cols[0]) || (i),
                             name: cols[1].trim(),
@@ -1212,50 +1277,41 @@
                             revenue: cols[4].trim(),
                             meetings: parseInt(cols[5]) || 0,
                             sales: parseInt(cols[6]) || 0,
-                            conversion: cols[7] ? cols[7].trim() : '0%', // CONVERSION is column 7 (% CONVERSÃO)
-                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00', // TICKET is column 8
+                            conversion: cols[7] ? cols[7].trim() : '0%',
+                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00',
                             points: parseFloat(cols[9]) || 0
                         };
                         players.push(player);
                     } else {
-                        // SDR mode (unchanged)
                         const player = {
                             rank: parseInt(cols[0]) || (i),
                             name: cols[1].trim(),
                             nickname: cols[2].trim(),
                             team: cols[3].trim(),
-                            sales: parseInt(cols[4]) || 0, // QTD DE VENDAS
-                            meetings: parseInt(cols[5]) || 0, // AGENDAMENTO
-                            shows: parseInt(cols[6]) || 0, // SHOWS
-                            noshow: cols[7].trim(), // NO-SHOW
+                            sales: parseInt(cols[4]) || 0,
+                            meetings: parseInt(cols[5]) || 0,
+                            shows: parseInt(cols[6]) || 0,
+                            noshow: cols[7].trim(),
                             points: parseFloat(cols[8]) || 0
                         };
                         players.push(player);
                     }
                 }
             }
-            
-            // Sort by rank ascending
             return players.sort((a, b) => a.rank - b.rank);
         }
 
-        // Fetch MTD metrics - CORRECTED FOR SDR
         async function fetchMTDMetrics() {
             try {
                 const url = DATA_SOURCES[currentMode].mtd + `&_=${Date.now()}`;
                 const response = await fetch(url);
                 const csvText = await response.text();
-                
                 const lines = csvText.trim().split('\n');
                 if (lines.length < 2) return;
-                
                 let values = [];
-                
-                // Parse row 2 (values)
                 const row2 = lines[1];
                 let currentValue = '';
                 let insideQuotes = false;
-                
                 for (let i = 0; i < row2.length; i++) {
                     const char = row2[i];
                     if (char === '"') {
@@ -1268,13 +1324,9 @@
                     }
                 }
                 values.push(currentValue.trim());
-                
-                // Ensure we have proper values and handle empty/invalid values
                 if (values.length >= 8) {
-                    // Use actual parsed values, but ensure they're not empty
                     for (let i = 0; i < values.length; i++) {
                         if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') {
-                            // Provide fallback values
                             if (currentMode === 'sdr') {
                                 const sdrFallbacks = ['55,99%', '47,82%', '1.344', '752', '55,95%', '467', '229', '49,04%'];
                                 values[i] = sdrFallbacks[i] || '0';
@@ -1285,8 +1337,6 @@
                         }
                     }
                 }
-                
-                // Update DOM
                 document.getElementById('mtd-ontem').textContent = values[0] || (currentMode === 'sdr' ? '55,99%' : '34,95%');
                 document.getElementById('mtd-hoje').textContent = values[1] || (currentMode === 'sdr' ? '47,82%' : '34,08%');
                 document.getElementById('meta-mensal').textContent = values[2] || (currentMode === 'sdr' ? '1.344' : 'R$ 300.038,53');
@@ -1295,13 +1345,9 @@
                 document.getElementById('meta-semanal').textContent = values[5] || (currentMode === 'sdr' ? '467' : 'R$ 91.859,33');
                 document.getElementById('realizado-semanal').textContent = values[6] || (currentMode === 'sdr' ? '229' : 'R$ 18.127,35');
                 document.getElementById('perc-realizado-semanal').textContent = values[7] || (currentMode === 'sdr' ? '49,04%' : '19,73%');
-                
-                // Update colors dynamically
                 updateMetricColors();
-                
             } catch (error) {
                 console.error('Error fetching MTD metrics:', error);
-                // Use fallback values on error
                 if (currentMode === 'sdr') {
                     document.getElementById('mtd-ontem').textContent = '55,99%';
                     document.getElementById('mtd-hoje').textContent = '47,82%';
@@ -1316,15 +1362,13 @@
         }
 
         function updateMetricColors() {
-            // % realizado mensal
             const percMensal = document.getElementById('perc-realizado-mensal');
             const valueMensal = parseFloat(percMensal.textContent.replace(',', '.').replace('%', ''));
             percMensal.className = 'mtd-value';
             if (valueMensal < 30) percMensal.classList.add('orange-glow');
             else if (valueMensal < 70) percMensal.classList.add('cyan-glow');
             else percMensal.classList.add('green-glow');
-            
-            // % realizado semanal
+
             const percSemanal = document.getElementById('perc-realizado-semanal');
             const valueSemanal = parseFloat(percSemanal.textContent.replace(',', '.').replace('%', ''));
             percSemanal.className = 'mtd-value';
@@ -1333,7 +1377,6 @@
             else percSemanal.classList.add('green-glow');
         }
 
-        // Fetch data from Google Sheets
         async function fetchPlayerData() {
             try {
                 const url = DATA_SOURCES[currentMode].players + `&_=${Date.now()}`;
@@ -1346,11 +1389,9 @@
             }
         }
 
-        // Update mode indicator
         function updateModeIndicator() {
             const indicator = document.getElementById('modeIndicator');
             const modeText = document.getElementById('modeText');
-            
             if (currentMode === 'sdr') {
                 indicator.classList.add('sdr-mode');
                 modeText.textContent = 'SDR';
@@ -1360,11 +1401,9 @@
             }
         }
 
-        // Update motivational phrase
         function updateMotivationalPhrase() {
             const subtitle = document.getElementById('subtitle');
             subtitle.style.opacity = '0';
-            
             setTimeout(() => {
                 subtitle.textContent = motivationalPhrases[currentMotivationalPhraseIndex];
                 currentMotivationalPhraseIndex = (currentMotivationalPhraseIndex + 1) % motivationalPhrases.length;
@@ -1372,58 +1411,49 @@
             }, 400);
         }
 
-        // Update table headers based on mode
         function updateTableHeaders() {
             if (currentMode === 'closer') {
-                // CLOSER headers (with TICKET column)
-                document.getElementById('stat1Icon').textContent = '💵';
+                document.getElementById('stat1Icon').textContent = '💰';
                 document.getElementById('stat1Label').textContent = 'R$';
-                document.getElementById('stat2Icon').textContent = '🤝';
+                document.getElementById('stat2Icon').textContent = '📅';
                 document.getElementById('stat2Label').textContent = 'Reun';
-                document.getElementById('stat3Icon').textContent = '🎁';
+                document.getElementById('stat3Icon').textContent = '🛒';
                 document.getElementById('stat3Label').textContent = 'Vend';
                 document.getElementById('stat4Icon').textContent = '🎫';
                 document.getElementById('stat4Label').textContent = 'Ticket';
                 document.getElementById('stat5Icon').textContent = '📊';
                 document.getElementById('stat5Label').textContent = 'Conv';
-                
-                document.getElementById('stat1Icon2').textContent = '💵';
+                document.getElementById('stat1Icon2').textContent = '💰';
                 document.getElementById('stat1Label2').textContent = 'R$';
-                document.getElementById('stat2Icon2').textContent = '🤝';
+                document.getElementById('stat2Icon2').textContent = '📅';
                 document.getElementById('stat2Label2').textContent = 'Reun';
-                document.getElementById('stat3Icon2').textContent = '🎁';
+                document.getElementById('stat3Icon2').textContent = '🛒';
                 document.getElementById('stat3Label2').textContent = 'Vend';
                 document.getElementById('stat4Icon2').textContent = '🎫';
                 document.getElementById('stat4Label2').textContent = 'Ticket';
                 document.getElementById('stat5Icon2').textContent = '📊';
                 document.getElementById('stat5Label2').textContent = 'Conv';
-                
-                // Show the 5th column for CLOSER
                 const headers = document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)');
                 headers.forEach(h => h.style.display = 'table-cell');
                 const cells = document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)');
                 cells.forEach(c => c.style.display = 'table-cell');
             } else {
-                // SDR headers (4 columns only)
-                document.getElementById('stat1Icon').textContent = '🎁';
+                document.getElementById('stat1Icon').textContent = '🛒';
                 document.getElementById('stat1Label').textContent = 'Vendas';
                 document.getElementById('stat2Icon').textContent = '📅';
                 document.getElementById('stat2Label').textContent = 'Agend';
-                document.getElementById('stat3Icon').textContent = '📺';
+                document.getElementById('stat3Icon').textContent = '✅';
                 document.getElementById('stat3Label').textContent = 'Shows';
-                document.getElementById('stat4Icon').textContent = '🚫';
+                document.getElementById('stat4Icon').textContent = '❌';
                 document.getElementById('stat4Label').textContent = 'No-show';
-                
-                document.getElementById('stat1Icon2').textContent = '🎁';
+                document.getElementById('stat1Icon2').textContent = '🛒';
                 document.getElementById('stat1Label2').textContent = 'Vendas';
                 document.getElementById('stat2Icon2').textContent = '📅';
                 document.getElementById('stat2Label2').textContent = 'Agend';
-                document.getElementById('stat3Icon2').textContent = '📺';
+                document.getElementById('stat3Icon2').textContent = '✅';
                 document.getElementById('stat3Label2').textContent = 'Shows';
-                document.getElementById('stat4Icon2').textContent = '🚫';
+                document.getElementById('stat4Icon2').textContent = '❌';
                 document.getElementById('stat4Label2').textContent = 'No-show';
-                
-                // Hide the 5th column for SDR
                 const headers = document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)');
                 headers.forEach(h => h.style.display = 'none');
                 const cells = document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)');
@@ -1431,71 +1461,70 @@
             }
         }
 
-        // Render table rows with FINAL CORRECTED TICKET and CONVERSION for CLOSER + BOTTOM 4 RED
+        // =============================================
+        // RENDER TABLE ROWS — ÚNICA FUNÇÃO ALTERADA
+        // =============================================
         function renderTableRows(players, startPosition) {
             return players.map((player, index) => {
                 const position = startPosition + index;
+                const totalPlayers = currentPlayers.length;
                 let zoneIcon = '';
                 let rowClass = '';
-                
-                // Top 5 (positions 1-5)
+
                 if (position <= 5) {
                     zoneIcon = '🏆';
+                } else if (position >= (totalPlayers - 3)) {
+                    zoneIcon = '⬇️';
+                    rowClass = 'bottom-4-danger';
                 }
-                // Bottom 4 logic - CORRECTED FOR BOTH MODES
-                else {
-                    const totalPlayers = currentPlayers.length;
-                    if (position >= (totalPlayers - 3)) { // Last 4 positions
-                        zoneIcon = '⚠️';
-                        rowClass = 'bottom-4-danger'; // UNIFIED CLASS for both modes
-                    }
-                }
-                
+
                 // Team color and class
                 let teamColor = '#8B5CF6';
                 let teamClass = '';
-                
                 if (currentMode === 'closer') {
                     if (player.team.toUpperCase().includes('TITANS')) {
-                        teamColor = '#8B5CF6';
-                        teamClass = 'team-TITANS';
+                        teamColor = '#8B5CF6'; teamClass = 'team-TITANS';
                     } else if (player.team.toUpperCase().includes('MAORI')) {
-                        teamColor = '#10B981';
-                        teamClass = 'team-MAORI';
+                        teamColor = '#10B981'; teamClass = 'team-MAORI';
                     }
                 } else {
                     if (player.team.toUpperCase().includes('EAGLES')) {
-                        teamColor = '#FFD700';
-                        teamClass = 'team-EAGLES';
+                        teamColor = '#FFD700'; teamClass = 'team-EAGLES';
                     } else if (player.team.toUpperCase().includes('PROCURANDO')) {
-                        teamColor = '#B026FF';
-                        teamClass = 'team-PROCURANDO-DEMO';
+                        teamColor = '#B026FF'; teamClass = 'team-PROCURANDO-DEMO';
                     }
                 }
-                
+
                 let stat1, stat2, stat3, stat4, stat5 = '';
-                
                 if (currentMode === 'closer') {
                     stat1 = player.revenue;
                     stat2 = player.meetings;
                     stat3 = player.sales;
-                    stat4 = player.ticket; // FINAL CORRECTION: TICKET is now correct from column 8
-                    stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`; // FINAL CORRECTION: CONVERSION is now correct from column 7
+                    stat4 = player.ticket;
+                    stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`;
                 } else {
                     stat1 = player.sales;
                     stat2 = player.meetings;
                     stat3 = player.shows;
                     stat4 = `<div class="conversion-bar low"><span>${player.noshow}</span></div>`;
-                    stat5 = ''; // No 5th column for SDR
+                    stat5 = '';
                 }
-                
+
                 const fifthColumn = currentMode === 'closer' ? `<td class="conversion-cell">${stat5}</td>` : '';
-                
+
+                // ---- NOVO: Avatar com número flutuante ----
+                const avatarHTML = getAvatarHTML(player.name, position, totalPlayers);
+
                 return `
                     <tr class="${rowClass}">
                         <td class="position-cell">
-                            <div class="position-badge">${position}</div>
-                            ${zoneIcon}
+                            <div class="position-wrapper">
+                                <div class="avatar-wrapper">
+                                    ${avatarHTML}
+                                    <div class="position-number">${position}</div>
+                                </div>
+                                <span class="zone-icon">${zoneIcon}</span>
+                            </div>
                         </td>
                         <td class="player-cell">
                             <div class="player-name">${player.name}</div>
@@ -1515,284 +1544,131 @@
                 `;
             }).join('');
         }
+        // =============================================
 
-        // Update table with new data
         function updateTable(players) {
             const column1 = document.getElementById('tableColumn1');
             const column2 = document.getElementById('tableColumn2');
-            
             if (!column1 || !column2 || !players) return;
-            
             currentPlayers = players;
-            
-            // Split players based on mode
             let col1Players, col2Players;
-            
             if (currentMode === 'closer') {
-                // 1-9 in column1, 10-18 in column2
                 col1Players = players.slice(0, 9);
                 col2Players = players.slice(9, 18);
             } else {
-                // 1-7 in column1, 8-13 in column2 for SDR
                 col1Players = players.slice(0, 7);
                 col2Players = players.slice(7, 13);
             }
-            
-            // Render columns
             column1.innerHTML = renderTableRows(col1Players, 1);
             column2.innerHTML = renderTableRows(col2Players, currentMode === 'closer' ? 10 : 8);
-            
             updateDestaques(players);
             updateRankingTimes(players);
             updatePerigoRebaixamento(players);
         }
 
-        // Update Destaques based on mode - WITH MAIOR TICKET
         function updateDestaques(players) {
             if (!players || players.length === 0) return;
-            
             const highlightsContainer = document.getElementById('highlights');
             let highlightsHTML = '';
-            
             if (currentMode === 'closer') {
-                // Top Performer
                 const topPlayer = players[0];
-                highlightsHTML += `
-                    <div class="destaque-item compact gold-glow">
-                        <div class="destaque-icon">👑</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Top Performer</div>
-                            <div class="destaque-value">${topPlayer.nickname} <span class="points-badge">${Math.round(topPlayer.points)} pts</span></div>
-                        </div>
-                    </div>
-                `;
-                
-                // Maior Receita
+                highlightsHTML += `<div class="destaque-item compact gold-glow"><div class="destaque-icon">🥇</div><div class="destaque-content"><div class="destaque-label">Top Performer</div><div class="destaque-value">${topPlayer.nickname} <span class="points-badge">${Math.round(topPlayer.points)} pts</span></div></div></div>`;
                 const topRevenue = players.reduce((max, p) => {
                     const rev = parseFloat(p.revenue.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
                     const maxRev = parseFloat(max.revenue.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
                     return rev > maxRev ? p : max;
                 });
-                highlightsHTML += `
-                    <div class="destaque-item compact green-glow">
-                        <div class="destaque-icon">💰</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Maior Receita</div>
-                            <div class="destaque-value">${topRevenue.nickname} <span class="money-badge">${topRevenue.revenue}</span></div>
-                        </div>
-                    </div>
-                `;
-                
-                // Maior Ticket (NEW - replaces "Mais Reuniões")
+                highlightsHTML += `<div class="destaque-item compact green-glow"><div class="destaque-icon">💰</div><div class="destaque-content"><div class="destaque-label">Maior Receita</div><div class="destaque-value">${topRevenue.nickname} <span class="money-badge">${topRevenue.revenue}</span></div></div></div>`;
                 const topTicket = players.reduce((max, p) => {
                     const ticket = parseFloat(p.ticket.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
                     const maxTicket = parseFloat(max.ticket.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
                     return ticket > maxTicket ? p : max;
                 });
-                highlightsHTML += `
-                    <div class="destaque-item compact purple-glow">
-                        <div class="destaque-icon">🎫</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Maior Ticket</div>
-                            <div class="destaque-value">${topTicket.nickname} <span class="money-badge">${topTicket.ticket}</span></div>
-                        </div>
-                    </div>
-                `;
-                
-                // Mais Vendas
-                const topSales = players.reduce((max, p) => 
-                    p.sales > max.sales ? p : max
-                );
-                highlightsHTML += `
-                    <div class="destaque-item compact blue-glow">
-                        <div class="destaque-icon">🏆</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Mais Vendas</div>
-                            <div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div>
-                        </div>
-                    </div>
-                `;
-                
-                // Melhor Conversão - CORRECTED: Only considers conversion %
+                highlightsHTML += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">🎫</div><div class="destaque-content"><div class="destaque-label">Maior Ticket</div><div class="destaque-value">${topTicket.nickname} <span class="money-badge">${topTicket.ticket}</span></div></div></div>`;
+                const topSales = players.reduce((max, p) => p.sales > max.sales ? p : max);
+                highlightsHTML += `<div class="destaque-item compact blue-glow"><div class="destaque-icon">🛒</div><div class="destaque-content"><div class="destaque-label">Mais Vendas</div><div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div></div></div>`;
                 const topConversion = players.reduce((max, p) => {
                     const conv = parseFloat(p.conversion.replace('%', '').replace(',', '.')) || 0;
                     const maxConv = parseFloat(max.conversion.replace('%', '').replace(',', '.')) || 0;
                     return conv > maxConv ? p : max;
                 });
-                highlightsHTML += `
-                    <div class="destaque-item compact purple-glow">
-                        <div class="destaque-icon">📈</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Melhor Conversão</div>
-                            <div class="destaque-value">${topConversion.nickname} <span class="percent-badge">${topConversion.conversion}</span></div>
-                        </div>
-                    </div>
-                `;
+                highlightsHTML += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">📊</div><div class="destaque-content"><div class="destaque-label">Melhor Conversão</div><div class="destaque-value">${topConversion.nickname} <span class="percent-badge">${topConversion.conversion}</span></div></div></div>`;
             } else {
-                // SDR mode
-                // Top Performer
                 const topPlayer = players[0];
-                highlightsHTML += `
-                    <div class="destaque-item compact gold-glow">
-                        <div class="destaque-icon">👑</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Top Performer</div>
-                            <div class="destaque-value">${topPlayer.nickname} <span class="points-badge">${Math.round(topPlayer.points)} pts</span></div>
-                        </div>
-                    </div>
-                `;
-                
-                // Maior Qtd Vendas
-                const topSales = players.reduce((max, p) => 
-                    p.sales > max.sales ? p : max
-                );
-                highlightsHTML += `
-                    <div class="destaque-item compact green-glow">
-                        <div class="destaque-icon">🎁</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Maior Qtd Vendas</div>
-                            <div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div>
-                        </div>
-                    </div>
-                `;
-                
-                // Mais Shows
-                const topShows = players.reduce((max, p) => 
-                    p.shows > max.shows ? p : max
-                );
-                highlightsHTML += `
-                    <div class="destaque-item compact blue-glow">
-                        <div class="destaque-icon">📺</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Mais Shows</div>
-                            <div class="destaque-value">${topShows.nickname} <span class="count-badge">${topShows.shows}</span></div>
-                        </div>
-                    </div>
-                `;
-                
-                // Mais Agendamentos
-                const topMeetings = players.reduce((max, p) => 
-                    p.meetings > max.meetings ? p : max
-                );
-                highlightsHTML += `
-                    <div class="destaque-item compact purple-glow">
-                        <div class="destaque-icon">📅</div>
-                        <div class="destaque-content">
-                            <div class="destaque-label">Mais Agendamentos</div>
-                            <div class="destaque-value">${topMeetings.nickname} <span class="count-badge">${topMeetings.meetings}</span></div>
-                        </div>
-                    </div>
-                `;
+                highlightsHTML += `<div class="destaque-item compact gold-glow"><div class="destaque-icon">🥇</div><div class="destaque-content"><div class="destaque-label">Top Performer</div><div class="destaque-value">${topPlayer.nickname} <span class="points-badge">${Math.round(topPlayer.points)} pts</span></div></div></div>`;
+                const topSales = players.reduce((max, p) => p.sales > max.sales ? p : max);
+                highlightsHTML += `<div class="destaque-item compact green-glow"><div class="destaque-icon">🛒</div><div class="destaque-content"><div class="destaque-label">Maior Qtd Vendas</div><div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div></div></div>`;
+                const topShows = players.reduce((max, p) => p.shows > max.shows ? p : max);
+                highlightsHTML += `<div class="destaque-item compact blue-glow"><div class="destaque-icon">✅</div><div class="destaque-content"><div class="destaque-label">Mais Shows</div><div class="destaque-value">${topShows.nickname} <span class="count-badge">${topShows.shows}</span></div></div></div>`;
+                const topMeetings = players.reduce((max, p) => p.meetings > max.meetings ? p : max);
+                highlightsHTML += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">📅</div><div class="destaque-content"><div class="destaque-label">Mais Agendamentos</div><div class="destaque-value">${topMeetings.nickname} <span class="count-badge">${topMeetings.meetings}</span></div></div></div>`;
             }
-            
             highlightsContainer.innerHTML = highlightsHTML;
         }
 
-        // Update Ranking por Times - TITANS + "Procurando Demo" + ORDERED BY AVG
         function updateRankingTimes(players) {
             if (!players || players.length === 0) return;
-            
             const teams = {};
-            
-            // Initialize teams based on mode
             if (currentMode === 'closer') {
                 teams['TITANS'] = { points: 0, count: 0, color: 'titans-glow' };
                 teams['MAORI'] = { points: 0, count: 0, color: 'maori-glow' };
-                // Removed VIPERS and SURICATS, added TITANS
             } else {
                 teams['EAGLES'] = { points: 0, count: 0, color: 'eagles-glow' };
-                teams['Procurando Demo'] = { points: 0, count: 0, color: 'procurando-glow' }; // CORRECTED NAME
+                teams['Procurando Demo'] = { points: 0, count: 0, color: 'procurando-glow' };
             }
-            
-            // Calculate team stats
             players.forEach(p => {
                 const teamName = p.team.toUpperCase().trim();
                 let foundTeam = null;
-                
                 for (const [key, value] of Object.entries(teams)) {
                     const teamKey = key.toUpperCase().replace(/\s+/g, '');
                     const playerTeamSimplified = teamName.replace(/\s+/g, '');
-                    
-                    // Enhanced matching for teams
-                    if (playerTeamSimplified.includes(teamKey) || 
+                    if (playerTeamSimplified.includes(teamKey) ||
                         teamKey.includes(playerTeamSimplified) ||
                         (teamKey === 'PROCURANDODEMO' && playerTeamSimplified.includes('PROCURANDO'))) {
                         foundTeam = key;
                         break;
                     }
                 }
-                
                 if (foundTeam) {
                     teams[foundTeam].points += p.points;
                     teams[foundTeam].count += 1;
                 }
             });
-            
-            // Sort teams by AVG (not total points)
-            const sortedTeams = Object.entries(teams)
-                .sort(([,a], [,b]) => {
-                    const avgA = a.count > 0 ? a.points / a.count : 0;
-                    const avgB = b.count > 0 ? b.points / b.count : 0;
-                    return avgB - avgA; // Descending order by AVG
-                });
-            
+            const sortedTeams = Object.entries(teams).sort(([,a], [,b]) => {
+                const avgA = a.count > 0 ? a.points / a.count : 0;
+                const avgB = b.count > 0 ? b.points / b.count : 0;
+                return avgB - avgA;
+            });
             let rankingHTML = '';
-            
             sortedTeams.forEach(([teamName, teamData], index) => {
                 const placeClass = ['first-place', 'second-place', 'third-place'][index] || 'third-place';
-                const medal = ['🥇', '🥈', '🥉'][index] || '🏆';
+                const medal = ['🥇', '🥈', '🥉'][index] || '🥉';
                 const avg = teamData.count > 0 ? (teamData.points / teamData.count).toFixed(1) : '0.0';
-                
-                rankingHTML += `
-                    <div class="time-card ${placeClass}">
-                        <div class="position-medal">${medal}</div>
-                        <div class="team-info">
-                            <div class="team-badge-large ${teamData.color}"></div>
-                            <div class="team-details">
-                                <div class="team-name">${teamName}</div>
-                                <div class="team-count">⚡ ${teamData.count} jogadores</div>
-                            </div>
-                        </div>
-                        <div class="team-score-big">
-                            <div class="score-number">${Math.round(teamData.points)}</div>
-                            <div class="score-avg">↗️ Avg: ${avg}</div>
-                        </div>
-                    </div>
-                `;
+                rankingHTML += `<div class="time-card ${placeClass}"><div class="position-medal">${medal}</div><div class="team-info"><div class="team-badge-large ${teamData.color}"></div><div class="team-details"><div class="team-name">${teamName}</div><div class="team-count">👥 ${teamData.count} jogadores</div></div></div><div class="team-score-big"><div class="score-number">${Math.round(teamData.points)}</div><div class="score-avg">⚡ Avg: ${avg}</div></div></div>`;
             });
-            
             document.getElementById('teamRankings').innerHTML = rankingHTML;
         }
 
-        // Update Perigo de Rebaixamento
         function updatePerigoRebaixamento(players) {
             if (!players || players.length === 0) return;
-            
             const totalPlayers = players.length;
-            const relegationStart = totalPlayers - 3; // Last 4 positions
-            
+            const relegationStart = totalPlayers - 3;
             let positionsHTML = '';
             for (let i = 0; i < 4; i++) {
                 const pos = relegationStart + i;
                 const label = i < 2 ? 'RISCO' : (i === 2 ? 'PERIGO' : 'CRÍTICO');
-                positionsHTML += `<div class="position-danger">${pos}º ${label}</div>`;
+                positionsHTML += `<div class="position-danger">${pos}° ${label}</div>`;
             }
-            
             document.getElementById('relegationPositions').innerHTML = positionsHTML;
         }
 
-        // Pause/Resume functionality
         function togglePause() {
             const pauseButton = document.getElementById('pauseButton');
             isPaused = !isPaused;
-            
             if (isPaused) {
                 pauseButton.textContent = '▶️';
                 pauseButton.classList.add('paused');
-                if (autoSwitchTimer) {
-                    clearInterval(autoSwitchTimer);
-                    autoSwitchTimer = null;
-                }
+                if (autoSwitchTimer) { clearInterval(autoSwitchTimer); autoSwitchTimer = null; }
             } else {
                 pauseButton.textContent = '⏸️';
                 pauseButton.classList.remove('paused');
@@ -1800,72 +1676,46 @@
             }
         }
 
-        // Switch mode with transition
         async function switchModeWithTransition() {
             const contentContainer = document.getElementById('contentContainer');
-            
-            // Fade out
             contentContainer.classList.add('fading');
-            
             await new Promise(resolve => setTimeout(resolve, 500));
-            
-            // Switch mode
             currentMode = currentMode === 'closer' ? 'sdr' : 'closer';
-            
-            // Update motivational phrase
             updateMotivationalPhrase();
-            
-            // Update mode indicator and headers
             updateModeIndicator();
             updateTableHeaders();
-            
-            // Load new data
             await loadCurrentModeData();
-            
-            // Fade in
             contentContainer.classList.remove('fading');
         }
 
-        // Load data for current mode
         async function loadCurrentModeData() {
             await fetchMTDMetrics();
             const data = await fetchPlayerData();
             if (data && data.length > 0) {
                 updateTable(data);
-                updateTimestamp();
             }
         }
 
-        // Auto-refresh function
         async function autoRefresh() {
             if (!document.getElementById('contentContainer').classList.contains('fading')) {
                 await loadCurrentModeData();
             }
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Initial load
             updateModeIndicator();
             updateTableHeaders();
             loadCurrentModeData();
-            
-            // Add click event to mode indicator badge
+
             document.getElementById('modeIndicator').addEventListener('click', function() {
-                if (!isPaused) {
-                    switchModeWithTransition();
-                }
+                if (!isPaused) switchModeWithTransition();
             });
-            
-            // Add click event to pause button
+
             document.getElementById('pauseButton').addEventListener('click', togglePause);
-            
-            // Auto-switch every 45 seconds
+            document.getElementById('pauseButton').textContent = '⏸️';
+
             autoSwitchTimer = setInterval(switchModeWithTransition, switchInterval);
-            
-            // Auto-refresh every 10 seconds
             autoRefreshTimer = setInterval(autoRefresh, 10000);
-            
         });
     </script>
 </body>
