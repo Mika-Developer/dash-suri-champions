@@ -42,6 +42,11 @@
             border-color: rgba(255, 215, 0, 0.4);
         }
 
+        .mode-indicator.podio-mode {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
         .mode-icon { font-size: 16px; }
 
         .mode-text {
@@ -187,7 +192,6 @@
             66%       { transform: translate(-80px, 100px) scale(0.9); }
         }
 
-        /* ── HEADER ── */
         .epic-header {
             display: flex;
             justify-content: space-between;
@@ -304,7 +308,6 @@
             letter-spacing: 2px;
         }
 
-        /* ── MAIN LAYOUT ── */
         .main-container {
             display: grid;
             grid-template-columns: 75% 25%;
@@ -324,7 +327,6 @@
 
         .table-column { width: 100%; height: 100%; }
 
-        /* ── TABLE ── */
         .championship-table.compact {
             width: 100%;
             border-collapse: collapse;
@@ -359,41 +361,32 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
-        
+
         .championship-table.compact tbody tr.top-5-safe {
             background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(0, 240, 255, 0.1));
             border-left: 3px solid #10B981;
             box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-}
-        
-/* Larguras fixas e iguais para todas as colunas */
-.championship-table.compact th:nth-child(1),
-.championship-table.compact td:nth-child(1) { width: 52px; min-width: 52px; }
+        }
 
-.championship-table.compact th:nth-child(2),
-.championship-table.compact td:nth-child(2) { width: 120px; min-width: 120px; }
+        .championship-table.compact th:nth-child(1),
+        .championship-table.compact td:nth-child(1) { width: 52px; min-width: 52px; }
+        .championship-table.compact th:nth-child(2),
+        .championship-table.compact td:nth-child(2) { width: 120px; min-width: 120px; }
+        .championship-table.compact th:nth-child(3),
+        .championship-table.compact td:nth-child(3) { width: 70px; min-width: 70px; }
+        .championship-table.compact th:nth-child(4),
+        .championship-table.compact td:nth-child(4) { width: 65px; min-width: 65px; }
+        .championship-table.compact th:nth-child(5),
+        .championship-table.compact td:nth-child(5) { width: 45px; min-width: 45px; }
+        .championship-table.compact th:nth-child(6),
+        .championship-table.compact td:nth-child(6) { width: 45px; min-width: 45px; }
+        .championship-table.compact th:nth-child(7),
+        .championship-table.compact td:nth-child(7) { width: 70px; min-width: 70px; }
+        .championship-table.compact th:nth-child(8),
+        .championship-table.compact td:nth-child(8) { width: 55px; min-width: 55px; }
+        .championship-table.compact th:nth-child(9),
+        .championship-table.compact td:nth-child(9) { width: 45px; min-width: 45px; }
 
-.championship-table.compact th:nth-child(3),
-.championship-table.compact td:nth-child(3) { width: 70px; min-width: 70px; }
-
-.championship-table.compact th:nth-child(4),
-.championship-table.compact td:nth-child(4) { width: 65px; min-width: 65px; }
-
-.championship-table.compact th:nth-child(5),
-.championship-table.compact td:nth-child(5) { width: 45px; min-width: 45px; }
-
-.championship-table.compact th:nth-child(6),
-.championship-table.compact td:nth-child(6) { width: 45px; min-width: 45px; }
-
-.championship-table.compact th:nth-child(7),
-.championship-table.compact td:nth-child(7) { width: 70px; min-width: 70px; }
-
-.championship-table.compact th:nth-child(8),
-.championship-table.compact td:nth-child(8) { width: 55px; min-width: 55px; }
-
-.championship-table.compact th:nth-child(9),
-.championship-table.compact td:nth-child(9) { width: 45px; min-width: 45px; }
-        
         .championship-table.compact tbody tr { transition: all 0.3s ease; }
 
         .championship-table.compact tbody tr:hover {
@@ -401,7 +394,7 @@
             transform: scale(1.02);
             box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
         }
-        
+
         .championship-table.compact tbody tr.bottom-4-danger {
             background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)) !important;
             border-left: 4px solid #EF4444 !important;
@@ -425,7 +418,6 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        /* ── AVATAR COM NÚMERO FLUTUANTE SEM BOLINHA ── */
         .position-wrapper {
             display: inline-flex;
             flex-direction: column;
@@ -451,7 +443,6 @@
         .avatar-top5   { border-color: #10B981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
         .avatar-danger { border-color: #EF4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
 
-        /* número flutuante — SEM bolinha */
         .position-number {
             position: absolute;
             top: -6px;
@@ -467,7 +458,6 @@
 
         .zone-icon { font-size: 11px; line-height: 1; }
 
-        /* ── TEAM BADGES ── */
         .championship-table.compact .team-badge {
             width: 8px; height: 8px;
             border-radius: 50%;
@@ -493,7 +483,6 @@
         .championship-table.compact .conversion-bar.medium { background: linear-gradient(90deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.1)); color: #FBBF24; }
         .championship-table.compact .conversion-bar.low    { background: linear-gradient(90deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));   color: #EF4444; }
 
-        /* ── SIDEBAR ── */
         .sidebar-section { display: flex; flex-direction: column; gap: 10px; height: 100%; overflow: hidden; }
 
         .glass-card {
@@ -559,7 +548,6 @@
         .score-number { font-size: 20px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #00D4FF; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
         .score-avg    { font-size: 10px; color: rgba(255, 255, 255, 0.6); }
 
-        /* ── DESTAQUES ── */
         .destaques-card { padding: 8px; }
 
         .destaques-card .card-title {
@@ -608,7 +596,6 @@
             font-weight: 700;
         }
 
-        /* ── FOOTER ── */
         footer {
             padding: 6px;
             font-size: 10px;
@@ -661,7 +648,6 @@
         .suri-branding a { color: #00D4FF; text-decoration: none; font-weight: 600; }
         .suri-branding a:hover { text-shadow: 0 0 10px rgba(0, 240, 255, 0.8); }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 1400px) {
             .main-container { grid-template-columns: 70% 30%; }
             .mtd-metrics-grid { gap: 8px 15px; }
@@ -680,6 +666,174 @@
             .mtd-metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 8px 10px; }
             .footer-content { flex-direction: column; text-align: center; }
         }
+
+        /* ══════════════════════════════════════════
+           PÓDIO DO MÊS — estilos novos
+        ══════════════════════════════════════════ */
+        .podio-view {
+            display: none;
+            padding: 20px 40px;
+            height: calc(100vh - 160px);
+            flex-direction: column;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .podio-view.active { display: flex; }
+
+        .podio-section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .podio-block {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .podio-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+            margin: 0 60px;
+        }
+
+        .podio-stage {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 40px;
+        }
+
+        /* Cada coluna do pódio */
+        .podio-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Medalha flutuante acima da foto */
+        .podio-medal {
+            font-size: 28px;
+            animation: floatMedal 2.5s ease-in-out infinite;
+        }
+
+        .podio-player:nth-child(1) .podio-medal { animation-delay: 0s; }
+        .podio-player:nth-child(2) .podio-medal { animation-delay: 0.4s; }
+        .podio-player:nth-child(3) .podio-medal { animation-delay: 0.8s; }
+
+        @keyframes floatMedal {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-8px); }
+        }
+
+        /* Foto circular do pódio */
+        .podio-avatar {
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            animation: floatAvatar 3s ease-in-out infinite;
+        }
+
+        .podio-player.place-1 .podio-avatar {
+            width: 110px;
+            height: 110px;
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 0 50px rgba(255, 215, 0, 0.3);
+            animation-delay: 0s;
+        }
+
+        .podio-player.place-2 .podio-avatar {
+            width: 85px;
+            height: 85px;
+            border: 3px solid #C0C0C0;
+            box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
+            animation-delay: 0.5s;
+        }
+
+        .podio-player.place-3 .podio-avatar {
+            width: 75px;
+            height: 75px;
+            border: 3px solid #CD7F32;
+            box-shadow: 0 0 15px rgba(205, 127, 50, 0.6);
+            animation-delay: 1s;
+        }
+
+        @keyframes floatAvatar {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-6px); }
+        }
+
+        .podio-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .podio-player.place-1 .podio-name { font-size: 16px; }
+        .podio-player.place-2 .podio-name { font-size: 13px; }
+        .podio-player.place-3 .podio-name { font-size: 13px; }
+
+        .podio-nickname {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            font-style: italic;
+            text-align: center;
+        }
+
+        .podio-pts {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #00D4FF;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+            text-align: center;
+        }
+
+        .podio-player.place-1 .podio-pts { font-size: 22px; }
+        .podio-player.place-2 .podio-pts { font-size: 17px; }
+        .podio-player.place-3 .podio-pts { font-size: 17px; }
+
+        /* Pedestal */
+        .podio-pedestal {
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .podio-player.place-1 .podio-pedestal {
+            width: 120px; height: 80px;
+            background: linear-gradient(180deg, rgba(255,215,0,0.3), rgba(255,165,0,0.15));
+            border: 2px solid rgba(255,215,0,0.5);
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        .podio-player.place-2 .podio-pedestal {
+            width: 100px; height: 55px;
+            background: linear-gradient(180deg, rgba(192,192,192,0.2), rgba(169,169,169,0.1));
+            border: 2px solid rgba(192,192,192,0.4);
+        }
+
+        .podio-player.place-3 .podio-pedestal {
+            width: 90px; height: 40px;
+            background: linear-gradient(180deg, rgba(205,127,50,0.2), rgba(184,115,51,0.1));
+            border: 2px solid rgba(205,127,50,0.4);
+        }
+        /* ══════════════════════════════════════════ */
     </style>
 </head>
 <body>
@@ -755,89 +909,117 @@
             </div>
         </header>
 
-        <div class="main-container">
-            <div class="table-section">
-                <div class="two-column-grid">
-                    <div class="table-column">
-                        <table class="championship-table compact">
-                            <thead>
-                                <tr id="tableHeader1">
-                                    <th>#</th>
-                                    <th>Jogador</th>
-                                    <th>Time</th>
-                                    <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
-                                    <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
-                                    <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
-                                    <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
-                                    <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
-                                    <th><span class="icon"></span> PTS</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableColumn1"></tbody>
-                        </table>
+        <!-- VISÃO NORMAL (tabela) -->
+        <div id="tableView">
+            <div class="main-container">
+                <div class="table-section">
+                    <div class="two-column-grid">
+                        <div class="table-column">
+                            <table class="championship-table compact">
+                                <thead>
+                                    <tr id="tableHeader1">
+                                        <th>#</th>
+                                        <th>Jogador</th>
+                                        <th>Time</th>
+                                        <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
+                                        <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
+                                        <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
+                                        <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
+                                        <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
+                                        <th><span class="icon"></span> PTS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableColumn1"></tbody>
+                            </table>
+                        </div>
+                        <div class="table-column">
+                            <table class="championship-table compact">
+                                <thead>
+                                    <tr id="tableHeader2">
+                                        <th>#</th>
+                                        <th>Jogador</th>
+                                        <th>Time</th>
+                                        <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
+                                        <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
+                                        <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
+                                        <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
+                                        <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
+                                        <th><span class="icon"></span> PTS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableColumn2"></tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="table-column">
-                        <table class="championship-table compact">
-                            <thead>
-                                <tr id="tableHeader2">
-                                    <th>#</th>
-                                    <th>Jogador</th>
-                                    <th>Time</th>
-                                    <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
-                                    <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
-                                    <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
-                                    <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
-                                    <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
-                                    <th><span class="icon"></span> PTS</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableColumn2"></tbody>
-                        </table>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="ranking-times-card glass-card">
+                        <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
+                        <div id="teamRankings"></div>
+                    </div>
+                    <div class="destaques-card glass-card">
+                        <h2 class="card-title"><span class="icon-glow">⭐</span> Destaques</h2>
+                        <div id="highlights"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="sidebar-section">
-                <div class="ranking-times-card glass-card">
-                    <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
-                    <div id="teamRankings"></div>
+            <footer>
+                <div class="footer-content">
+                    <div class="formula" id="formula">
+                        <h3>Fórmula dos Pontos</h3>
+                        <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
+                    </div>
+                    <div class="perigo-rebaixamento">
+                        <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
+                        <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! ⬇️</p>
+                        <div class="rebaixamento-positions" id="relegationPositions"></div>
+                    </div>
+                    <div class="suri-branding">
+                        Powered by <a href="https://www.suri.ai" target="_blank">SURI</a> - Inteligência Artificial para Vendas
+                    </div>
                 </div>
-                <div class="destaques-card glass-card">
-                    <h2 class="card-title"><span class="icon-glow">⭐</span> Destaques</h2>
-                    <div id="highlights"></div>
-                </div>
-            </div>
+            </footer>
         </div>
 
-        <footer>
-            <div class="footer-content">
-                <div class="formula" id="formula">
-                    <h3>Fórmula dos Pontos</h3>
-                    <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
-                </div>
-                <div class="perigo-rebaixamento">
-                    <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
-                    <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! ⬇️</p>
-                    <div class="rebaixamento-positions" id="relegationPositions"></div>
-                </div>
-                <div class="suri-branding">
-                    Powered by <a href="https://www.suri.ai" target="_blank">SURI</a> - Inteligência Artificial para Vendas
-                </div>
+        <!-- VISÃO PÓDIO -->
+        <div class="podio-view" id="podioView">
+
+            <!-- Pódio CLOSER -->
+            <div class="podio-block">
+                <div class="podio-section-title">🏆 PÓDIO DO MÊS — CLOSER</div>
+                <div class="podio-stage" id="podioCloser"></div>
             </div>
-        </footer>
+
+            <div class="podio-divider"></div>
+
+            <!-- Pódio SDR -->
+            <div class="podio-block">
+                <div class="podio-section-title">🏆 PÓDIO DO MÊS — SDR</div>
+                <div class="podio-stage" id="podioSDR"></div>
+            </div>
+
+        </div>
 
     </div><!-- fim content-container -->
 
     <script>
-        let currentMode = 'closer';
-        let switchInterval = 45000;
+        let currentMode = 'closer'; // closer | sdr | podio
         let currentPlayers = [];
         let isPaused = false;
         let autoSwitchTimer = null;
         let autoRefreshTimer = null;
         let currentMotivationalPhraseIndex = 0;
 
-        /* ── FOTOS (URL corrigida: lh3.googleusercontent.com/d/ID) ── */
+        // Sequência e tempos de cada modo
+        const MODE_SEQUENCE = ['closer', 'sdr', 'podio'];
+        const MODE_DURATIONS = { closer: 45000, sdr: 45000, podio: 30000 };
+
+        // Cache de dados para o pódio
+        let cachedCloserPlayers = [];
+        let cachedSDRPlayers    = [];
+
         const CLOSER_PHOTOS = {
             'Alex Uchôa':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
             'Alex Uchoa':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
@@ -871,25 +1053,59 @@
         function getAvatarHTML(name, position, totalPlayers) {
             const photoUrl = currentMode === 'closer' ? getPlayerPhoto(name) : null;
             const isTop5   = position <= 5;
-            const isDanger = position >= (totalPlayers - 3);
+            const isDanger = position > (totalPlayers - 4);
             const avatarClass = isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '');
-
             if (photoUrl) {
-                return `<img
-                    class="player-avatar ${avatarClass}"
-                    src="${photoUrl}"
-                    alt="${name}"
-                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                <div class="player-avatar ${avatarClass}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">
-                    ${name.charAt(0)}
-                </div>`;
+                return `<img class="player-avatar ${avatarClass}" src="${photoUrl}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="player-avatar ${avatarClass}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
             }
-            return `<div class="player-avatar ${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">
-                ${name.charAt(0)}
-            </div>`;
+            return `<div class="player-avatar ${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
         }
 
-        /* ── FRASES MOTIVACIONAIS ── */
+        /* ── PÓDIO ── */
+        function buildPodioPlayer(player, place, usePhoto) {
+            const medals  = ['🥇','🥈','🥉'];
+            const classes = ['place-1','place-2','place-3'];
+            const medal   = medals[place - 1];
+            const cls     = classes[place - 1];
+            const photoUrl = usePhoto ? getPlayerPhoto(player.name) : null;
+
+            const avatarTag = photoUrl
+                ? `<img class="podio-avatar" src="${photoUrl}" alt="${player.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                   <div class="podio-avatar" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`
+                : `<div class="podio-avatar" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`;
+
+            return `
+                <div class="podio-player ${cls}">
+                    <div class="podio-medal">${medal}</div>
+                    ${avatarTag}
+                    <div class="podio-name">${player.name}</div>
+                    <div class="podio-nickname">${player.nickname || ''}</div>
+                    <div class="podio-pts">${Math.round(player.points)} pts</div>
+                    <div class="podio-pedestal">${place}</div>
+                </div>`;
+        }
+
+        function renderPodio() {
+            // CLOSER — ordem visual: 2º, 1º, 3º (estilo pódio olímpico)
+            const cp = cachedCloserPlayers.slice(0, 3);
+            if (cp.length >= 3) {
+                document.getElementById('podioCloser').innerHTML =
+                    buildPodioPlayer(cp[1], 2, true) +
+                    buildPodioPlayer(cp[0], 1, true) +
+                    buildPodioPlayer(cp[2], 3, true);
+            }
+
+            // SDR — sem fotos (não temos fotos SDR mapeadas)
+            const sp = cachedSDRPlayers.slice(0, 3);
+            if (sp.length >= 3) {
+                document.getElementById('podioSDR').innerHTML =
+                    buildPodioPlayer(sp[1], 2, false) +
+                    buildPodioPlayer(sp[0], 1, false) +
+                    buildPodioPlayer(sp[2], 3, false);
+            }
+        }
+
         const motivationalPhrases = [
             "Vamos com tudo! Cada chamada é uma oportunidade de ouro! 🚀",
             "Foco no topo! O sucesso está a uma venda de distância! 🎯",
@@ -913,7 +1129,6 @@
             "Você nasceu para vencer! 🥇"
         ];
 
-        /* ── DATA SOURCES ── */
         const DATA_SOURCES = {
             closer: {
                 players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
@@ -925,7 +1140,6 @@
             }
         };
 
-        /* ── CSV PARSER ── */
         function parseCSVLine(line) {
             const result = [];
             let current = '';
@@ -940,7 +1154,7 @@
             return result;
         }
 
-        function parseCSV(csv) {
+        function parseCSV(csv, mode) {
             const lines = csv.split('\n');
             const players = [];
             for (let i = 1; i < lines.length; i++) {
@@ -948,30 +1162,21 @@
                 if (!line) continue;
                 const cols = parseCSVLine(line);
                 if (cols.length >= 9 && cols[1] && cols[8]) {
-                    if (currentMode === 'closer') {
+                    if (mode === 'closer') {
                         players.push({
-                            rank:       parseInt(cols[0]) || i,
-                            name:       cols[1].trim(),
-                            nickname:   cols[2].trim(),
-                            team:       cols[3].trim(),
-                            revenue:    cols[4].trim(),
-                            meetings:   parseInt(cols[5]) || 0,
-                            sales:      parseInt(cols[6]) || 0,
-                            conversion: cols[7] ? cols[7].trim() : '0%',
-                            ticket:     cols[8] ? cols[8].trim() : 'R$ 0,00',
-                            points:     parseFloat(cols[9]) || 0
+                            rank: parseInt(cols[0]) || i,
+                            name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
+                            revenue: cols[4].trim(), meetings: parseInt(cols[5]) || 0,
+                            sales: parseInt(cols[6]) || 0, conversion: cols[7] ? cols[7].trim() : '0%',
+                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00', points: parseFloat(cols[9]) || 0
                         });
                     } else {
                         players.push({
-                            rank:     parseInt(cols[0]) || i,
-                            name:     cols[1].trim(),
-                            nickname: cols[2].trim(),
-                            team:     cols[3].trim(),
-                            sales:    parseInt(cols[4]) || 0,
-                            meetings: parseInt(cols[5]) || 0,
-                            shows:    parseInt(cols[6]) || 0,
-                            noshow:   cols[7].trim(),
-                            points:   parseFloat(cols[8]) || 0
+                            rank: parseInt(cols[0]) || i,
+                            name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
+                            sales: parseInt(cols[4]) || 0, meetings: parseInt(cols[5]) || 0,
+                            shows: parseInt(cols[6]) || 0, noshow: cols[7].trim(),
+                            points: parseFloat(cols[8]) || 0
                         });
                     }
                 }
@@ -979,19 +1184,17 @@
             return players.sort((a, b) => a.rank - b.rank);
         }
 
-        /* ── MTD ── */
         async function fetchMTDMetrics() {
+            const modeForMTD = (currentMode === 'podio') ? 'closer' : currentMode;
             try {
-                const url = DATA_SOURCES[currentMode].mtd + `&_=${Date.now()}`;
-                const response  = await fetch(url);
-                const csvText   = await response.text();
-                const lines     = csvText.trim().split('\n');
+                const url = DATA_SOURCES[modeForMTD].mtd + `&_=${Date.now()}`;
+                const response = await fetch(url);
+                const csvText  = await response.text();
+                const lines    = csvText.trim().split('\n');
                 if (lines.length < 2) return;
-
                 let values = [];
                 const row2 = lines[1];
-                let cur = '';
-                let inQ = false;
+                let cur = ''; let inQ = false;
                 for (let i = 0; i < row2.length; i++) {
                     const c = row2[i];
                     if (c === '"') { inQ = !inQ; }
@@ -999,29 +1202,23 @@
                     else { cur += c; }
                 }
                 values.push(cur.trim());
-
                 if (values.length >= 8) {
                     const fbC = ['34,95%','34,08%','R$ 300.038,53','R$ 31.124,25','10,37%','R$ 91.859,33','R$ 18.127,35','19,73%'];
                     const fbS = ['55,99%','47,82%','1.344','752','55,95%','467','229','49,04%'];
                     for (let i = 0; i < values.length; i++) {
                         if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') {
-                            values[i] = (currentMode === 'sdr' ? fbS : fbC)[i] || '0';
+                            values[i] = (modeForMTD === 'sdr' ? fbS : fbC)[i] || '0';
                         }
                     }
                 }
-
                 document.getElementById('mtd-ontem').textContent              = values[0];
                 document.getElementById('mtd-hoje').textContent               = values[1];
                 document.getElementById('meta-mensal').textContent            = values[2];
                 document.getElementById('realizado-mensal').textContent       = values[3];
                 document.getElementById('perc-realizado-mensal').textContent  = values[4];
-                document.getElementById('meta-semanal').textContent           = values[5];
-                document.getElementById('realizado-semanal').textContent      = values[6];
                 document.getElementById('perc-realizado-semanal').textContent = values[7];
                 updateMetricColors();
-            } catch (e) {
-                console.error('MTD error:', e);
-            }
+            } catch (e) { console.error('MTD error:', e); }
         }
 
         function updateMetricColors() {
@@ -1029,37 +1226,45 @@
             const vm = parseFloat(pm.textContent.replace(',','.').replace('%',''));
             pm.className = 'mtd-value';
             pm.classList.add(vm < 30 ? 'orange-glow' : vm < 70 ? 'cyan-glow' : 'green-glow');
-
             const ps = document.getElementById('perc-realizado-semanal');
             const vs = parseFloat(ps.textContent.replace(',','.').replace('%',''));
             ps.className = 'mtd-value';
             ps.classList.add(vs < 30 ? 'orange-glow' : vs < 70 ? 'cyan-glow' : 'green-glow');
         }
 
-        /* ── PLAYER DATA ── */
-        async function fetchPlayerData() {
+        async function fetchPlayerData(mode) {
             try {
-                const url      = DATA_SOURCES[currentMode].players + `&_=${Date.now()}`;
+                const url = DATA_SOURCES[mode].players + `&_=${Date.now()}`;
                 const response = await fetch(url);
                 const csvText  = await response.text();
-                return parseCSV(csvText);
-            } catch (e) {
-                console.error('Player data error:', e);
-                return null;
-            }
+                return parseCSV(csvText, mode);
+            } catch (e) { console.error('Player data error:', e); return null; }
         }
 
-        /* ── UI UPDATES ── */
         function updateModeIndicator() {
             const indicator = document.getElementById('modeIndicator');
             const modeText  = document.getElementById('modeText');
+            indicator.classList.remove('sdr-mode', 'podio-mode');
             if (currentMode === 'sdr') {
                 indicator.classList.add('sdr-mode');
                 modeText.textContent = 'SDR';
+            } else if (currentMode === 'podio') {
+                indicator.classList.add('podio-mode');
+                modeText.textContent = 'PÓDIO';
             } else {
-                indicator.classList.remove('sdr-mode');
                 modeText.textContent = 'CLOSER';
             }
+        }
+
+        function showTableView()  {
+            document.getElementById('tableView').style.display = 'block';
+            document.getElementById('podioView').classList.remove('active');
+        }
+
+        function showPodioView() {
+            document.getElementById('tableView').style.display = 'none';
+            document.getElementById('podioView').classList.add('active');
+            renderPodio();
         }
 
         function updateMotivationalPhrase() {
@@ -1074,186 +1279,128 @@
 
         function updateTableHeaders() {
             if (currentMode === 'closer') {
-                document.getElementById('stat1Icon').textContent  = '💰';
-                document.getElementById('stat1Label').textContent = 'R$';
-                document.getElementById('stat2Icon').textContent  = '📅';
-                document.getElementById('stat2Label').textContent = 'Reun';
-                document.getElementById('stat3Icon').textContent  = '🛒';
-                document.getElementById('stat3Label').textContent = 'Vend';
-                document.getElementById('stat4Icon').textContent  = '🎫';
-                document.getElementById('stat4Label').textContent = 'Ticket';
-                document.getElementById('stat5Icon').textContent  = '📊';
-                document.getElementById('stat5Label').textContent = 'Conv';
-                document.getElementById('stat1Icon2').textContent  = '💰';
-                document.getElementById('stat1Label2').textContent = 'R$';
-                document.getElementById('stat2Icon2').textContent  = '📅';
-                document.getElementById('stat2Label2').textContent = 'Reun';
-                document.getElementById('stat3Icon2').textContent  = '🛒';
-                document.getElementById('stat3Label2').textContent = 'Vend';
-                document.getElementById('stat4Icon2').textContent  = '🎫';
-                document.getElementById('stat4Label2').textContent = 'Ticket';
-                document.getElementById('stat5Icon2').textContent  = '📊';
-                document.getElementById('stat5Label2').textContent = 'Conv';
+                document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
+                document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
+                document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
+                document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
+                document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
+                document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
+                document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
+                document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
+                document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
+                document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
                 document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
                 document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
-            } else {
-                document.getElementById('stat1Icon').textContent  = '🛒';
-                document.getElementById('stat1Label').textContent = 'Vendas';
-                document.getElementById('stat2Icon').textContent  = '📅';
-                document.getElementById('stat2Label').textContent = 'Agend';
-                document.getElementById('stat3Icon').textContent  = '✅';
-                document.getElementById('stat3Label').textContent = 'Shows';
-                document.getElementById('stat4Icon').textContent  = '❌';
-                document.getElementById('stat4Label').textContent = 'No-show';
-                document.getElementById('stat1Icon2').textContent  = '🛒';
-                document.getElementById('stat1Label2').textContent = 'Vendas';
-                document.getElementById('stat2Icon2').textContent  = '📅';
-                document.getElementById('stat2Label2').textContent = 'Agend';
-                document.getElementById('stat3Icon2').textContent  = '✅';
-                document.getElementById('stat3Label2').textContent = 'Shows';
-                document.getElementById('stat4Icon2').textContent  = '❌';
-                document.getElementById('stat4Label2').textContent = 'No-show';
+            } else if (currentMode === 'sdr') {
+                document.getElementById('stat1Icon').textContent  = '🛒'; document.getElementById('stat1Label').textContent = 'Vendas';
+                document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Agend';
+                document.getElementById('stat3Icon').textContent  = '✅'; document.getElementById('stat3Label').textContent = 'Shows';
+                document.getElementById('stat4Icon').textContent  = '❌'; document.getElementById('stat4Label').textContent = 'No-show';
+                document.getElementById('stat1Icon2').textContent = '🛒'; document.getElementById('stat1Label2').textContent = 'Vendas';
+                document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Agend';
+                document.getElementById('stat3Icon2').textContent = '✅'; document.getElementById('stat3Label2').textContent = 'Shows';
+                document.getElementById('stat4Icon2').textContent = '❌'; document.getElementById('stat4Label2').textContent = 'No-show';
                 document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'none');
                 document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'none');
             }
         }
 
-        /* ── RENDER ROWS ── */
         function renderTableRows(players, startPosition) {
             return players.map((player, index) => {
                 const position     = startPosition + index;
                 const totalPlayers = currentPlayers.length;
-                let zoneIcon = '';
-                let rowClass = '';
+                let zoneIcon = ''; let rowClass = '';
+                if (position <= 5) { zoneIcon = '🏆'; rowClass = 'top-5-safe'; }
+                else if (position > (totalPlayers - 4)) { zoneIcon = '⚠️'; rowClass = 'bottom-4-danger'; }
 
-                if (position <= 5) {
-                    zoneIcon = '🏆';
-                    rowClass = 'top-5-safe';
-                } else if (position > (totalPlayers - 4)) {
-                    zoneIcon = '⚠️';
-                    rowClass = 'bottom-4-danger';
-                }
-
-                let teamColor = '#8B5CF6';
-                let teamClass = '';
+                let teamColor = '#8B5CF6'; let teamClass = '';
                 if (currentMode === 'closer') {
-                    if (player.team.toUpperCase().includes('TITANS'))   { teamColor = '#8B5CF6'; teamClass = 'team-TITANS'; }
+                    if (player.team.toUpperCase().includes('TITANS'))    { teamColor = '#8B5CF6'; teamClass = 'team-TITANS'; }
                     else if (player.team.toUpperCase().includes('MAORI')) { teamColor = '#10B981'; teamClass = 'team-MAORI'; }
                 } else {
-                    if (player.team.toUpperCase().includes('EAGLES'))      { teamColor = '#FFD700'; teamClass = 'team-EAGLES'; }
+                    if (player.team.toUpperCase().includes('EAGLES'))         { teamColor = '#FFD700'; teamClass = 'team-EAGLES'; }
                     else if (player.team.toUpperCase().includes('PROCURANDO')) { teamColor = '#B026FF'; teamClass = 'team-PROCURANDO-DEMO'; }
                 }
 
                 let stat1, stat2, stat3, stat4, stat5 = '';
                 if (currentMode === 'closer') {
-                    stat1 = player.revenue;
-                    stat2 = player.meetings;
-                    stat3 = player.sales;
+                    stat1 = player.revenue; stat2 = player.meetings; stat3 = player.sales;
                     stat4 = player.ticket;
                     stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`;
                 } else {
-                    stat1 = player.sales;
-                    stat2 = player.meetings;
-                    stat3 = player.shows;
+                    stat1 = player.sales; stat2 = player.meetings; stat3 = player.shows;
                     stat4 = `<div class="conversion-bar low"><span>${player.noshow}</span></div>`;
                     stat5 = '';
                 }
 
-                const fifthColumn  = currentMode === 'closer' ? `<td class="conversion-cell">${stat5}</td>` : '';
-                const avatarHTML   = getAvatarHTML(player.name, position, totalPlayers);
+                const fifthColumn = currentMode === 'closer' ? `<td class="conversion-cell">${stat5}</td>` : '';
+                const avatarHTML  = getAvatarHTML(player.name, position, totalPlayers);
 
-                return `
-                    <tr class="${rowClass}">
-                        <td class="position-cell">
-                            <div class="position-wrapper">
-                                <div class="avatar-wrapper">
-                                    ${avatarHTML}
-                                    <div class="position-number">${position}</div>
-                                </div>
-                                <span class="zone-icon">${zoneIcon}</span>
-                            </div>
-                        </td>
-                        <td class="player-cell">
-                            <div class="player-name">${player.name}</div>
-                            <div class="player-nickname">${player.nickname}</div>
-                        </td>
-                        <td class="team-cell">
-                            <span class="team-badge ${teamClass}" style="background-color:${teamColor}"></span>
-                            ${player.team}
-                        </td>
-                        <td class="revenue-cell">${stat1}</td>
-                        <td class="meetings-cell">${stat2}</td>
-                        <td class="sales-cell">${stat3}</td>
-                        <td class="ticket-cell">${stat4}</td>
-                        ${fifthColumn}
-                        <td class="points-cell">${Math.round(player.points)}</td>
-                    </tr>`;
+                return `<tr class="${rowClass}">
+                    <td class="position-cell">
+                        <div class="position-wrapper">
+                            <div class="avatar-wrapper">${avatarHTML}<div class="position-number">${position}</div></div>
+                            <span class="zone-icon">${zoneIcon}</span>
+                        </div>
+                    </td>
+                    <td class="player-cell"><div class="player-name">${player.name}</div><div class="player-nickname">${player.nickname}</div></td>
+                    <td class="team-cell"><span class="team-badge ${teamClass}" style="background-color:${teamColor}"></span>${player.team}</td>
+                    <td class="revenue-cell">${stat1}</td>
+                    <td class="meetings-cell">${stat2}</td>
+                    <td class="sales-cell">${stat3}</td>
+                    <td class="ticket-cell">${stat4}</td>
+                    ${fifthColumn}
+                    <td class="points-cell">${Math.round(player.points)}</td>
+                </tr>`;
             }).join('');
         }
 
-        /* ── UPDATE TABLE ── */
         function updateTable(players) {
             const column1 = document.getElementById('tableColumn1');
             const column2 = document.getElementById('tableColumn2');
             if (!column1 || !column2 || !players) return;
             currentPlayers = players;
-
             let col1Players, col2Players;
             if (currentMode === 'closer') {
-                col1Players = players.slice(0, 7);
-                col2Players = players.slice(7);
+                col1Players = players.slice(0, 7); col2Players = players.slice(7);
             } else {
-                col1Players = players.slice(0, 7);
-                col2Players = players.slice(7, 13);
+                col1Players = players.slice(0, 7); col2Players = players.slice(7, 13);
             }
-
             column1.innerHTML = renderTableRows(col1Players, 1);
             column2.innerHTML = renderTableRows(col2Players, 8);
-
             updateDestaques(players);
             updateRankingTimes(players);
             updatePerigoRebaixamento(players);
         }
 
-        /* ── DESTAQUES ── */
         function updateDestaques(players) {
             if (!players || players.length === 0) return;
             const container = document.getElementById('highlights');
             let html = '';
-
             if (currentMode === 'closer') {
                 const top = players[0];
                 html += `<div class="destaque-item compact gold-glow"><div class="destaque-icon">🥇</div><div class="destaque-content"><div class="destaque-label">Top Performer</div><div class="destaque-value">${top.nickname} <span class="points-badge">${Math.round(top.points)} pts</span></div></div></div>`;
-
-                const topRev = players.reduce((m, p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+                const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
                 html += `<div class="destaque-item compact green-glow"><div class="destaque-icon">💰</div><div class="destaque-content"><div class="destaque-label">Maior Receita</div><div class="destaque-value">${topRev.nickname} <span class="money-badge">${topRev.revenue}</span></div></div></div>`;
-
-                const topTkt = players.reduce((m, p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+                const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
                 html += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">🎫</div><div class="destaque-content"><div class="destaque-label">Maior Ticket</div><div class="destaque-value">${topTkt.nickname} <span class="money-badge">${topTkt.ticket}</span></div></div></div>`;
-
-                const topSales = players.reduce((m, p) => p.sales > m.sales ? p : m);
+                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
                 html += `<div class="destaque-item compact blue-glow"><div class="destaque-icon">🛒</div><div class="destaque-content"><div class="destaque-label">Mais Vendas</div><div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div></div></div>`;
-
-                const topConv = players.reduce((m, p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
+                const topConv = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
                 html += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">📊</div><div class="destaque-content"><div class="destaque-label">Melhor Conversão</div><div class="destaque-value">${topConv.nickname} <span class="percent-badge">${topConv.conversion}</span></div></div></div>`;
             } else {
                 const top = players[0];
                 html += `<div class="destaque-item compact gold-glow"><div class="destaque-icon">🥇</div><div class="destaque-content"><div class="destaque-label">Top Performer</div><div class="destaque-value">${top.nickname} <span class="points-badge">${Math.round(top.points)} pts</span></div></div></div>`;
-
-                const topSales = players.reduce((m, p) => p.sales > m.sales ? p : m);
+                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
                 html += `<div class="destaque-item compact green-glow"><div class="destaque-icon">🛒</div><div class="destaque-content"><div class="destaque-label">Maior Qtd Vendas</div><div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div></div></div>`;
-
-                const topShows = players.reduce((m, p) => p.shows > m.shows ? p : m);
+                const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
                 html += `<div class="destaque-item compact blue-glow"><div class="destaque-icon">✅</div><div class="destaque-content"><div class="destaque-label">Mais Shows</div><div class="destaque-value">${topShows.nickname} <span class="count-badge">${topShows.shows}</span></div></div></div>`;
-
-                const topMeet = players.reduce((m, p) => p.meetings > m.meetings ? p : m);
+                const topMeet = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
                 html += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">📅</div><div class="destaque-content"><div class="destaque-label">Mais Agendamentos</div><div class="destaque-value">${topMeet.nickname} <span class="count-badge">${topMeet.meetings}</span></div></div></div>`;
             }
-
             container.innerHTML = html;
         }
 
-        /* ── RANKING TIMES ── */
         function updateRankingTimes(players) {
             if (!players || players.length === 0) return;
             const teams = {};
@@ -1264,38 +1411,31 @@
                 teams['EAGLES']          = { points: 0, count: 0, color: 'eagles-glow' };
                 teams['Procurando Demo'] = { points: 0, count: 0, color: 'procurando-glow' };
             }
-
             players.forEach(p => {
                 const tn = p.team.toUpperCase().trim();
                 let found = null;
                 for (const [key] of Object.entries(teams)) {
                     const k = key.toUpperCase().replace(/\s+/g,'');
                     const t = tn.replace(/\s+/g,'');
-                    if (t.includes(k) || k.includes(t) || (k === 'PROCURANDODEMO' && t.includes('PROCURANDO'))) {
-                        found = key; break;
-                    }
+                    if (t.includes(k) || k.includes(t) || (k === 'PROCURANDODEMO' && t.includes('PROCURANDO'))) { found = key; break; }
                 }
                 if (found) { teams[found].points += p.points; teams[found].count += 1; }
             });
-
             const sorted = Object.entries(teams).sort(([,a],[,b]) => {
                 const avgA = a.count > 0 ? a.points / a.count : 0;
                 const avgB = b.count > 0 ? b.points / b.count : 0;
                 return avgB - avgA;
             });
-
             let html = '';
             sorted.forEach(([name, data], i) => {
-                const cls   = ['first-place','second-place','third-place'][i] || 'third-place';
+                const cls = ['first-place','second-place','third-place'][i] || 'third-place';
                 const medal = ['🥇','🥈','🥉'][i] || '🥉';
-                const avg   = data.count > 0 ? (data.points / data.count).toFixed(1) : '0.0';
+                const avg = data.count > 0 ? (data.points / data.count).toFixed(1) : '0.0';
                 html += `<div class="time-card ${cls}"><div class="position-medal">${medal}</div><div class="team-info"><div class="team-badge-large ${data.color}"></div><div class="team-details"><div class="team-name">${name}</div><div class="team-count">👥 ${data.count} jogadores</div></div></div><div class="team-score-big"><div class="score-number">${Math.round(data.points)}</div><div class="score-avg">⚡ Avg: ${avg}</div></div></div>`;
             });
-
             document.getElementById('teamRankings').innerHTML = html;
         }
 
-        /* ── PERIGO REBAIXAMENTO ── */
         function updatePerigoRebaixamento(players) {
             if (!players || players.length === 0) return;
             const total = players.length;
@@ -1309,52 +1449,90 @@
             document.getElementById('relegationPositions').innerHTML = html;
         }
 
-        /* ── PAUSE ── */
         function togglePause() {
             const btn = document.getElementById('pauseButton');
             isPaused = !isPaused;
             if (isPaused) {
-                btn.textContent = '▶️';
-                btn.classList.add('paused');
+                btn.textContent = '▶️'; btn.classList.add('paused');
                 if (autoSwitchTimer) { clearInterval(autoSwitchTimer); autoSwitchTimer = null; }
             } else {
-                btn.textContent = '⏸️';
-                btn.classList.remove('paused');
-                autoSwitchTimer = setInterval(switchModeWithTransition, switchInterval);
+                btn.textContent = '⏸️'; btn.classList.remove('paused');
+                scheduleNextSwitch();
             }
         }
 
-        /* ── SWITCH MODE ── */
+        function scheduleNextSwitch() {
+            if (autoSwitchTimer) clearTimeout(autoSwitchTimer);
+            const duration = MODE_DURATIONS[currentMode] || 45000;
+            autoSwitchTimer = setTimeout(switchModeWithTransition, duration);
+        }
+
         async function switchModeWithTransition() {
             const cc = document.getElementById('contentContainer');
             cc.classList.add('fading');
             await new Promise(r => setTimeout(r, 500));
-            currentMode = currentMode === 'closer' ? 'sdr' : 'closer';
+
+            // Avança para o próximo modo na sequência
+            const idx = MODE_SEQUENCE.indexOf(currentMode);
+            currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
+
             updateMotivationalPhrase();
             updateModeIndicator();
-            updateTableHeaders();
-            await loadCurrentModeData();
+
+            if (currentMode === 'podio') {
+                // Atualiza cache com dados frescos antes de mostrar
+                const cp = await fetchPlayerData('closer');
+                const sp = await fetchPlayerData('sdr');
+                if (cp) cachedCloserPlayers = cp;
+                if (sp) cachedSDRPlayers    = sp;
+                await fetchMTDMetrics();
+                showPodioView();
+            } else {
+                showTableView();
+                updateTableHeaders();
+                await loadCurrentModeData();
+            }
+
             cc.classList.remove('fading');
+            if (!isPaused) scheduleNextSwitch();
         }
 
-        /* ── LOAD DATA ── */
         async function loadCurrentModeData() {
             await fetchMTDMetrics();
-            const data = await fetchPlayerData();
-            if (data && data.length > 0) updateTable(data);
+            const data = await fetchPlayerData(currentMode);
+            if (data && data.length > 0) {
+                if (currentMode === 'closer') cachedCloserPlayers = data;
+                if (currentMode === 'sdr')    cachedSDRPlayers    = data;
+                updateTable(data);
+            }
         }
 
         async function autoRefresh() {
-            if (!document.getElementById('contentContainer').classList.contains('fading')) {
+            if (isPaused) return;
+            if (document.getElementById('contentContainer').classList.contains('fading')) return;
+            if (currentMode === 'podio') {
+                const cp = await fetchPlayerData('closer');
+                const sp = await fetchPlayerData('sdr');
+                if (cp) cachedCloserPlayers = cp;
+                if (sp) cachedSDRPlayers    = sp;
+                renderPodio();
+            } else {
                 await loadCurrentModeData();
             }
         }
 
-        /* ── INIT ── */
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', async function () {
             updateModeIndicator();
             updateTableHeaders();
-            loadCurrentModeData();
+            showTableView();
+
+            // Carrega e faz cache inicial de ambos
+            const cp = await fetchPlayerData('closer');
+            const sp = await fetchPlayerData('sdr');
+            if (cp) cachedCloserPlayers = cp;
+            if (sp) cachedSDRPlayers    = sp;
+
+            await loadCurrentModeData();
 
             document.getElementById('modeIndicator').addEventListener('click', () => {
                 if (!isPaused) switchModeWithTransition();
@@ -1363,7 +1541,7 @@
             document.getElementById('pauseButton').addEventListener('click', togglePause);
             document.getElementById('pauseButton').textContent = '⏸️';
 
-            autoSwitchTimer  = setInterval(switchModeWithTransition, switchInterval);
+            scheduleNextSwitch();
             autoRefreshTimer = setInterval(autoRefresh, 10000);
         });
     </script>
