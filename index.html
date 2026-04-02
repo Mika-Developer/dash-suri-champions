@@ -1127,7 +1127,7 @@
 
                 if (position <= 5) {
                     zoneIcon = '🏆';
-                } else if (position >= (totalPlayers - 3)) {
+                } else if (position > (totalPlayers - 4)) {
                     zoneIcon = '⚠️';
                     rowClass = 'bottom-4-danger';
                 }
@@ -1206,7 +1206,7 @@
             }
 
             column1.innerHTML = renderTableRows(col1Players, 1);
-            column2.innerHTML = renderTableRows(col2Players, currentMode === 'closer' ? 10 : 8);
+            column2.innerHTML = renderTableRows(col2Players, 8);
 
             updateDestaques(players);
             updateRankingTimes(players);
