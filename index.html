@@ -648,6 +648,127 @@
         .suri-branding a { color: #00D4FF; text-decoration: none; font-weight: 600; }
         .suri-branding a:hover { text-shadow: 0 0 10px rgba(0, 240, 255, 0.8); }
 
+
+
+        /* Ajustes específicos de layout */
+        body.mode-closer #tableView .table-section > div:first-child {
+            grid-template-columns: 78.5% 21.5% !important;
+            gap: 10px !important;
+        }
+
+        body.mode-closer .sidebar-section,
+        body.mode-closer .ranking-times-card,
+        body.mode-closer .time-card,
+        body.mode-closer .team-info,
+        body.mode-closer .team-details,
+        body.mode-closer .team-score-big {
+            min-width: 0;
+        }
+
+        body.mode-closer .ranking-times-card {
+            padding: 4px;
+        }
+
+        body.mode-closer .ranking-times-card .card-title {
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        body.mode-closer .ranking-times-card .icon-glow {
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        body.mode-closer .time-card {
+            padding: 4px;
+            gap: 6px;
+            margin-bottom: 2px;
+        }
+
+        body.mode-closer .position-medal { font-size: 14px; }
+        body.mode-closer .team-badge-large { width: 8px; height: 8px; }
+        body.mode-closer .team-name { font-size: 11px; }
+        body.mode-closer .team-count { font-size: 8px; }
+        body.mode-closer .score-number { font-size: 15px; }
+        body.mode-closer .score-avg { font-size: 8px; }
+
+        body.mode-podio .podio-view {
+            padding: 12px 26px;
+            gap: 0;
+        }
+
+        body.mode-podio .podio-section-title {
+            font-size: 15px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        body.mode-podio .podio-block {
+            justify-content: center;
+        }
+
+        body.mode-podio .podio-divider {
+            margin: 0 30px;
+        }
+
+        body.mode-podio .podio-stage {
+            max-width: 760px;
+            gap: 14px;
+        }
+
+        body.mode-podio .podio-player {
+            gap: 6px;
+        }
+
+        body.mode-podio .podio-medal {
+            font-size: 22px;
+        }
+
+        body.mode-podio .podio-player.place-1 .podio-avatar {
+            width: 88px;
+            height: 88px;
+            border-width: 3px;
+        }
+
+        body.mode-podio .podio-player.place-2 .podio-avatar {
+            width: 70px;
+            height: 70px;
+            border-width: 3px;
+        }
+
+        body.mode-podio .podio-player.place-3 .podio-avatar {
+            width: 64px;
+            height: 64px;
+            border-width: 3px;
+        }
+
+        body.mode-podio .podio-player.place-1 .podio-name { font-size: 14px; }
+        body.mode-podio .podio-player.place-2 .podio-name,
+        body.mode-podio .podio-player.place-3 .podio-name { font-size: 12px; }
+
+        body.mode-podio .podio-nickname {
+            font-size: 10px;
+        }
+
+        body.mode-podio .podio-player.place-1 .podio-pts { font-size: 18px; }
+        body.mode-podio .podio-player.place-2 .podio-pts,
+        body.mode-podio .podio-player.place-3 .podio-pts { font-size: 15px; }
+
+        body.mode-podio .podio-player.place-1 .podio-pedestal {
+            width: 250px;
+            height: 140px;
+        }
+
+        body.mode-podio .podio-player.place-2 .podio-pedestal {
+            width: 220px;
+            height: 98px;
+        }
+
+        body.mode-podio .podio-player.place-3 .podio-pedestal {
+            width: 220px;
+            height: 64px;
+        }
+
         @media (max-width: 1400px) {
             .main-container { grid-template-columns: 70% 30%; }
             .mtd-metrics-grid { gap: 8px 15px; }
@@ -880,100 +1001,6 @@
 .destaque-card-bottom .db-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
 .destaque-card-bottom .db-name  { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Orbitron', sans-serif; }
 .destaque-card-bottom .db-value { font-size: 12px; font-weight: 700; color: #00D4FF; background: rgba(0,212,255,0.15); padding: 3px 10px; border-radius: 20px; }
-
-        /* Ajustes finos de layout */
-        body.mode-closer .ranking-times-card .card-title {
-            font-size: 11px;
-        }
-
-        body.mode-closer .ranking-times-card .icon-glow {
-            font-size: 13px;
-            margin-right: 6px;
-        }
-
-        body.mode-podio .podio-view {
-            padding: 10px 24px;
-            gap: 0;
-        }
-
-        body.mode-podio .podio-section-title {
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
-
-        body.mode-podio .podio-divider {
-            margin: 0 30px;
-        }
-
-        body.mode-podio .podio-stage {
-            gap: 14px;
-            max-width: 760px;
-        }
-
-        body.mode-podio .podio-player {
-            gap: 8px;
-        }
-
-        body.mode-podio .podio-medal {
-            font-size: 24px;
-        }
-
-        body.mode-podio .podio-player.place-1 .podio-avatar {
-            width: 92px;
-            height: 92px;
-        }
-
-        body.mode-podio .podio-player.place-2 .podio-avatar {
-            width: 76px;
-            height: 76px;
-        }
-
-        body.mode-podio .podio-player.place-3 .podio-avatar {
-            width: 68px;
-            height: 68px;
-        }
-
-        body.mode-podio .podio-player.place-1 .podio-name {
-            font-size: 14px;
-        }
-
-        body.mode-podio .podio-player.place-2 .podio-name,
-        body.mode-podio .podio-player.place-3 .podio-name {
-            font-size: 12px;
-        }
-
-        body.mode-podio .podio-nickname {
-            font-size: 10px;
-        }
-
-        body.mode-podio .podio-player.place-1 .podio-pts {
-            font-size: 18px;
-        }
-
-        body.mode-podio .podio-player.place-2 .podio-pts,
-        body.mode-podio .podio-player.place-3 .podio-pts {
-            font-size: 15px;
-        }
-
-        body.mode-podio .podio-pedestal {
-            font-size: 18px;
-        }
-
-        body.mode-podio .podio-player.place-1 .podio-pedestal {
-            width: 260px;
-            height: 140px;
-        }
-
-        body.mode-podio .podio-player.place-2 .podio-pedestal {
-            width: 220px;
-            height: 95px;
-        }
-
-        body.mode-podio .podio-player.place-3 .podio-pedestal {
-            width: 200px;
-            height: 65px;
-        }
-
     </style>
 </head>
 <body>
@@ -1447,16 +1474,18 @@
         function updateModeIndicator() {
             const indicator = document.getElementById('modeIndicator');
             const modeText  = document.getElementById('modeText');
-            indicator.classList.remove('sdr-mode', 'podio-mode');
             document.body.classList.remove('mode-closer', 'mode-sdr', 'mode-podio');
-            document.body.classList.add(`mode-${currentMode}`);
+            indicator.classList.remove('sdr-mode', 'podio-mode');
             if (currentMode === 'sdr') {
+                document.body.classList.add('mode-sdr');
                 indicator.classList.add('sdr-mode');
                 modeText.textContent = 'SDR';
             } else if (currentMode === 'podio') {
+                document.body.classList.add('mode-podio');
                 indicator.classList.add('podio-mode');
                 modeText.textContent = 'PÓDIO';
             } else {
+                document.body.classList.add('mode-closer');
                 modeText.textContent = 'CLOSER';
             }
         }
