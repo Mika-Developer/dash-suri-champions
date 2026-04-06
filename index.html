@@ -1313,42 +1313,38 @@
         }
 
         function updateTableHeaders() {
-            if (currentMode === 'closer') {
-                document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
-                document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'SCORE';
-                document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
-                document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
-                document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
-                document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
-                document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
-                document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'SCORE';
-                document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
-                document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
-                document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
-                document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
-                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
-                
-            else if (currentMode === 'sdr') {
-                document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent = 'Agend';
-                document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent = 'Shows';
-                document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent = 'No-show';
-                document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent = 'Vendas';
-                document.getElementById('stat5Icon').textContent  = '🎯'; document.getElementById('stat5Label').textContent = 'PTS';
-
-                document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
-                document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
-                document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
-                document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
-                document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
-
-               document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
-               document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
-      }
-        }
-
+    if (currentMode === 'closer') {
+        document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
+        document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'Score';
+        document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
+        document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
+        document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
+        document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
+        document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
+        document.getElementById('statJIcon2').textContent = '⭐️'; document.getElementById('statJLabel2').textContent = 'Score';
+        document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
+        document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
+        document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
+        document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
+        document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'table-cell');
+        document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
+        document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'table-cell');
+        document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
+    } else if (currentMode === 'sdr') {
+        document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent = 'Agend';
+        document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent = 'Shows';
+        document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent = 'No-show';
+        document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent = 'Vendas';
+        document.getElementById('stat5Icon').textContent  = '🎯'; document.getElementById('stat5Label').textContent = 'PTS';
+        document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
+        document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
+        document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
+        document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
+        document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
+        document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
+        document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
+    }
+}
         function renderTableRows(players, startPosition) {
             return players.map((player, index) => {
                 const position     = startPosition + index;
