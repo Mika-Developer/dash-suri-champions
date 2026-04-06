@@ -1198,10 +1198,10 @@
                         players.push({
                             rank: parseInt(cols[0]) || i,
                             name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
-                            revenue: cols[4].trim(), score: cols[5] ? cols[5].trim() : '-',
-                            meetings: parseInt(cols[6]) || 0, sales: parseInt(cols[7]) || 0,
-                            conversion: cols[8] ? cols[8].trim() : '0%',
-                            ticket: cols[9] ? cols[9].trim() : 'R$ 0,00', points: parseFloat(cols[10]) || 0
+                            revenue: cols[4].trim(), meetings: parseInt(cols[5]) || 0,
+                            sales: parseInt(cols[6]) || 0, conversion: cols[7] ? cols[7].trim() : '0%',
+                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00', score: cols[9] ? cols[9].trim() : '-',
+                            points: parseFloat(cols[10]) || 0
                         });
                     } else {
                         players.push({
