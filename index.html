@@ -1207,8 +1207,8 @@
                         players.push({
                             rank: parseInt(cols[0]) || i,
                             name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
-                            sales: parseInt(cols[4]) || 0, meetings: parseInt(cols[5]) || 0,
-                            shows: parseInt(cols[6]) || 0, noshow: cols[7].trim(),
+                            meetings: parseInt(cols[5]) || 0, shows: parseInt(cols[6]) || 0,
+                            noshow: cols[7] ? cols[7].trim() : '0', sales: parseInt(cols[4]) || 0,
                             points: parseFloat(cols[8]) || 0
                         });
                     }
@@ -1327,16 +1327,17 @@
                 document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
                 document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
             } else if (currentMode === 'sdr') {
-                document.getElementById('stat1Icon').textContent  = '🛒'; document.getElementById('stat1Label').textContent = 'Vendas';
-                document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Agend';
-                document.getElementById('stat3Icon').textContent  = '✅'; document.getElementById('stat3Label').textContent = 'Shows';
-                document.getElementById('stat4Icon').textContent  = '❌'; document.getElementById('stat4Label').textContent = 'No-show';
-                document.getElementById('stat1Icon2').textContent = '🛒'; document.getElementById('stat1Label2').textContent = 'Vendas';
-                document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Agend';
-                document.getElementById('stat3Icon2').textContent = '✅'; document.getElementById('stat3Label2').textContent = 'Shows';
-                document.getElementById('stat4Icon2').textContent = '❌'; document.getElementById('stat4Label2').textContent = 'No-show';
+                document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent = 'Agend';
+                document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent = 'Shows';
+                document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent = 'No-show';
+                document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent = 'Vendas';
+                document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
+                document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
+                document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
+                document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
+                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
                 document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'none');
-                document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'none');
+                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
             }
         }
 
@@ -1363,8 +1364,8 @@
                     stat4 = player.ticket;
                     stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`;
                 } else {
-                    stat1 = player.sales; stat2 = player.meetings; stat3 = player.shows;
-                    stat4 = `<div class="conversion-bar low"><span>${player.noshow}</span></div>`;
+                    stat1 = player.meetings; stat2 = player.shows;
+                    stat3 = player.noshow; stat4 = player.sales;
                     stat5 = '';
                 }
 
