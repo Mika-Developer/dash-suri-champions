@@ -1105,6 +1105,40 @@
             'Thiago de Brito':   'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
         };
 
+        function extractGoogleDriveId(url) {
+            const match = url && url.match(/\/d\/([^/?]+)/);
+            return match ? match[1] : null;
+        }
+
+        function buildGooglePhotoSources(url) {
+            const fileId = extractGoogleDriveId(url);
+            if (!fileId) return [url].filter(Boolean);
+            return [
+                `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`,
+                `https://drive.usercontent.google.com/download?id=${fileId}&export=view&authuser=0`,
+                `https://lh3.googleusercontent.com/d/${fileId}`,
+                `https://drive.google.com/uc?export=view&id=${fileId}`
+            ];
+        }
+
+        function createPhotoImgHTML(photoUrl, className, altText, fallbackText) {
+            const sources = JSON.stringify(buildGooglePhotoSources(photoUrl)).replace(/"/g, '&quot;');
+            return `<img class="${className}" src="${buildGooglePhotoSources(photoUrl)[0]}" alt="${altText}" referrerpolicy="no-referrer" crossorigin="anonymous" data-photo-sources="${sources}" data-photo-index="0" onerror="handlePhotoFallback(this)"><div class="${className}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${fallbackText}</div>`;
+        }
+
+        function handlePhotoFallback(img) {
+            const sources = JSON.parse(img.dataset.photoSources || '[]');
+            let index = parseInt(img.dataset.photoIndex || '0', 10);
+            index += 1;
+            if (index < sources.length) {
+                img.dataset.photoIndex = String(index);
+                img.src = sources[index];
+                return;
+            }
+            img.style.display = 'none';
+            if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
+        }
+
         function getPlayerPhoto(name) {
             if (CLOSER_PHOTOS[name]) return CLOSER_PHOTOS[name];
             const firstName = name.split(' ')[0].toLowerCase();
@@ -1127,12 +1161,11 @@
             const photoUrl = currentMode === 'closer' ? getPlayerPhoto(name) : getSDRPhoto(name);
             const isTop5   = position <= 5;
             const isDanger = position > (totalPlayers - 4);
-            const avatarClass = isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '');
+            const avatarClass = `player-avatar ${isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '')}`.trim();
             if (photoUrl) {
-                return `<img class="player-avatar ${avatarClass}" src="${photoUrl}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                <div class="player-avatar ${avatarClass}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
+                return createPhotoImgHTML(photoUrl, avatarClass, name, name.charAt(0));
             }
-            return `<div class="player-avatar ${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
+            return `<div class="${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
         }
 
         /* ── PÓDIO ── */
@@ -1145,8 +1178,7 @@
 
 
             const avatarTag = photoUrl
-                ? `<img class="podio-avatar" src="${photoUrl}" alt="${player.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                   <div class="podio-avatar" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`
+                ? createPhotoImgHTML(photoUrl, 'podio-avatar', player.name, player.name.charAt(0))
                 : `<div class="podio-avatar" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`;
 
             return `
