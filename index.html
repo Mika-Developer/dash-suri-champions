@@ -1045,6 +1045,22 @@
             'Rafael Lima':          'https://lh3.googleusercontent.com/d/1wMT6AqUWGBQ431cx8Dvubu_WryAUGOVL'
         };
 
+        const SDR_PHOTOS = {
+            'Cida Gomes':        'https://lh3.googleusercontent.com/d/1L73zILGelKxvyLspXuJyuzcSIesSV7Id',
+            'Daniele Carvalho':  'https://lh3.googleusercontent.com/d/1JRi7GxFAVe0X1f4TYso7OOw3gFQea3Zw',
+            'Dara Barroso':      'https://lh3.googleusercontent.com/d/1oJt4ENPVf9mbzLYfFQ0JPODNAJASQ0r_',
+            'Driele Rodrigues':  'https://lh3.googleusercontent.com/d/1XFatPpyQsaZTTubyMzeuLn2kjUKJPA5x',
+            'Iara Jéssica':      'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
+            'Iara Jessica':      'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
+            'Júnior Lima':       'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
+            'Junior Lima':       'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
+            'Matheus Lima':      'https://lh3.googleusercontent.com/d/1dHEKu-VqT0NDIPpHog3vW3FAk6cwXJ-_',
+            'Pedro Roncalli':    'https://lh3.googleusercontent.com/d/1XOat3HSo5WBv0CWsVjhJdrqPTNv-qhZZ',
+            'Sâmela Vieira':     'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
+            'Samela Vieira':     'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
+            'Thiago de Brito':   'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
+        };
+
         function getPlayerPhoto(name) {
             if (CLOSER_PHOTOS[name]) return CLOSER_PHOTOS[name];
             const firstName = name.split(' ')[0].toLowerCase();
@@ -1054,8 +1070,17 @@
             return null;
         }
 
+        function getSDRPhoto(name) {
+            if (SDR_PHOTOS[name]) return SDR_PHOTOS[name];
+            const firstName = name.split(' ')[0].toLowerCase();
+            for (const key of Object.keys(SDR_PHOTOS)) {
+                 if (key.toLowerCase().startsWith(firstName)) return SDR_PHOTOS[key];
+            }
+            return null;
+        }
+
         function getAvatarHTML(name, position, totalPlayers) {
-            const photoUrl = currentMode === 'closer' ? getPlayerPhoto(name) : null;
+            const photoUrl = currentMode === 'closer' ? getPlayerPhoto(name) : getSDRPhoto(name);
             const isTop5   = position <= 5;
             const isDanger = position > (totalPlayers - 4);
             const avatarClass = isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '');
