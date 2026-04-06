@@ -1100,7 +1100,8 @@
             const classes = ['place-1','place-2','place-3'];
             const medal   = medals[place - 1];
             const cls     = classes[place - 1];
-            const photoUrl = usePhoto ? getPlayerPhoto(player.name) : null;
+            const photoUrl = usePhoto ? (getPlayerPhoto(player.name) || getSDRPhoto(player.name)) : null;
+
 
             const avatarTag = photoUrl
                 ? `<img class="podio-avatar" src="${photoUrl}" alt="${player.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -1128,13 +1129,13 @@
                     buildPodioPlayer(cp[2], 3, true);
             }
 
-            // SDR — sem fotos (não temos fotos SDR mapeadas)
+            // SDR 
             const sp = cachedSDRPlayers.slice(0, 3);
             if (sp.length >= 3) {
                 document.getElementById('podioSDR').innerHTML =
-                    buildPodioPlayer(sp[1], 2, false) +
-                    buildPodioPlayer(sp[0], 1, false) +
-                    buildPodioPlayer(sp[2], 3, false);
+                    buildPodioPlayer(sp[1], 2, true) +
+                    buildPodioPlayer(sp[0], 1, true) +
+                    buildPodioPlayer(sp[2], 3, true);
             }
         }
 
