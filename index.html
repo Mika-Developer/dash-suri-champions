@@ -926,6 +926,7 @@
                                         <th>Jogador</th>
                                         <th>Time</th>
                                         <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
+                                        <th><span class="icon" id="statJIcon"></span> <span id="statJLabel">Score</span></th>
                                         <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
                                         <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
                                         <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
@@ -944,6 +945,7 @@
                                         <th>Jogador</th>
                                         <th>Time</th>
                                         <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
+                                        <th><span class="icon" id="statJIcon2"></span> <span id="statJLabel2">Score</span></th>
                                         <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
                                         <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
                                         <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
@@ -1196,9 +1198,10 @@
                         players.push({
                             rank: parseInt(cols[0]) || i,
                             name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
-                            revenue: cols[4].trim(), meetings: parseInt(cols[5]) || 0,
-                            sales: parseInt(cols[6]) || 0, conversion: cols[7] ? cols[7].trim() : '0%',
-                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00', points: parseFloat(cols[9]) || 0
+                            revenue: cols[4].trim(), score: cols[5] ? cols[5].trim() : '-',
+                            meetings: parseInt(cols[6]) || 0, sales: parseInt(cols[7]) || 0,
+                            conversion: cols[8] ? cols[8].trim() : '0%',
+                            ticket: cols[9] ? cols[9].trim() : 'R$ 0,00', points: parseFloat(cols[10]) || 0
                         });
                     } else {
                         players.push({
@@ -1378,6 +1381,7 @@
                     <td class="player-cell"><div class="player-name">${player.name}</div><div class="player-nickname">${player.nickname}</div></td>
                     <td class="team-cell"><span class="team-badge ${teamClass}" style="background-color:${teamColor}"></span>${player.team}</td>
                     <td class="revenue-cell">${stat1}</td>
+                    ${currentMode === 'closer' ? `<td class="score-cell">${player.score || '-'}</td>` : ''}
                     <td class="meetings-cell">${stat2}</td>
                     <td class="sales-cell">${stat3}</td>
                     <td class="ticket-cell">${stat4}</td>
