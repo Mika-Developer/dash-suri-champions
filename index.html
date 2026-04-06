@@ -931,7 +931,7 @@
                                         <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
                                         <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
                                         <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
-                                        <th><span class="icon"></span> PTS</th>
+                                        <th><span class="icon">🎯</span> PTS</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableColumn1"></tbody>
@@ -950,7 +950,7 @@
                                         <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
                                         <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
                                         <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
-                                        <th><span class="icon"></span> PTS</th>
+                                        <th><span class="icon">🎯</span> PTS</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableColumn2"></tbody>
@@ -1315,11 +1315,13 @@
         function updateTableHeaders() {
             if (currentMode === 'closer') {
                 document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
+                document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'SCORE';
                 document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
                 document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
                 document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
                 document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
                 document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
+                document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'SCORE';
                 document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
                 document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
                 document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
