@@ -838,6 +838,48 @@
             border: 2px solid rgba(205,127,50,0.4);
         }
         /* ══════════════════════════════════════════ */
+        /* Destaques em linha abaixo das tabelas */
+.destaques-bottom {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 8px 12px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.destaque-card-bottom {
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 10px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.destaque-card-bottom:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.destaque-card-bottom.gold-glow   { border-color: #FBBF24; background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); box-shadow: 0 0 20px rgba(251,191,36,0.2); }
+.destaque-card-bottom.green-glow  { border-color: #10B981; background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05)); box-shadow: 0 0 20px rgba(16,185,129,0.2); }
+.destaque-card-bottom.blue-glow   { border-color: #3B82F6; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05)); box-shadow: 0 0 20px rgba(59,130,246,0.2); }
+.destaque-card-bottom.purple-glow { border-color: #A855F7; background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05)); box-shadow: 0 0 20px rgba(168,85,247,0.2); }
+.destaque-card-bottom.cyan-glow   { border-color: #00D4FF; background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05)); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
+
+.destaque-card-bottom .db-icon  { font-size: 24px; }
+.destaque-card-bottom .db-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
+.destaque-card-bottom .db-name  { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Orbitron', sans-serif; }
+.destaque-card-bottom .db-value { font-size: 12px; font-weight: 700; color: #00D4FF; background: rgba(0,212,255,0.15); padding: 3px 10px; border-radius: 20px; }
     </style>
 </head>
 <body>
@@ -915,80 +957,79 @@
 
         <!-- VISÃO NORMAL (tabela) -->
         <div id="tableView">
-            <div class="main-container">
-                <div class="table-section">
-                    <div class="two-column-grid">
-                        <div class="table-column">
-                            <table class="championship-table compact">
-                                <thead>
-                                    <tr id="tableHeader1">
-                                        <th>#</th>
-                                        <th>Jogador</th>
-                                        <th>Time</th>
-                                        <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
-                                        <th><span class="icon" id="statJIcon"></span> <span id="statJLabel">Score</span></th>
-                                        <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
-                                        <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
-                                        <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
-                                        <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
-                                        <th><span class="icon">🎯</span> PTS</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableColumn1"></tbody>
-                            </table>
-                        </div>
-                        <div class="table-column">
-                            <table class="championship-table compact">
-                                <thead>
-                                    <tr id="tableHeader2">
-                                        <th>#</th>
-                                        <th>Jogador</th>
-                                        <th>Time</th>
-                                        <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
-                                        <th><span class="icon" id="statJIcon2"></span> <span id="statJLabel2">Score</span></th>
-                                        <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
-                                        <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
-                                        <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
-                                        <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
-                                        <th><span class="icon">🎯</span> PTS</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableColumn2"></tbody>
-                            </table>
-                        </div>
+    <div class="main-container" style="grid-template-columns: 1fr; height: auto;">
+        <div class="table-section">
+            <div style="display: grid; grid-template-columns: 75% 25%; gap: 12px; align-items: start;">
+                <div class="two-column-grid">
+                    <div class="table-column">
+                        <table class="championship-table compact">
+                            <thead>
+                                <tr id="tableHeader1">
+                                    <th>#</th>
+                                    <th>Jogador</th>
+                                    <th>Time</th>
+                                    <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
+                                    <th><span class="icon" id="statJIcon"></span> <span id="statJLabel">Score</span></th>
+                                    <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
+                                    <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
+                                    <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
+                                    <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
+                                    <th><span class="icon"></span> PTS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableColumn1"></tbody>
+                        </table>
+                    </div>
+                    <div class="table-column">
+                        <table class="championship-table compact">
+                            <thead>
+                                <tr id="tableHeader2">
+                                    <th>#</th>
+                                    <th>Jogador</th>
+                                    <th>Time</th>
+                                    <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
+                                    <th><span class="icon" id="statJIcon2"></span> <span id="statJLabel2">Score</span></th>
+                                    <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
+                                    <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
+                                    <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
+                                    <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
+                                    <th><span class="icon"></span> PTS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableColumn2"></tbody>
+                        </table>
                     </div>
                 </div>
-
                 <div class="sidebar-section">
                     <div class="ranking-times-card glass-card">
                         <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
                         <div id="teamRankings"></div>
                     </div>
-                    <div class="destaques-card glass-card">
-                        <h2 class="card-title"><span class="icon-glow">⭐</span> Destaques</h2>
-                        <div id="highlights"></div>
-                    </div>
                 </div>
             </div>
-
-            <footer>
-                <div class="footer-content">
-                    <div class="formula" id="formula">
-                        <h3>Fórmula dos Pontos</h3>
-                        <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
-                    </div>
-                    <div class="perigo-rebaixamento">
-                        <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
-                        <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! ⬇️</p>
-                        <div class="rebaixamento-positions" id="relegationPositions"></div>
-                    </div>
-                    <div class="suri-branding">
-                        Powered by <a href="https://www.suri.ai" target="_blank">SURI</a> - Inteligência Artificial para Vendas
-                    </div>
-                </div>
-            </footer>
+            <!-- Destaques em linha abaixo -->
+            <div class="destaques-bottom" id="highlights"></div>
         </div>
+    </div>
 
+    <footer>
+        <div class="footer-content">
+            <div class="formula" id="formula">
+                <h3>Fórmula dos Pontos</h3>
+                <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
+            </div>
+            <div class="perigo-rebaixamento">
+                <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
+                <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! ⬇️</p>
+                <div class="rebaixamento-positions" id="relegationPositions"></div>
+            </div>
+            <div class="suri-branding">
+                Powered by <a href="https://www.suri.ai" target="_blank">SURI</a> - Inteligência Artificial para Vendas
+            </div>
+        </div>
+    </footer>
+</div>
+        
         <!-- VISÃO PÓDIO -->
         <div class="podio-view" id="podioView">
 
@@ -1416,32 +1457,32 @@
         }
 
         function updateDestaques(players) {
-            if (!players || players.length === 0) return;
-            const container = document.getElementById('highlights');
-            let html = '';
-            if (currentMode === 'closer') {
-                const top = players[0];
-                html += `<div class="destaque-item compact gold-glow"><div class="destaque-icon">🥇</div><div class="destaque-content"><div class="destaque-label">Top Performer</div><div class="destaque-value">${top.nickname} <span class="points-badge">${Math.round(top.points)} pts</span></div></div></div>`;
-                const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-item compact green-glow"><div class="destaque-icon">💰</div><div class="destaque-content"><div class="destaque-label">Maior Receita</div><div class="destaque-value">${topRev.nickname} <span class="money-badge">${topRev.revenue}</span></div></div></div>`;
-                const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">🎫</div><div class="destaque-content"><div class="destaque-label">Maior Ticket</div><div class="destaque-value">${topTkt.nickname} <span class="money-badge">${topTkt.ticket}</span></div></div></div>`;
-                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-                html += `<div class="destaque-item compact blue-glow"><div class="destaque-icon">🛒</div><div class="destaque-content"><div class="destaque-label">Mais Vendas</div><div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div></div></div>`;
-                const topConv = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">📊</div><div class="destaque-content"><div class="destaque-label">Melhor Conversão</div><div class="destaque-value">${topConv.nickname} <span class="percent-badge">${topConv.conversion}</span></div></div></div>`;
-            } else {
-                const top = players[0];
-                html += `<div class="destaque-item compact gold-glow"><div class="destaque-icon">🥇</div><div class="destaque-content"><div class="destaque-label">Top Performer</div><div class="destaque-value">${top.nickname} <span class="points-badge">${Math.round(top.points)} pts</span></div></div></div>`;
-                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-                html += `<div class="destaque-item compact green-glow"><div class="destaque-icon">🛒</div><div class="destaque-content"><div class="destaque-label">Maior Qtd Vendas</div><div class="destaque-value">${topSales.nickname} <span class="count-badge">${topSales.sales}</span></div></div></div>`;
-                const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
-                html += `<div class="destaque-item compact blue-glow"><div class="destaque-icon">✅</div><div class="destaque-content"><div class="destaque-label">Mais Shows</div><div class="destaque-value">${topShows.nickname} <span class="count-badge">${topShows.shows}</span></div></div></div>`;
-                const topMeet = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
-                html += `<div class="destaque-item compact purple-glow"><div class="destaque-icon">📅</div><div class="destaque-content"><div class="destaque-label">Mais Agendamentos</div><div class="destaque-value">${topMeet.nickname} <span class="count-badge">${topMeet.meetings}</span></div></div></div>`;
-            }
-            container.innerHTML = html;
-        }
+    if (!players || players.length === 0) return;
+    const container = document.getElementById('highlights');
+    let html = '';
+    if (currentMode === 'closer') {
+        const top = players[0];
+        html += `<div class="destaque-card-bottom gold-glow"><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div>`;
+        const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+        html += `<div class="destaque-card-bottom green-glow"><div class="db-icon">💰</div><div class="db-label">Maior Receita</div><div class="db-name">${topRev.nickname}</div><div class="db-value">${topRev.revenue}</div></div>`;
+        const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+        html += `<div class="destaque-card-bottom purple-glow"><div class="db-icon">🎫</div><div class="db-label">Maior Ticket</div><div class="db-name">${topTkt.nickname}</div><div class="db-value">${topTkt.ticket}</div></div>`;
+        const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
+        html += `<div class="destaque-card-bottom blue-glow"><div class="db-icon">🛒</div><div class="db-label">Mais Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div>`;
+        const topConv = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
+        html += `<div class="destaque-card-bottom cyan-glow"><div class="db-icon">📊</div><div class="db-label">Melhor Conversão</div><div class="db-name">${topConv.nickname}</div><div class="db-value">${topConv.conversion}</div></div>`;
+    } else {
+        const top = players[0];
+        html += `<div class="destaque-card-bottom gold-glow"><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div>`;
+        const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
+        html += `<div class="destaque-card-bottom green-glow"><div class="db-icon">🛒</div><div class="db-label">Maior Qtd Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div>`;
+        const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
+        html += `<div class="destaque-card-bottom blue-glow"><div class="db-icon">✅</div><div class="db-label">Mais Shows</div><div class="db-name">${topShows.nickname}</div><div class="db-value">${topShows.shows} shows</div></div>`;
+        const topMeet = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
+        html += `<div class="destaque-card-bottom purple-glow"><div class="db-icon">📅</div><div class="db-label">Mais Agendamentos</div><div class="db-name">${topMeet.nickname}</div><div class="db-value">${topMeet.meetings} agend.</div></div>`;
+    }
+    container.innerHTML = html;
+}
 
         function updateRankingTimes(players) {
             if (!players || players.length === 0) return;
