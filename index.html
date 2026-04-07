@@ -495,58 +495,37 @@
             overflow: hidden;
         }
 
-        .ranking-times-card { padding: 5px; }
+        .ranking-times-card { padding: 0; background: transparent; border: none; box-shadow: none; }
 
         .ranking-times-card .card-title {
-            font-size: 13px;
-            margin-bottom: 5px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            text-align: center;
-            color: #00D4FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+           font-size: 10px;
+           margin-bottom: 4px;
+           font-family: 'Orbitron', sans-serif;
+           font-weight: 700;
+           text-align: center;
+           color: #00D4FF;
+           text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
         }
 
-        .ranking-times-card .icon-glow { font-size: 15px; margin-right: 8px; }
+         .ranking-times-card .icon-glow { font-size: 11px; margin-right: 4px; }
 
-        .time-card {
-            padding: 5px;
-            margin-bottom: 3px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
+         .time-card {
+          padding: 4px 6px;
+          margin-bottom: 2px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          transition: all 0.3s ease;
         }
 
-        .time-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+         .position-medal { font-size: 13px; animation: float 3s ease-in-out infinite; }
+         .team-name    { font-size: 9px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #ffffff; }
+         .team-count   { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
+         .score-number { font-size: 12px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #00D4FF; }
+         .score-avg    { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
+         .team-badge-large { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
 
-        .time-card.first-place  { background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));   border: 2px solid #FFD700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
-        .time-card.second-place { background: linear-gradient(135deg, rgba(192, 192, 192, 0.15), rgba(169, 169, 169, 0.1)); border: 2px solid #C0C0C0; box-shadow: 0 0 15px rgba(192, 192, 192, 0.3); }
-        .time-card.third-place  { background: linear-gradient(135deg, rgba(205, 127, 50, 0.15), rgba(184, 115, 51, 0.1));  border: 2px solid #CD7F32; box-shadow: 0 0 15px rgba(205, 127, 50, 0.3); }
-
-        .position-medal { font-size: 18px; animation: float 3s ease-in-out infinite; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50%       { transform: translateY(-5px); }
-        }
-
-        .team-badge-large { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-
-        .titans-glow    { background: #8B5CF6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
-        .maori-glow     { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
-        .eagles-glow    { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-        .procurando-glow { background: #B026FF; box-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
-
-        .team-name    { font-size: 13px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #ffffff; }
-        .team-count   { font-size: 9px; color: rgba(255, 255, 255, 0.6); }
-        .team-info    { display: flex; align-items: center; gap: 8px; flex: 1; }
-        .team-details { display: flex; flex-direction: column; }
-        .team-score-big { text-align: right; }
-
-        .score-number { font-size: 20px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #00D4FF; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
-        .score-avg    { font-size: 10px; color: rgba(255, 255, 255, 0.6); }
 
         .destaques-card { padding: 8px; }
 
@@ -652,8 +631,8 @@
 
         /* Ajustes específicos de layout */
         body.mode-closer #tableView .table-section > div:first-child {
-            grid-template-columns: 78.5% 21.5% !important;
-            gap: 10px !important;
+            grid-template-columns: 84% 16% !important;
+            gap: 6px !important;
         }
 
         body.mode-closer .sidebar-section,
@@ -1121,10 +1100,10 @@
                         </table>
                     </div>
                 </div>
-                <div class="sidebar-section">
-                    <div class="ranking-times-card glass-card">
+                <div class="sidebar-section" style="background: transparent; border: none; box-shadow: none; padding: 4px;">
+                    <div class="ranking-times-card" style="background: transparent; border: none; box-shadow: none;">
                         <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
-                        <div id="teamRankings"></div>
+                        <<div id="teamRankings"></div>
                     </div>
                 </div>
             </div>
