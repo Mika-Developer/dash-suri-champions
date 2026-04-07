@@ -1536,10 +1536,10 @@
             const btn = document.getElementById('pauseButton');
             isPaused = !isPaused;
             if (isPaused) {
-                btn.textContent = '▶️'; btn.classList.add('paused');
+                btn.textContent = '⏸'; btn.classList.add('paused');
                 if (autoSwitchTimer) { clearInterval(autoSwitchTimer); autoSwitchTimer = null; }
             } else {
-                btn.textContent = '⏸️'; btn.classList.remove('paused');
+                btn.textContent = '▶'; btn.classList.remove('paused');
                 scheduleNextSwitch();
             }
         }
@@ -1618,7 +1618,7 @@
             });
 
             document.getElementById('pauseButton').addEventListener('click', togglePause);
-            document.getElementById('pauseButton').textContent = '⏸️';
+            document.getElementById('pauseButton').textContent = '⏸';
 
             scheduleNextSwitch();
             autoRefreshTimer = setInterval(autoRefresh, 10000);
