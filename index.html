@@ -1612,7 +1612,7 @@
             await loadCurrentModeData();
 
             document.getElementById('modeIndicator').addEventListener('click', () => {
-                if (!isPaused) switchModeWithTransition();
+                switchModeWithTransition();
             });
 
             document.getElementById('pauseButton').addEventListener('click', togglePause);
