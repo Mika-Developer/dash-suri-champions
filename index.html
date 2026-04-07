@@ -263,18 +263,6 @@
         .mtd-value.green-glow  { color: #10B981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); }
         .mtd-value.orange-glow { color: #F97316; text-shadow: 0 0 10px rgba(249, 115, 22, 0.6); }
 
-        .subtitle {
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.7);
-            text-align: center;
-            margin-top: 6px;
-            letter-spacing: 1px;
-            opacity: 1;
-            transition: opacity 0.8s ease-in-out;
-        }
-
         .live-indicator {
             display: flex;
             align-items: center;
@@ -507,25 +495,33 @@
            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
         }
 
-         .ranking-times-card .icon-glow { font-size: 11px; margin-right: 4px; }
+        .ranking-times-card .icon-glow { font-size: 11px; margin-right: 4px; }
 
-         .time-card {
-          padding: 4px 6px;
-          margin-bottom: 2px;
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          transition: all 0.3s ease;
+        .time-card {
+            padding: 4px 6px;
+            margin-bottom: 2px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
         }
 
-         .position-medal { font-size: 13px; animation: float 3s ease-in-out infinite; }
-         .team-name    { font-size: 9px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #ffffff; }
-         .team-count   { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
-         .score-number { font-size: 12px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #00D4FF; }
-         .score-avg    { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
-         .team-badge-large { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+        .position-medal { font-size: 13px; animation: float 3s ease-in-out infinite; }
+        .team-name    { font-size: 9px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #ffffff; }
+        .team-count   { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
+        .score-number { font-size: 12px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #00D4FF; }
+        .score-avg    { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
+        .team-badge-large { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
 
+        .titans-glow    { background: #8B5CF6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
+        .maori-glow     { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+        .eagles-glow    { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .procurando-glow { background: #B026FF; box-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
+
+        .team-info    { display: flex; align-items: center; gap: 5px; flex: 1; }
+        .team-details { display: flex; flex-direction: column; }
+        .team-score-big { text-align: right; }
 
         .destaques-card { padding: 8px; }
 
@@ -627,9 +623,6 @@
         .suri-branding a { color: #00D4FF; text-decoration: none; font-weight: 600; }
         .suri-branding a:hover { text-shadow: 0 0 10px rgba(0, 240, 255, 0.8); }
 
-
-
-        /* Ajustes específicos de layout */
         body.mode-closer #tableView .table-section > div:first-child {
             grid-template-columns: 84% 16% !important;
             gap: 6px !important;
@@ -640,30 +633,12 @@
         body.mode-closer .time-card,
         body.mode-closer .team-info,
         body.mode-closer .team-details,
-        body.mode-closer .team-score-big {
-            min-width: 0;
-        }
+        body.mode-closer .team-score-big { min-width: 0; }
 
-        body.mode-closer .ranking-times-card {
-            padding: 4px;
-        }
-
-        body.mode-closer .ranking-times-card .card-title {
-            font-size: 11px;
-            margin-bottom: 4px;
-        }
-
-        body.mode-closer .ranking-times-card .icon-glow {
-            font-size: 12px;
-            margin-right: 5px;
-        }
-
-        body.mode-closer .time-card {
-            padding: 4px;
-            gap: 6px;
-            margin-bottom: 2px;
-        }
-
+        body.mode-closer .ranking-times-card { padding: 4px; }
+        body.mode-closer .ranking-times-card .card-title { font-size: 11px; margin-bottom: 4px; }
+        body.mode-closer .ranking-times-card .icon-glow { font-size: 12px; margin-right: 5px; }
+        body.mode-closer .time-card { padding: 4px; gap: 6px; margin-bottom: 2px; }
         body.mode-closer .position-medal { font-size: 14px; }
         body.mode-closer .team-badge-large { width: 8px; height: 8px; }
         body.mode-closer .team-name { font-size: 11px; }
@@ -671,82 +646,26 @@
         body.mode-closer .score-number { font-size: 15px; }
         body.mode-closer .score-avg { font-size: 8px; }
 
-        body.mode-podio .podio-view {
-            padding: 12px 26px;
-            gap: 0;
-        }
-
-        body.mode-podio .podio-section-title {
-            font-size: 15px;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-        }
-
-        body.mode-podio .podio-block {
-            justify-content: center;
-        }
-
-        body.mode-podio .podio-divider {
-            margin: 0 30px;
-        }
-
-        body.mode-podio .podio-stage {
-            max-width: 760px;
-            gap: 14px;
-        }
-
-        body.mode-podio .podio-player {
-            gap: 6px;
-        }
-
-        body.mode-podio .podio-medal {
-            font-size: 22px;
-        }
-
-        body.mode-podio .podio-player.place-1 .podio-avatar {
-            width: 88px;
-            height: 88px;
-            border-width: 3px;
-        }
-
-        body.mode-podio .podio-player.place-2 .podio-avatar {
-            width: 70px;
-            height: 70px;
-            border-width: 3px;
-        }
-
-        body.mode-podio .podio-player.place-3 .podio-avatar {
-            width: 64px;
-            height: 64px;
-            border-width: 3px;
-        }
-
+        body.mode-podio .podio-view { padding: 12px 26px; gap: 0; }
+        body.mode-podio .podio-section-title { font-size: 15px; margin-bottom: 6px; letter-spacing: 1px; }
+        body.mode-podio .podio-block { justify-content: center; }
+        body.mode-podio .podio-divider { margin: 0 30px; }
+        body.mode-podio .podio-stage { max-width: 760px; gap: 14px; }
+        body.mode-podio .podio-player { gap: 6px; }
+        body.mode-podio .podio-medal { font-size: 22px; }
+        body.mode-podio .podio-player.place-1 .podio-avatar { width: 88px; height: 88px; border-width: 3px; }
+        body.mode-podio .podio-player.place-2 .podio-avatar { width: 70px; height: 70px; border-width: 3px; }
+        body.mode-podio .podio-player.place-3 .podio-avatar { width: 64px; height: 64px; border-width: 3px; }
         body.mode-podio .podio-player.place-1 .podio-name { font-size: 14px; }
         body.mode-podio .podio-player.place-2 .podio-name,
         body.mode-podio .podio-player.place-3 .podio-name { font-size: 12px; }
-
-        body.mode-podio .podio-nickname {
-            font-size: 10px;
-        }
-
+        body.mode-podio .podio-nickname { font-size: 10px; }
         body.mode-podio .podio-player.place-1 .podio-pts { font-size: 18px; }
         body.mode-podio .podio-player.place-2 .podio-pts,
         body.mode-podio .podio-player.place-3 .podio-pts { font-size: 15px; }
-
-        body.mode-podio .podio-player.place-1 .podio-pedestal {
-            width: 250px;
-            height: 140px;
-        }
-
-        body.mode-podio .podio-player.place-2 .podio-pedestal {
-            width: 220px;
-            height: 98px;
-        }
-
-        body.mode-podio .podio-player.place-3 .podio-pedestal {
-            width: 220px;
-            height: 64px;
-        }
+        body.mode-podio .podio-player.place-1 .podio-pedestal { width: 250px; height: 140px; }
+        body.mode-podio .podio-player.place-2 .podio-pedestal { width: 220px; height: 98px; }
+        body.mode-podio .podio-player.place-3 .podio-pedestal { width: 220px; height: 64px; }
 
         @media (max-width: 1400px) {
             .main-container { grid-template-columns: 70% 30%; }
@@ -767,9 +686,6 @@
             .footer-content { flex-direction: column; text-align: center; }
         }
 
-        /* ══════════════════════════════════════════
-           PÓDIO DO MÊS — estilos novos
-        ══════════════════════════════════════════ */
         .podio-view {
             display: none;
             padding: 20px 40px;
@@ -816,7 +732,6 @@
             margin: 0 auto;
         }
 
-        /* Cada coluna do pódio */
         .podio-player {
             display: flex;
             flex-direction: column;
@@ -824,7 +739,6 @@
             gap: 10px;
         }
 
-        /* Medalha flutuante acima da foto */
         .podio-medal {
             font-size: 28px;
             animation: floatMedal 2.5s ease-in-out infinite;
@@ -839,7 +753,6 @@
             50%       { transform: translateY(-8px); }
         }
 
-        /* Foto circular do pódio */
         .podio-avatar {
             border-radius: 50%;
             object-fit: cover;
@@ -849,24 +762,21 @@
         }
 
         .podio-player.place-1 .podio-avatar {
-            width: 110px;
-            height: 110px;
+            width: 110px; height: 110px;
             border: 4px solid #FFD700;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 0 50px rgba(255, 215, 0, 0.3);
             animation-delay: 0s;
         }
 
         .podio-player.place-2 .podio-avatar {
-            width: 85px;
-            height: 85px;
+            width: 85px; height: 85px;
             border: 3px solid #C0C0C0;
             box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
             animation-delay: 0.5s;
         }
 
         .podio-player.place-3 .podio-avatar {
-            width: 75px;
-            height: 75px;
+            width: 75px; height: 75px;
             border: 3px solid #CD7F32;
             box-shadow: 0 0 15px rgba(205, 127, 50, 0.6);
             animation-delay: 1s;
@@ -875,6 +785,11 @@
         @keyframes floatAvatar {
             0%, 100% { transform: translateY(0px); }
             50%       { transform: translateY(-6px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(-5px); }
         }
 
         .podio-name {
@@ -907,7 +822,6 @@
         .podio-player.place-2 .podio-pts { font-size: 17px; }
         .podio-player.place-3 .podio-pts { font-size: 17px; }
 
-        /* Pedestal */
         .podio-pedestal {
             border-radius: 8px 8px 0 0;
             display: flex;
@@ -937,49 +851,48 @@
             background: linear-gradient(180deg, rgba(205,127,50,0.2), rgba(184,115,51,0.1));
             border: 2px solid rgba(205,127,50,0.4);
         }
-        /* ══════════════════════════════════════════ */
-        /* Destaques em linha abaixo das tabelas */
-.destaques-bottom {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    padding: 8px 12px;
-    width: 100%;
-    overflow-x: auto;
-}
 
-.destaque-card-bottom {
-    flex: 1;
-    min-width: 140px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    padding: 12px 10px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    text-align: center;
-}
+        .destaques-bottom {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            padding: 8px 12px;
+            width: 100%;
+            overflow-x: auto;
+        }
 
-.destaque-card-bottom:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-}
+        .destaque-card-bottom {
+            flex: 1;
+            min-width: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 10px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
 
-.destaque-card-bottom.gold-glow   { border-color: #FBBF24; background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); box-shadow: 0 0 20px rgba(251,191,36,0.2); }
-.destaque-card-bottom.green-glow  { border-color: #10B981; background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05)); box-shadow: 0 0 20px rgba(16,185,129,0.2); }
-.destaque-card-bottom.blue-glow   { border-color: #3B82F6; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05)); box-shadow: 0 0 20px rgba(59,130,246,0.2); }
-.destaque-card-bottom.purple-glow { border-color: #A855F7; background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05)); box-shadow: 0 0 20px rgba(168,85,247,0.2); }
-.destaque-card-bottom.cyan-glow   { border-color: #00D4FF; background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05)); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
+        .destaque-card-bottom:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
 
-.destaque-card-bottom .db-icon  { font-size: 24px; }
-.destaque-card-bottom .db-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
-.destaque-card-bottom .db-name  { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Orbitron', sans-serif; }
-.destaque-card-bottom .db-value { font-size: 12px; font-weight: 700; color: #00D4FF; background: rgba(0,212,255,0.15); padding: 3px 10px; border-radius: 20px; }
+        .destaque-card-bottom.gold-glow   { border-color: #FBBF24; background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); box-shadow: 0 0 20px rgba(251,191,36,0.2); }
+        .destaque-card-bottom.green-glow  { border-color: #10B981; background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05)); box-shadow: 0 0 20px rgba(16,185,129,0.2); }
+        .destaque-card-bottom.blue-glow   { border-color: #3B82F6; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05)); box-shadow: 0 0 20px rgba(59,130,246,0.2); }
+        .destaque-card-bottom.purple-glow { border-color: #A855F7; background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05)); box-shadow: 0 0 20px rgba(168,85,247,0.2); }
+        .destaque-card-bottom.cyan-glow   { border-color: #00D4FF; background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05)); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
+
+        .destaque-card-bottom .db-icon  { font-size: 24px; }
+        .destaque-card-bottom .db-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
+        .destaque-card-bottom .db-name  { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Orbitron', sans-serif; }
+        .destaque-card-bottom .db-value { font-size: 12px; font-weight: 700; color: #00D4FF; background: rgba(0,212,255,0.15); padding: 3px 10px; border-radius: 20px; }
     </style>
 </head>
 <body>
@@ -1016,7 +929,6 @@
             <div class="logo-container">
                 <img src="https://cdn.prod.website-files.com/5f99af040fc8a6ae400fc29d/6673221b3ce01287894e61e3_suri_logo.png" alt="SURI" class="suri-logo">
             </div>
-
             <div class="title-section">
                 <div class="mtd-metrics-header">
                     <div class="mtd-metrics-grid">
@@ -1046,163 +958,150 @@
                         </div>
                     </div>
                 </div>
-                <p class="subtitle" id="subtitle">Vamos com tudo! Cada chamada é uma oportunidade de ouro! 🚀</p>
             </div>
-
             <div class="live-indicator">
                 <span class="live-dot"></span>
                 <span class="live-text">AO VIVO</span>
             </div>
         </header>
 
-        <!-- VISÃO NORMAL (tabela) -->
         <div id="tableView">
-    <div class="main-container" style="grid-template-columns: 1fr; height: auto;">
-        <div class="table-section">
-            <div style="display: grid; grid-template-columns: 75% 25%; gap: 12px; align-items: start;">
-                <div class="two-column-grid">
-                    <div class="table-column">
-                        <table class="championship-table compact">
-                            <thead>
-                                <tr id="tableHeader1">
-                                    <th>#</th>
-                                    <th>Jogador</th>
-                                    <th>Time</th>
-                                    <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
-                                    <th><span class="icon" id="statJIcon"></span> <span id="statJLabel">Score</span></th>
-                                    <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
-                                    <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
-                                    <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
-                                    <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
-                                    <th><span class="icon"></span> PTS</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableColumn1"></tbody>
-                        </table>
+            <div class="main-container" style="grid-template-columns: 1fr; height: auto;">
+                <div class="table-section">
+                    <div style="display: grid; grid-template-columns: 75% 25%; gap: 12px; align-items: start;">
+                        <div class="two-column-grid">
+                            <div class="table-column">
+                                <table class="championship-table compact">
+                                    <thead>
+                                        <tr id="tableHeader1">
+                                            <th>#</th>
+                                            <th>Jogador</th>
+                                            <th>Time</th>
+                                            <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
+                                            <th><span class="icon" id="statJIcon"></span> <span id="statJLabel">Score</span></th>
+                                            <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
+                                            <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
+                                            <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
+                                            <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
+                                            <th><span class="icon"></span> PTS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableColumn1"></tbody>
+                                </table>
+                            </div>
+                            <div class="table-column">
+                                <table class="championship-table compact">
+                                    <thead>
+                                        <tr id="tableHeader2">
+                                            <th>#</th>
+                                            <th>Jogador</th>
+                                            <th>Time</th>
+                                            <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
+                                            <th><span class="icon" id="statJIcon2"></span> <span id="statJLabel2">Score</span></th>
+                                            <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
+                                            <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
+                                            <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
+                                            <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
+                                            <th><span class="icon"></span> PTS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableColumn2"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="sidebar-section" style="background: transparent; border: none; box-shadow: none; padding: 4px;">
+                            <div class="ranking-times-card" style="background: transparent; border: none; box-shadow: none;">
+                                <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
+                                <div id="teamRankings"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-column">
-                        <table class="championship-table compact">
-                            <thead>
-                                <tr id="tableHeader2">
-                                    <th>#</th>
-                                    <th>Jogador</th>
-                                    <th>Time</th>
-                                    <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
-                                    <th><span class="icon" id="statJIcon2"></span> <span id="statJLabel2">Score</span></th>
-                                    <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
-                                    <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
-                                    <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
-                                    <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
-                                    <th><span class="icon"></span> PTS</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableColumn2"></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="sidebar-section" style="background: transparent; border: none; box-shadow: none; padding: 4px;">
-                    <div class="ranking-times-card" style="background: transparent; border: none; box-shadow: none;">
-                        <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
-                        <<div id="teamRankings"></div>
-                    </div>
+                    <div class="destaques-bottom" id="highlights"></div>
                 </div>
             </div>
-            <!-- Destaques em linha abaixo -->
-            <div class="destaques-bottom" id="highlights"></div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="formula" id="formula">
-                <h3>Fórmula dos Pontos</h3>
-                <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
-            </div>
-            <div class="perigo-rebaixamento">
-                <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
-                <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! ⬇️</p>
-                <div class="rebaixamento-positions" id="relegationPositions"></div>
-            </div>
-            <div class="suri-branding">
-                Powered by <a href="https://www.suri.ai" target="_blank">SURI</a> - Inteligência Artificial para Vendas
-            </div>
+            <footer>
+                <div class="footer-content">
+                    <div class="formula" id="formula">
+                        <h3>Fórmula dos Pontos</h3>
+                        <p id="formulaText"><strong>Receita (30%)</strong> + <strong>Reuniões (15%)</strong> + <strong>Vendas (30%)</strong> + <strong>Conversão (25%)</strong> = <strong>Pontuação Final</strong></p>
+                    </div>
+                    <div class="perigo-rebaixamento">
+                        <h3>⚠️ PERIGO DE REBAIXAMENTO</h3>
+                        <p>Os <strong>últimos 4 colocados</strong> estão na ZONA DE PERIGO! ⬇️</p>
+                        <div class="rebaixamento-positions" id="relegationPositions"></div>
+                    </div>
+                    <div class="suri-branding">
+                        Powered by <a href="https://www.suri.ai" target="_blank">SURI</a> - Inteligência Artificial para Vendas
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
-</div>
-        
-        <!-- VISÃO PÓDIO -->
+
         <div class="podio-view" id="podioView">
-
-            <!-- Pódio CLOSER -->
             <div class="podio-block">
                 <div class="podio-section-title">🏆 PÓDIO DO MÊS — CLOSER</div>
                 <div class="podio-stage" id="podioCloser"></div>
             </div>
-
             <div class="podio-divider"></div>
-
-            <!-- Pódio SDR -->
             <div class="podio-block">
                 <div class="podio-section-title">🏆 PÓDIO DO MÊS — SDR</div>
                 <div class="podio-stage" id="podioSDR"></div>
             </div>
-
         </div>
 
-    </div><!-- fim content-container -->
+    </div>
 
     <script>
-        let currentMode = 'closer'; // closer | sdr | podio
+        let currentMode = 'closer';
         let currentPlayers = [];
         let isPaused = false;
         let autoSwitchTimer = null;
         let autoRefreshTimer = null;
         let currentMotivationalPhraseIndex = 0;
 
-        // Sequência e tempos de cada modo
         const MODE_SEQUENCE = ['closer', 'sdr', 'podio'];
         const MODE_DURATIONS = { closer: 45000, sdr: 45000, podio: 30000 };
 
-        // Cache de dados para o pódio
         let cachedCloserPlayers = [];
         let cachedSDRPlayers    = [];
 
         const CLOSER_PHOTOS = {
-            'Alex Uchôa':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
-            'Alex Uchoa':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
-            'Amanda Ribeiro':       'https://lh3.googleusercontent.com/d/1zJft4i-3pZ_ASY0a1YE2AZt1P8GnEdsk',
-            'André Queiroz':        'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
-            'Andre Queiroz':        'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
-            'Brena Carvalho':       'https://lh3.googleusercontent.com/d/150nv2Csf3V3UQsNL8lfLPZS4R41woFHh',
-            'Clailton Nascimento':  'https://lh3.googleusercontent.com/d/11iTMXwG6K32AV-pSdlnr_oyw5LcnckPb',
-            'Emerson Rocha':        'https://lh3.googleusercontent.com/d/1e0n_M3AGh1-MqK1aFm8RmxcS-JnJ2fq3',
-            'Gleice Moraes':        'https://lh3.googleusercontent.com/d/1y4qetBRh6leCZ3gzz-jQmnuac0-J4_bP',
-            'Jéssika Lima':         'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
-            'Jessika Lima':         'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
-            'João Victor':          'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
-            'Joao Victor':          'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
-            'Jossiane':             'https://lh3.googleusercontent.com/d/1N4lCr55HU8oHOV2__EogHqZ78G3X-NSm',
-            'Lucas Machado':        'https://lh3.googleusercontent.com/d/1r0HUosc_S3USRbwmvsl1lWc-gD6Ftdb6',
-            'Patricio Felix':       'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
-            'Patrício Felix':       'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
-            'Rafael Lima':          'https://lh3.googleusercontent.com/d/1wMT6AqUWGBQ431cx8Dvubu_WryAUGOVL'
+            'Alex Ucha':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
+            'Alex Uchoa':          'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
+            'Amanda Ribeiro':      'https://lh3.googleusercontent.com/d/1zJft4i-3pZ_ASY0a1YE2AZt1P8GnEdsk',
+            'Andr Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
+            'Andre Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
+            'Brena Carvalho':      'https://lh3.googleusercontent.com/d/150nv2Csf3V3UQsNL8lfLPZS4R41woFHh',
+            'Clailton Nascimento': 'https://lh3.googleusercontent.com/d/11iTMXwG6K32AV-pSdlnr_oyw5LcnckPb',
+            'Emerson Rocha':       'https://lh3.googleusercontent.com/d/1e0n_M3AGh1-MqK1aFm8RmxcS-JnJ2fq3',
+            'Gleice Moraes':       'https://lh3.googleusercontent.com/d/1y4qetBRh6leCZ3gzz-jQmnuac0-J4_bP',
+            'Jssika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
+            'Jessika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
+            'Joo Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
+            'Joao Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
+            'Jossiane':            'https://lh3.googleusercontent.com/d/1N4lCr55HU8oHOV2__EogHqZ78G3X-NSm',
+            'Lucas Machado':       'https://lh3.googleusercontent.com/d/1r0HUosc_S3USRbwmvsl1lWc-gD6Ftdb6',
+            'Patricio Felix':      'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
+            'Patrcio Felix':      'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
+            'Rafael Lima':         'https://lh3.googleusercontent.com/d/1wMT6AqUWGBQ431cx8Dvubu_WryAUGOVL'
         };
 
         const SDR_PHOTOS = {
-            'Cida Gomes':        'https://lh3.googleusercontent.com/d/1L73zILGelKxvyLspXuJyuzcSIesSV7Id',
-            'Cintia Cifoni':     'https://lh3.googleusercontent.com/d/1PpFpK3wbai-SIwSIidt8TwffL80Flbp3',
-            'Daniele Carvalho':  'https://lh3.googleusercontent.com/d/1JRi7GxFAVe0X1f4TYso7OOw3gFQea3Zw',
-            'Dara Barroso':      'https://lh3.googleusercontent.com/d/1oJt4ENPVf9mbzLYfFQ0JPODNAJASQ0r_',
-            'Driele Rodrigues':  'https://lh3.googleusercontent.com/d/1XFatPpyQsaZTTubyMzeuLn2kjUKJPA5x',
-            'Iara Jéssica':      'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
-            'Iara Jessica':      'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
-            'Júnior Lima':       'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
-            'Junior Lima':       'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
-            'Matheus Lima':      'https://lh3.googleusercontent.com/d/1dHEKu-VqT0NDIPpHog3vW3FAk6cwXJ-_',
-            'Pedro Roncalli':    'https://lh3.googleusercontent.com/d/1XOat3HSo5WBv0CWsVjhJdrqPTNv-qhZZ',
-            'Sâmela Vieira':     'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
-            'Samela Vieira':     'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
-            'Thiago de Brito':   'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
+            'Cida Gomes':       'https://lh3.googleusercontent.com/d/1L73zILGelKxvyLspXuJyuzcSIesSV7Id',
+            'Cintia Cifoni':    'https://lh3.googleusercontent.com/d/1PpFpK3wbai-SIwSIidt8TwffL80Flbp3',
+            'Daniele Carvalho': 'https://lh3.googleusercontent.com/d/1JRi7GxFAVe0X1f4TYso7OOw3gFQea3Zw',
+            'Dara Barroso':     'https://lh3.googleusercontent.com/d/1oJt4ENPVf9mbzLYfFQ0JPODNAJASQ0r_',
+            'Driele Rodrigues': 'https://lh3.googleusercontent.com/d/1XFatPpyQsaZTTubyMzeuLn2kjUKJPA5x',
+            'Iara Jssica':     'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
+            'Iara Jessica':     'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
+            'Jnior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
+            'Junior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
+            'Matheus Lima':     'https://lh3.googleusercontent.com/d/1dHEKu-VqT0NDIPpHog3vW3FAk6cwXJ-_',
+            'Pedro Roncalli':   'https://lh3.googleusercontent.com/d/1XOat3HSo5WBv0CWsVjhJdrqPTNv-qhZZ',
+            'Smela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
+            'Samela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
+            'Thiago de Brito':  'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
         };
 
         function extractGoogleDriveId(url) {
@@ -1254,7 +1153,7 @@
             if (SDR_PHOTOS[name]) return SDR_PHOTOS[name];
             const firstName = name.split(' ')[0].toLowerCase();
             for (const key of Object.keys(SDR_PHOTOS)) {
-                 if (key.toLowerCase().startsWith(firstName)) return SDR_PHOTOS[key];
+                if (key.toLowerCase().startsWith(firstName)) return SDR_PHOTOS[key];
             }
             return null;
         }
@@ -1270,14 +1169,12 @@
             return `<div class="${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
         }
 
-        /* ── PÓDIO ── */
         function buildPodioPlayer(player, place, usePhoto) {
             const medals  = ['🥇','🥈','🥉'];
             const classes = ['place-1','place-2','place-3'];
             const medal   = medals[place - 1];
             const cls     = classes[place - 1];
             const photoUrl = usePhoto ? (getPlayerPhoto(player.name) || getSDRPhoto(player.name)) : null;
-
 
             const avatarTag = photoUrl
                 ? createPhotoImgHTML(photoUrl, 'podio-avatar', player.name, player.name.charAt(0))
@@ -1295,7 +1192,6 @@
         }
 
         function renderPodio() {
-            // CLOSER — ordem visual: 2º, 1º, 3º (estilo pódio olímpico)
             const cp = cachedCloserPlayers.slice(0, 3);
             if (cp.length >= 3) {
                 document.getElementById('podioCloser').innerHTML =
@@ -1303,8 +1199,6 @@
                     buildPodioPlayer(cp[0], 1, true) +
                     buildPodioPlayer(cp[2], 3, true);
             }
-
-            // SDR 
             const sp = cachedSDRPlayers.slice(0, 3);
             if (sp.length >= 3) {
                 document.getElementById('podioSDR').innerHTML =
@@ -1313,29 +1207,6 @@
                     buildPodioPlayer(sp[2], 3, true);
             }
         }
-
-        const motivationalPhrases = [
-            "Vamos com tudo! Cada chamada é uma oportunidade de ouro! 🚀",
-            "Foco no topo! O sucesso está a uma venda de distância! 🎯",
-            "Sua dedicação transforma metas em conquistas! 💪",
-            "Persistência é o caminho para a vitória! 🏆",
-            "Cada 'não' te aproxima do próximo 'sim'! ⚡",
-            "Excelência em vendas começa com você! 🌟",
-            "Determinação é sua maior força! 💥",
-            "O impossível é só uma questão de perspectiva! 🔥",
-            "Seja a mudança que você quer ver nos resultados! ✨",
-            "Sua energia contagiante conquista clientes! 🎪",
-            "Cada ligação é uma nova chance de brilhar! 💫",
-            "Supere seus limites e conquiste o mundo! 🌍",
-            "A excelência não é um ato, mas um hábito! 🎖️",
-            "Transforme desafios em oportunidades! 🚀",
-            "Você tem o poder de fazer a diferença! ⭐",
-            "Cada meta alcançada é um novo ponto de partida! 🏁",
-            "Seja protagonista da sua própria história de sucesso! 🎬",
-            "A determinação é a chave do sucesso! 🗝️",
-            "Conquiste cada cliente com sua paixão! ❤️",
-            "Você nasceu para vencer! 🥇"
-        ];
 
         const DATA_SOURCES = {
             closer: {
@@ -1469,7 +1340,7 @@
             }
         }
 
-        function showTableView()  {
+        function showTableView() {
             document.getElementById('tableView').style.display = 'block';
             document.getElementById('podioView').classList.remove('active');
             document.getElementById('mainHeader').style.display = 'flex';
@@ -1482,49 +1353,40 @@
             renderPodio();
         }
 
-        function updateMotivationalPhrase() {
-            const subtitle = document.getElementById('subtitle');
-            subtitle.style.opacity = '0';
-            setTimeout(() => {
-                subtitle.textContent = motivationalPhrases[currentMotivationalPhraseIndex];
-                currentMotivationalPhraseIndex = (currentMotivationalPhraseIndex + 1) % motivationalPhrases.length;
-                subtitle.style.opacity = '1';
-            }, 400);
+        function updateTableHeaders() {
+            if (currentMode === 'closer') {
+                document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
+                document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'Score';
+                document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
+                document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
+                document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
+                document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
+                document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
+                document.getElementById('statJIcon2').textContent = '⭐️'; document.getElementById('statJLabel2').textContent = 'Score';
+                document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
+                document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
+                document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
+                document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
+                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'table-cell');
+                document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
+                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'table-cell');
+                document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
+            } else if (currentMode === 'sdr') {
+                document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent = 'Agend';
+                document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent = 'Shows';
+                document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent = 'No-show';
+                document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent = 'Vendas';
+                document.getElementById('stat5Icon').textContent  = '🎯'; document.getElementById('stat5Label').textContent = 'PTS';
+                document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
+                document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
+                document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
+                document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
+                document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
+                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
+                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
+            }
         }
 
-        function updateTableHeaders() {
-    if (currentMode === 'closer') {
-        document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
-        document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'Score';
-        document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
-        document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
-        document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
-        document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
-        document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
-        document.getElementById('statJIcon2').textContent = '⭐️'; document.getElementById('statJLabel2').textContent = 'Score';
-        document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
-        document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
-        document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
-        document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
-        document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'table-cell');
-        document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
-        document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'table-cell');
-        document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
-    } else if (currentMode === 'sdr') {
-        document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent = 'Agend';
-        document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent = 'Shows';
-        document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent = 'No-show';
-        document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent = 'Vendas';
-        document.getElementById('stat5Icon').textContent  = '🎯'; document.getElementById('stat5Label').textContent = 'PTS';
-        document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
-        document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
-        document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
-        document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
-        document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
-        document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
-        document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
-    }
-}
         function renderTableRows(players, startPosition) {
             return players.map((player, index) => {
                 const position     = startPosition + index;
@@ -1594,33 +1456,47 @@
             updatePerigoRebaixamento(players);
         }
 
+        function getPhotoForDestaque(name) {
+            const url = getPlayerPhoto(name) || getSDRPhoto(name);
+            if (!url) return null;
+            return url;
+        }
+
+        function destaqueAvatarHTML(name) {
+            const url = getPhotoForDestaque(name);
+            if (url) {
+                return `<img src="${url}" alt="${name}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div style="display:none;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
+            }
+            return `<div style="display:flex;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
+        }
+
         function updateDestaques(players) {
-    if (!players || players.length === 0) return;
-    const container = document.getElementById('highlights');
-    let html = '';
-    if (currentMode === 'closer') {
-        const top = players[0];
-        html += `<div class="destaque-card-bottom gold-glow"><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div>`;
-        const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-        html += `<div class="destaque-card-bottom green-glow"><div class="db-icon">💰</div><div class="db-label">Maior Receita</div><div class="db-name">${topRev.nickname}</div><div class="db-value">${topRev.revenue}</div></div>`;
-        const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-        html += `<div class="destaque-card-bottom purple-glow"><div class="db-icon">🎫</div><div class="db-label">Maior Ticket</div><div class="db-name">${topTkt.nickname}</div><div class="db-value">${topTkt.ticket}</div></div>`;
-        const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-        html += `<div class="destaque-card-bottom blue-glow"><div class="db-icon">🛒</div><div class="db-label">Mais Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div>`;
-        const topConv = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
-        html += `<div class="destaque-card-bottom cyan-glow"><div class="db-icon">📊</div><div class="db-label">Melhor Conversão</div><div class="db-name">${topConv.nickname}</div><div class="db-value">${topConv.conversion}</div></div>`;
-    } else {
-        const top = players[0];
-        html += `<div class="destaque-card-bottom gold-glow"><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div>`;
-        const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-        html += `<div class="destaque-card-bottom green-glow"><div class="db-icon">🛒</div><div class="db-label">Maior Qtd Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div>`;
-        const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
-        html += `<div class="destaque-card-bottom blue-glow"><div class="db-icon">✅</div><div class="db-label">Mais Shows</div><div class="db-name">${topShows.nickname}</div><div class="db-value">${topShows.shows} shows</div></div>`;
-        const topMeet = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
-        html += `<div class="destaque-card-bottom purple-glow"><div class="db-icon">📅</div><div class="db-label">Mais Agendamentos</div><div class="db-name">${topMeet.nickname}</div><div class="db-value">${topMeet.meetings} agend.</div></div>`;
-    }
-    container.innerHTML = html;
-}
+            if (!players || players.length === 0) return;
+            const container = document.getElementById('highlights');
+            let html = '';
+            if (currentMode === 'closer') {
+                const top = players[0];
+                html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
+                const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+                html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topRev.name)}<div><div class="db-icon">💰</div><div class="db-label">Maior Receita</div><div class="db-name">${topRev.nickname}</div><div class="db-value">${topRev.revenue}</div></div></div>`;
+                const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+                html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topTkt.name)}<div><div class="db-icon">🎫</div><div class="db-label">Maior Ticket</div><div class="db-name">${topTkt.nickname}</div><div class="db-value">${topTkt.ticket}</div></div></div>`;
+                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
+                html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Mais Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
+                const topConv = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
+                html += `<div class="destaque-card-bottom cyan-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topConv.name)}<div><div class="db-icon">📊</div><div class="db-label">Melhor Conversão</div><div class="db-name">${topConv.nickname}</div><div class="db-value">${topConv.conversion}</div></div></div>`;
+            } else {
+                const top = players[0];
+                html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
+                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
+                html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Maior Qtd Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
+                const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
+                html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topShows.name)}<div><div class="db-icon">✅</div><div class="db-label">Mais Shows</div><div class="db-name">${topShows.nickname}</div><div class="db-value">${topShows.shows} shows</div></div></div>`;
+                const topMeet = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
+                html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topMeet.name)}<div><div class="db-icon">📅</div><div class="db-label">Mais Agendamentos</div><div class="db-name">${topMeet.nickname}</div><div class="db-value">${topMeet.meetings} agend.</div></div></div>`;
+            }
+            container.innerHTML = html;
+        }
 
         function updateRankingTimes(players) {
             if (!players || players.length === 0) return;
@@ -1693,15 +1569,12 @@
             cc.classList.add('fading');
             await new Promise(r => setTimeout(r, 500));
 
-            // Avança para o próximo modo na sequência
             const idx = MODE_SEQUENCE.indexOf(currentMode);
             currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
 
-            updateMotivationalPhrase();
             updateModeIndicator();
 
             if (currentMode === 'podio') {
-                // Atualiza cache com dados frescos antes de mostrar
                 const cp = await fetchPlayerData('closer');
                 const sp = await fetchPlayerData('sdr');
                 if (cp) cachedCloserPlayers = cp;
@@ -1747,7 +1620,6 @@
             updateTableHeaders();
             showTableView();
 
-            // Carrega e faz cache inicial de ambos
             const cp = await fetchPlayerData('closer');
             const sp = await fetchPlayerData('sdr');
             if (cp) cachedCloserPlayers = cp;
