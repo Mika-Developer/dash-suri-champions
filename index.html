@@ -870,24 +870,20 @@
             gap: 6px;
             padding: 12px 10px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            background: transparent;
+            border: none;
+            box-shadow: none;
             transition: all 0.3s ease;
             text-align: center;
         }
 
-        .destaque-card-bottom:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-        }
+       .destaque-card-bottom:hover { transform: translateY(-4px); }
 
-        .destaque-card-bottom.gold-glow   { border-color: #FBBF24; background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); box-shadow: 0 0 20px rgba(251,191,36,0.2); }
-        .destaque-card-bottom.green-glow  { border-color: #10B981; background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05)); box-shadow: 0 0 20px rgba(16,185,129,0.2); }
-        .destaque-card-bottom.blue-glow   { border-color: #3B82F6; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05)); box-shadow: 0 0 20px rgba(59,130,246,0.2); }
-        .destaque-card-bottom.purple-glow { border-color: #A855F7; background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05)); box-shadow: 0 0 20px rgba(168,85,247,0.2); }
-        .destaque-card-bottom.cyan-glow   { border-color: #00D4FF; background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05)); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
+       .destaque-card-bottom.gold-glow   { background: transparent; border: none; box-shadow: none; }
+       .destaque-card-bottom.green-glow  { background: transparent; border: none; box-shadow: none; }
+       .destaque-card-bottom.blue-glow   { background: transparent; border: none; box-shadow: none; }
+       .destaque-card-bottom.purple-glow { background: transparent; border: none; box-shadow: none; }
+       .destaque-card-bottom.cyan-glow   { background: transparent; border: none; box-shadow: none; }
 
         .destaque-card-bottom .db-icon  { font-size: 24px; }
         .destaque-card-bottom .db-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
@@ -1460,12 +1456,13 @@
         }
 
         function destaqueAvatarHTML(name) {
-            const url = getPhotoForDestaque(name);
-            if (url) {
-                return `<img src="${url}" alt="${name}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div style="display:none;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
-            }
-            return `<div style="display:flex;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
-        }
+    const url = getPhotoForDestaque(name);
+    const photoHTML = url
+        ? `<img src="${url}" alt="${name}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div style="display:none;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`
+        : `<div style="display:flex;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
+    return `<div style="position:relative;flex-shrink:0;">${photoHTML}<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:14px;filter:drop-shadow(0 0 6px #FFD700);animation:floatMedal 2.5s ease-in-out infinite;">⭐</span></div>`;
+}
+
 
         function updateDestaques(players) {
             if (!players || players.length === 0) return;
