@@ -1519,18 +1519,19 @@
         }
 
         function updatePerigoRebaixamento(players) {
-            if (!players || players.length === 0) return;
-            const total = players.length;
-            const start = total - 3;
-            let html = '';
-            for (let i = 0; i < 4; i++) {
-                const pos   = start + i;
-                const label = i < 2 ? 'RISCO' : (i === 2 ? 'PERIGO' : 'CRÍTICO');
-                html += `<div class="position-danger">${pos}° ${label}</div>`;
-            }
-            document.getElementById('relegationPositions').innerHTML = html;
-        }
-
+    if (!players || players.length === 0) return;
+    const el = document.getElementById('relegationPositions');
+    if (!el) return;
+    const total = players.length;
+    const start = total - 3;
+    let html = '';
+    for (let i = 0; i < 4; i++) {
+        const pos   = start + i;
+        const label = i < 2 ? 'RISCO' : (i === 2 ? 'PERIGO' : 'CRÍTICO');
+        html += `<div class="position-danger">${pos}° ${label}</div>`;
+    }
+    el.innerHTML = html;
+}
         function togglePause() {
             const btn = document.getElementById('pauseButton');
             isPaused = !isPaused;
