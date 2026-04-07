@@ -1122,11 +1122,8 @@
         }
 
         function createPhotoImgHTML(photoUrl, className, altText, fallbackText) {
-            const allSources = buildGooglePhotoSources(photoUrl);
-            const sources = JSON.stringify(allSources).replace(/"/g, '&quot;');
-            return `<img class="${className}" src="${allSources[0]}" alt="${altText}" data-photo-sources="${sources}" data-photo-index="0" onerror="handlePhotoFallback(this)"><div class="${className}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${fallbackText}</div>`;
-        }
-
+            return `<img class="${className}" src="${photoUrl}" alt="${altText}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="${className}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${fallbackText}</div>`;
+}
         function handlePhotoFallback(img) {
             const sources = JSON.parse(img.dataset.photoSources || '[]');
             let index = parseInt(img.dataset.photoIndex || '0', 10);
