@@ -1506,22 +1506,24 @@
         }
 
         function updateTable(players) {
-            const column1 = document.getElementById('tableColumn1');
-            const column2 = document.getElementById('tableColumn2');
-            if (!column1 || !column2 || !players) return;
-            currentPlayers = players;
-            let col1Players, col2Players;
-            if (currentMode === 'closer') {
-                col1Players = players.slice(0, 7); col2Players = players.slice(7);
-            } else {
-                col1Players = players.slice(0, 7); col2Players = players.slice(7, 13);
-            }
-            column1.innerHTML = renderTableRows(col1Players, 1);
-            column2.innerHTML = renderTableRows(col2Players, 8);
-            updateDestaques(players);
-            updateRankingTimes(players);
-            updatePerigoRebaixamento(players);
-        }
+    const column1 = document.getElementById('tableColumn1');
+    const column2 = document.getElementById('tableColumn2');
+    if (!column1 || !column2 || !players) return;
+    currentPlayers = players;
+    let col1Players, col2Players;
+    if (currentMode === 'closer') {
+        col1Players = players.slice(0, 7); col2Players = players.slice(7);
+    } else {
+        const mid = Math.ceil(players.length / 2);
+        col1Players = players.slice(0, mid); 
+        col2Players = players.slice(mid);
+    }
+    column1.innerHTML = renderTableRows(col1Players, 1);
+    column2.innerHTML = renderTableRows(col2Players, col1Players.length + 1);
+    updateDestaques(players);
+    updateRankingTimes(players);
+    updatePerigoRebaixamento(players);
+}
 
         function getPhotoForDestaque(name) {
             const url = getPlayerPhoto(name) || getSDRPhoto(name);
