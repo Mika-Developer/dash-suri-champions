@@ -4,1713 +4,1145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Champions Suri - Dashboard Tempo Real</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    position: relative;
-    background: url('https://lh3.googleusercontent.com/d/1009iyOQbvPprlEemN62ZAZnRgErtnKJU') center center / cover no-repeat;
-    color: #ffffff;
-}
-
-        .mode-indicator {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(0, 240, 255, 0.2);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            background: url('https://lh3.googleusercontent.com/d/1009iyOQbvPprlEemN62ZAZnRgErtnKJU') center center / cover no-repeat;
+            color: #ffffff;
         }
 
-        .mode-indicator.sdr-mode {
-            background: rgba(255, 215, 0, 0.2);
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-
-        .mode-indicator.podio-mode {
-            background: rgba(255, 215, 0, 0.3);
-            border-color: rgba(255, 215, 0, 0.6);
-        }
-
-        .mode-icon { font-size: 16px; }
-
-        .mode-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .pause-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 8px 16px;
-            background: rgba(0, 240, 255, 0.2);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            cursor: pointer;
-            font-size: 16px;
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-
-        .pause-button:hover {
-            background: rgba(0, 240, 255, 0.3);
-            border-color: rgba(0, 240, 255, 0.6);
-            transform: scale(1.05);
-        }
-
-        .pause-button.paused {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: rgba(239, 68, 68, 0.4);
-        }
-
-        .content-container {
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .content-container.fading { opacity: 0; }
-
-        .background-container {
+        .background-effects {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .gradient-mesh {
-    position: absolute;
-    width: 200%; height: 200%;
-    top: -50%; left: -50%;
-    background:
-        radial-gradient(ellipse at 50% 100%, rgba(0, 120, 255, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 60%, rgba(0, 60, 180, 0.25) 0%, transparent 50%),
-        radial-gradient(circle at 20% 30%, rgba(0, 180, 255, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(0, 180, 255, 0.15) 0%, transparent 40%);
-    animation: meshMove 20s ease-in-out infinite alternate;
-}
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(0, 120, 255, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 60%, rgba(0, 60, 180, 0.18) 0%, transparent 50%),
+                radial-gradient(circle at 20% 30%, rgba(0, 180, 255, 0.10) 0%, transparent 40%),
+                radial-gradient(circle at 80% 30%, rgba(0, 180, 255, 0.10) 0%, transparent 40%);
+            animation: meshMove 20s ease-in-out infinite alternate;
+        }
 
         @keyframes meshMove {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-5%, -5%) rotate(5deg); }
-            100% { transform: translate(5%, 5%) rotate(-5deg); }
-        }
-
-        .particles { position: absolute; width: 100%; height: 100%; }
-
-        .particle {
-            position: absolute;
-            width: 4px; height: 4px;
-            background: rgba(0, 240, 255, 0.6);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
-            animation: floatParticle 15s infinite ease-in-out;
-        }
-
-        .particle:nth-child(1)  { left: 10%; top: 20%; animation-delay: 0s;  animation-duration: 12s; }
-        .particle:nth-child(2)  { left: 20%; top: 80%; animation-delay: 2s;  animation-duration: 18s; }
-        .particle:nth-child(3)  { left: 30%; top: 40%; animation-delay: 4s;  animation-duration: 15s; }
-        .particle:nth-child(4)  { left: 40%; top: 60%; animation-delay: 1s;  animation-duration: 20s; }
-        .particle:nth-child(5)  { left: 50%; top: 30%; animation-delay: 3s;  animation-duration: 14s; }
-        .particle:nth-child(6)  { left: 60%; top: 70%; animation-delay: 5s;  animation-duration: 16s; }
-        .particle:nth-child(7)  { left: 70%; top: 50%; animation-delay: 2s;  animation-duration: 19s; }
-        .particle:nth-child(8)  { left: 80%; top: 20%; animation-delay: 4s;  animation-duration: 13s; }
-        .particle:nth-child(9)  { left: 90%; top: 80%; animation-delay: 1s;  animation-duration: 17s; }
-        .particle:nth-child(10) { left: 15%; top: 50%; animation-delay: 3s;  animation-duration: 21s; }
-        .particle:nth-child(11) { left: 25%; top: 15%; animation-delay: 0s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(12) { left: 35%; top: 85%; animation-delay: 2s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(13) { left: 45%; top: 25%; animation-delay: 4s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(14) { left: 55%; top: 65%; animation-delay: 1s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(15) { left: 65%; top: 45%; animation-delay: 3s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(16) { left: 75%; top: 75%; animation-delay: 5s;  background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
-        .particle:nth-child(17) { left: 85%; top: 35%; animation-delay: 2s;  background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
-        .particle:nth-child(18) { left: 95%; top: 55%; animation-delay: 4s;  background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
-        .particle:nth-child(19) { left: 5%;  top: 65%; animation-delay: 1s;  background: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.8); }
-        .particle:nth-child(20) { left: 12%; top: 90%; animation-delay: 3s;  background: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.8); }
-
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-            25%       { transform: translateY(-100px) translateX(50px); opacity: 0.8; }
-            50%       { transform: translateY(-200px) translateX(-30px); opacity: 0.5; }
-            75%       { transform: translateY(-100px) translateX(-80px); opacity: 0.9; }
+            0%   { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(3%, 3%) rotate(2deg); }
         }
 
         .grid-overlay {
             position: absolute;
             width: 100%; height: 100%;
             background-image:
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
             background-size: 50px 50px;
-            animation: gridMove 30s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0%   { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .glow-orbs { position: absolute; width: 100%; height: 100%; }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
             opacity: 0.3;
-            animation: orbFloat 15s infinite ease-in-out;
         }
 
-        .orb-1 { width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(0, 100, 255, 0.25) 0%, transparent 70%); bottom: 0%; left: 10%; animation-duration: 20s; border-radius: 50%; }
-        .orb-2 { width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(0, 160, 255, 0.2) 0%, transparent 70%); top: 20%; left: 50%; transform: translateX(-50%); animation-duration: 25s; animation-delay: 5s; border-radius: 50%; }
-        .orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%); top: 5%; left: 50%; transform: translateX(-50%); animation-duration: 18s; animation-delay: 10s; }
-        
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33%       { transform: translate(100px, -80px) scale(1.1); }
-            66%       { transform: translate(-80px, 100px) scale(0.9); }
-        }
-
-        .epic-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background: transparent;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-}
-
-        .suri-logo {
-            height: 40px;
-            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
-        }
-
-        .mtd-metrics-header {
-            width: 100%;
-            padding: 12px 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .mtd-metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 10px 18px;
-            max-width: 1200px;
-        }
-
-        .mtd-metric-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .mtd-metric-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 240, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .mtd-label {
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        .mtd-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: #ffffff;
-            text-align: center;
-            line-height: 1;
-        }
-
-        .mtd-value.cyan-glow   { color: #00F0FF; text-shadow: 0 0 10px rgba(0, 240, 255, 0.6); }
-        .mtd-value.green-glow  { color: #10B981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); }
-        .mtd-value.orange-glow { color: #F97316; text-shadow: 0 0 10px rgba(249, 115, 22, 0.6); }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            background: rgba(220, 38, 38, 0.15);
-            border: 2px solid #DC2626;
-            border-radius: 50px;
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
-        }
-
-        .live-dot {
-            width: 12px; height: 12px;
-            background: #DC2626;
-            border-radius: 50%;
-            animation: pulse-red 1.5s ease-in-out infinite;
-            box-shadow: 0 0 10px #DC2626;
-        }
-
-        @keyframes pulse-red {
-            0%, 100% { opacity: 1; transform: scale(1);   box-shadow: 0 0 10px #DC2626; }
-            50%       { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px #DC2626; }
-        }
-
-        .live-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: #DC2626;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .main-container {
-            display: grid;
-            grid-template-columns: 75% 25%;
-            gap: 12px;
-            padding: 12px;
-            max-width: 1920px;
-            margin: 0 auto;
-            height: calc(100vh - 200px);
-        }
-
-        .two-column-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            height: 100%;
-        }
-
-        .table-column { width: 100%; height: 100%; }
-
-        .championship-table.compact {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            height: fit-content;
-        }
-
-        .championship-table.compact thead { background: rgba(0, 240, 255, 0.1); }
-
-        .championship-table.compact thead th {
-            font-size: 11px;
-            padding: 6px 4px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            text-align: center;
-            color: #00D4FF;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
-        }
-
-        .championship-table.compact th .icon { font-size: 13px; margin-right: 4px; }
-
-        .championship-table.compact tbody td {
-            padding: 8px 4px;
-            font-size: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .championship-table.compact tbody tr.top-5-safe {
-            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(0, 240, 255, 0.1));
-            border-left: 3px solid #10B981;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .championship-table.compact th:nth-child(1),
-        .championship-table.compact td:nth-child(1) { width: 52px; min-width: 52px; }
-        .championship-table.compact th:nth-child(2),
-        .championship-table.compact td:nth-child(2) { width: 120px; min-width: 120px; }
-        .championship-table.compact th:nth-child(3),
-        .championship-table.compact td:nth-child(3) { width: 70px; min-width: 70px; }
-        .championship-table.compact th:nth-child(4),
-        .championship-table.compact td:nth-child(4) { width: 65px; min-width: 65px; }
-        .championship-table.compact th:nth-child(5),
-        .championship-table.compact td:nth-child(5) { width: 45px; min-width: 45px; }
-        .championship-table.compact th:nth-child(6),
-        .championship-table.compact td:nth-child(6) { width: 45px; min-width: 45px; }
-        .championship-table.compact th:nth-child(7),
-        .championship-table.compact td:nth-child(7) { width: 70px; min-width: 70px; }
-        .championship-table.compact th:nth-child(8),
-        .championship-table.compact td:nth-child(8) { width: 55px; min-width: 55px; }
-        .championship-table.compact th:nth-child(9),
-        .championship-table.compact td:nth-child(9) { width: 45px; min-width: 45px; }
-
-        .championship-table.compact tbody tr { transition: all 0.3s ease; }
-
-        .championship-table.compact tbody tr:hover {
-            background: rgba(0, 240, 255, 0.1);
-            transform: scale(1.02);
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
-        }
-
-        .championship-table.compact tbody tr.bottom-4-danger {
-            background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)) !important;
-            border-left: 4px solid #EF4444 !important;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important;
-        }
-
-        .championship-table.compact .player-cell { max-width: 120px; text-align: left; }
-        .championship-table.compact .player-name { font-size: 12px; font-weight: 600; color: #ffffff; }
-        .championship-table.compact .player-nickname { font-size: 10px; color: rgba(255, 255, 255, 0.6); font-style: italic; }
-
-        .championship-table.compact .points-cell {
-            font-size: 16px;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-            color: #00D4FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-
-        .championship-table.compact .position-cell {
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .position-wrapper {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .avatar-wrapper {
+        .container {
             position: relative;
-            display: inline-block;
-        }
-
-        .player-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center top;
-            border: 2px solid rgba(0, 240, 255, 0.5);
-            display: block;
-        }
-
-        .avatar-top5   { border-color: #10B981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
-        .avatar-danger { border-color: #EF4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
-
-        .position-number {
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            color: #ffffff;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 9px;
-            font-weight: 700;
-            text-shadow: 0 0 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.7);
-            z-index: 2;
-            line-height: 1;
-        }
-
-        .zone-icon { font-size: 11px; line-height: 1; }
-
-        .championship-table.compact .team-badge {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 3px;
-        }
-
-        .team-badge.team-TITANS        { background: #8B5CF6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
-        .team-badge.team-MAORI         { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
-        .team-badge.team-EAGLES        { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-        .team-badge.team-PROCURANDO-DEMO { background: #B026FF; box-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
-
-        .championship-table.compact .team-cell { font-weight: 600; text-align: left; font-size: 10px; }
-
-        .championship-table.compact .conversion-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 3px 6px;
-            text-align: center;
-        }
-
-        .championship-table.compact .conversion-bar.high   { background: linear-gradient(90deg, rgba(34, 197, 94, 0.3), rgba(34, 197, 94, 0.1));   color: #22C55E; }
-        .championship-table.compact .conversion-bar.medium { background: linear-gradient(90deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.1)); color: #FBBF24; }
-        .championship-table.compact .conversion-bar.low    { background: linear-gradient(90deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));   color: #EF4444; }
-
-        .sidebar-section { display: flex; flex-direction: column; gap: 10px; height: 100%; overflow: hidden; }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .ranking-times-card { padding: 0; background: transparent; border: none; box-shadow: none; }
-
-        .ranking-times-card .card-title {
-           font-size: 10px;
-           margin-bottom: 4px;
-           font-family: 'Orbitron', sans-serif;
-           font-weight: 700;
-           text-align: center;
-           color: #00D4FF;
-           text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
-        }
-
-        .ranking-times-card .icon-glow { font-size: 11px; margin-right: 4px; }
-
-        .time-card {
-            padding: 4px 6px;
-            margin-bottom: 2px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .position-medal { font-size: 13px; animation: float 3s ease-in-out infinite; }
-        .team-name    { font-size: 9px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #ffffff; }
-        .team-count   { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
-        .score-number { font-size: 12px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #00D4FF; }
-        .score-avg    { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
-        .team-badge-large { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-
-        .titans-glow    { background: #8B5CF6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
-        .maori-glow     { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
-        .eagles-glow    { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-        .procurando-glow { background: #B026FF; box-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
-
-        .team-info    { display: flex; align-items: center; gap: 5px; flex: 1; }
-        .team-details { display: flex; flex-direction: column; }
-        .team-score-big { text-align: right; }
-
-        .destaques-card { padding: 8px; }
-
-        .destaques-card .card-title {
-            font-size: 14px;
-            margin-bottom: 8px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            text-align: center;
-            color: #00D4FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-
-        .destaques-card .icon-glow { font-size: 16px; margin-right: 8px; }
-
-        .destaque-item.compact {
-            padding: 8px 10px;
-            margin: 4px 0;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-left: 3px solid;
-            transition: all 0.3s ease;
-            min-height: 45px;
-        }
-
-        .destaque-item.compact:hover { transform: translateX(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-
-        .destaque-item.gold-glow   { border-color: #FBBF24; background: linear-gradient(90deg, rgba(251, 191, 36, 0.1), transparent); }
-        .destaque-item.green-glow  { border-color: #10B981; background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), transparent); }
-        .destaque-item.blue-glow   { border-color: #3B82F6; background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent); }
-        .destaque-item.purple-glow { border-color: #A855F7; background: linear-gradient(90deg, rgba(168, 85, 247, 0.1), transparent); }
-
-        .destaque-icon    { font-size: 18px; margin-right: 6px; }
-        .destaque-content { flex: 1; }
-        .destaque-label   { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.7); }
-        .destaque-value   { font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; color: #ffffff; }
-
-        .points-badge, .money-badge, .count-badge, .percent-badge {
-            font-size: 10px;
-            padding: 3px 6px;
-            border-radius: 12px;
-            margin-left: 4px;
-            background: rgba(0, 240, 255, 0.2);
-            color: #00D4FF;
-            font-weight: 700;
-        }
-
-        footer {
-            padding: 6px;
-            font-size: 10px;
-            background: rgba(10, 22, 40, 0.8);
-            margin-top: 8px;
-            border-top: 1px solid rgba(0, 240, 255, 0.2);
-        }
-
-        .footer-content {
-            max-width: 1920px;
+            z-index: 1;
+            max-width: 1800px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
+            padding: 20px;
+            min-height: 100vh;
         }
 
-        .formula, .perigo-rebaixamento, .suri-branding { text-align: center; }
-
-        .formula h3, .perigo-rebaixamento h3 {
-            font-size: 12px;
-            font-family: 'Orbitron', sans-serif;
-            color: #00D4FF;
-            margin-bottom: 3px;
+        /* EPIC HEADER */
+        .epic-header {
+            text-align: center;
+            padding: 60px 30px 40px;
+            margin-bottom: 30px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
-        .formula p, .perigo-rebaixamento p { font-size: 9px; color: rgba(255, 255, 255, 0.7); }
-
-        .perigo-rebaixamento {
-            padding: 6px;
-            background: rgba(220, 38, 38, 0.1);
-            border: 2px solid #DC2626;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+        .epic-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            width: 300px; height: 120px;
+            background: radial-gradient(ellipse at center, rgba(0, 150, 255, 0.25) 0%, transparent 70%);
+            transform: translateX(-50%);
+            filter: blur(40px);
+            z-index: -1;
         }
 
-        .rebaixamento-positions { display: flex; gap: 5px; justify-content: center; margin-top: 5px; }
-
-        .position-danger {
-            font-size: 10px;
-            padding: 3px 6px;
-            background: #DC2626;
-            color: #ffffff;
-            border-radius: 8px;
-            font-weight: 700;
+        .epic-header h1 {
+            font-size: 68px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #FFF 0%, #00D4FF 50%, #0080FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 80px rgba(0, 180, 255, 0.6);
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        .suri-branding a { color: #00D4FF; text-decoration: none; font-weight: 600; }
-        .suri-branding a:hover { text-shadow: 0 0 10px rgba(0, 240, 255, 0.8); }
-
-        body.mode-closer #tableView .table-section > div:first-child {
-            grid-template-columns: 84% 16% !important;
-            gap: 6px !important;
+        /* MODE INDICATOR */
+        .mode-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 32px;
+            background: rgba(0, 120, 255, 0.15);
+            border: 2px solid rgba(0, 180, 255, 0.4);
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #00D4FF;
+            box-shadow: 0 0 30px rgba(0, 180, 255, 0.3), inset 0 0 20px rgba(0, 180, 255, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        body.mode-closer .sidebar-section,
-        body.mode-closer .ranking-times-card,
-        body.mode-closer .time-card,
-        body.mode-closer .team-info,
-        body.mode-closer .team-details,
-        body.mode-closer .team-score-big { min-width: 0; }
-
-        body.mode-closer .ranking-times-card { padding: 4px; }
-        body.mode-closer .ranking-times-card .card-title { font-size: 11px; margin-bottom: 4px; }
-        body.mode-closer .ranking-times-card .icon-glow { font-size: 12px; margin-right: 5px; }
-        body.mode-closer .time-card { padding: 4px; gap: 6px; margin-bottom: 2px; }
-        body.mode-closer .position-medal { font-size: 14px; }
-        body.mode-closer .team-badge-large { width: 8px; height: 8px; }
-        body.mode-closer .team-name { font-size: 11px; }
-        body.mode-closer .team-count { font-size: 8px; }
-        body.mode-closer .score-number { font-size: 15px; }
-        body.mode-closer .score-avg { font-size: 8px; }
-
-        body.mode-podio .podio-view { padding: 12px 26px; gap: 0; }
-        body.mode-podio .podio-section-title { font-size: 15px; margin-bottom: 6px; letter-spacing: 1px; }
-        body.mode-podio .podio-block { justify-content: center; }
-        body.mode-podio .podio-divider { margin: 0 30px; }
-        body.mode-podio .podio-stage { max-width: 760px; gap: 14px; }
-        body.mode-podio .podio-player { gap: 6px; }
-        body.mode-podio .podio-medal { font-size: 22px; }
-        body.mode-podio .podio-player.place-1 .podio-avatar { width: 88px; height: 88px; border-width: 3px; }
-        body.mode-podio .podio-player.place-2 .podio-avatar { width: 70px; height: 70px; border-width: 3px; }
-        body.mode-podio .podio-player.place-3 .podio-avatar { width: 64px; height: 64px; border-width: 3px; }
-        body.mode-podio .podio-player.place-1 .podio-name { font-size: 14px; }
-        body.mode-podio .podio-player.place-2 .podio-name,
-        body.mode-podio .podio-player.place-3 .podio-name { font-size: 12px; }
-        body.mode-podio .podio-nickname { font-size: 10px; }
-        body.mode-podio .podio-player.place-1 .podio-pts { font-size: 18px; }
-        body.mode-podio .podio-player.place-2 .podio-pts,
-        body.mode-podio .podio-player.place-3 .podio-pts { font-size: 15px; }
-        body.mode-podio .podio-player.place-1 .podio-pedestal { width: 250px; height: 140px; }
-        body.mode-podio .podio-player.place-2 .podio-pedestal { width: 220px; height: 98px; }
-        body.mode-podio .podio-player.place-3 .podio-pedestal { width: 220px; height: 64px; }
-
-        @media (max-width: 1400px) {
-            .main-container { grid-template-columns: 70% 30%; }
-            .mtd-metrics-grid { gap: 8px 15px; }
+        .mode-indicator::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
         }
 
-        @media (max-width: 1200px) {
-            .main-container { grid-template-columns: 1fr; gap: 20px; }
-            .sidebar-section { flex-direction: row; gap: 20px; }
-            .ranking-times-card, .destaques-card { flex: 1; }
+        @keyframes shine {
+            to { left: 100%; }
         }
 
-        @media (max-width: 768px) {
-            .two-column-grid { grid-template-columns: 1fr; }
-            .sidebar-section { flex-direction: column; }
-            .epic-header { padding: 15px; flex-direction: column; gap: 15px; }
-            .mtd-metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 8px 10px; }
-            .footer-content { flex-direction: column; text-align: center; }
+        .mode-indicator .pulse-dot {
+            width: 12px; height: 12px;
+            background: #00FF88;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #00FF88;
+            animation: pulse 1.5s ease-in-out infinite;
         }
 
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50%      { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        /* PODIO */
         .podio-view {
-            display: none;
-            padding: 20px 40px;
-            height: 100vh;
-            width: 100%;
+            display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 05px;
-        }
-
-        .podio-view.active { display: flex; }
-
-        .podio-section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            font-weight: 800;
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-            text-align: center;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            align-items: center;
+            padding: 60px 30px;
+            gap: 0;
+            min-height: 70vh;
         }
 
         .podio-block {
-            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-        }
-
-        .podio-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
-            margin: 0 60px;
+            align-items: center;
+            width: 100%;
+            height: 100%;
         }
 
         .podio-stage {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
+            gap: 40px;
+            margin-top: 20px;
+            max-width: 1400px;
+        }
+
+        .podio-section-title {
+            font-size: 32px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #FFF 0%, #00D4FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(0, 180, 255, 0.8);
         }
 
         .podio-player {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 16px;
+            animation: podioEntrance 0.8s ease-out;
+        }
+
+        @keyframes podioEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .podio-player.place-1 { animation-delay: 0.2s; }
+        .podio-player.place-2 { animation-delay: 0s; }
+        .podio-player.place-3 { animation-delay: 0.1s; }
+
+        .podio-player .avatar-container {
+            position: relative;
+        }
+
+        .podio-player .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255,215,0,0.6);
+            box-shadow: 0 8px 30px rgba(255,215,0,0.4);
+        }
+
+        .podio-player.place-1 .avatar {
+            width: 160px;
+            height: 160px;
+            border-width: 5px;
+            border-color: rgba(255,215,0,0.9);
+            box-shadow: 0 12px 50px rgba(255,215,0,0.6);
+        }
+
+        .podio-player.place-2 .avatar {
+            width: 130px;
+            height: 130px;
+            border-width: 4px;
+            border-color: rgba(192,192,192,0.8);
+            box-shadow: 0 10px 40px rgba(192,192,192,0.5);
+        }
+
+        .podio-player.place-3 .avatar {
+            width: 120px;
+            height: 120px;
+            border-width: 4px;
+            border-color: rgba(205,127,50,0.8);
+            box-shadow: 0 10px 40px rgba(205,127,50,0.5);
         }
 
         .podio-medal {
-            font-size: 28px;
-            animation: floatMedal 2.5s ease-in-out infinite;
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            font-size: 48px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
         }
 
-        .podio-player:nth-child(1) .podio-medal { animation-delay: 0s; }
-        .podio-player:nth-child(2) .podio-medal { animation-delay: 0.4s; }
-        .podio-player:nth-child(3) .podio-medal { animation-delay: 0.8s; }
-
-        @keyframes floatMedal {
-            0%, 100% { transform: translateY(0px); }
-            50%       { transform: translateY(-8px); }
-        }
-
-        .podio-avatar {
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center top;
-            display: block;
-            animation: floatAvatar 3s ease-in-out infinite;
-        }
-
-        .podio-player.place-1 .podio-avatar {
-            width: 110px; height: 110px;
-            border: 4px solid #FFD700;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 0 50px rgba(255, 215, 0, 0.3);
-            animation-delay: 0s;
-        }
-
-        .podio-player.place-2 .podio-avatar {
-            width: 85px; height: 85px;
-            border: 3px solid #C0C0C0;
-            box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
-            animation-delay: 0.5s;
-        }
-
-        .podio-player.place-3 .podio-avatar {
-            width: 75px; height: 75px;
-            border: 3px solid #CD7F32;
-            box-shadow: 0 0 15px rgba(205, 127, 50, 0.6);
-            animation-delay: 1s;
-        }
-
-        @keyframes floatAvatar {
-            0%, 100% { transform: translateY(0px); }
-            50%       { transform: translateY(-6px); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50%       { transform: translateY(-5px); }
-        }
-
-        .podio-name {
-            font-family: 'Orbitron', sans-serif;
+        .podio-player .podio-name {
+            font-size: 20px;
             font-weight: 700;
-            color: #ffffff;
             text-align: center;
+            color: #FFF;
         }
 
-        .podio-player.place-1 .podio-name { font-size: 16px; }
-        .podio-player.place-2 .podio-name { font-size: 13px; }
-        .podio-player.place-3 .podio-name { font-size: 13px; }
+        .podio-player.place-1 .podio-name {
+            font-size: 24px;
+        }
 
-        .podio-nickname {
-            font-size: 11px;
-            color: rgba(255,255,255,0.6);
+        .podio-player .podio-nickname {
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
             font-style: italic;
-            text-align: center;
         }
 
-        .podio-pts {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            color: #00D4FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
-            text-align: center;
+        .podio-player .podio-pts {
+            font-size: 26px;
+            font-weight: 800;
+            color: #00FF88;
+            text-shadow: 0 0 20px rgba(0,255,136,0.8);
         }
 
-        .podio-player.place-1 .podio-pts { font-size: 22px; }
-        .podio-player.place-2 .podio-pts { font-size: 17px; }
-        .podio-player.place-3 .podio-pts { font-size: 17px; }
+        .podio-player.place-1 .podio-pts {
+            font-size: 32px;
+        }
 
         .podio-pedestal {
-            border-radius: 8px 8px 0 0;
+            width: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
+            font-size: 28px;
             font-weight: 900;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.9);
+            background: linear-gradient(180deg, rgba(0,120,255,0.3) 0%, rgba(0,60,120,0.5) 100%);
+            border: 2px solid rgba(0,180,255,0.4);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,120,255,0.4);
+            margin-top: 20px;
         }
 
         .podio-player.place-1 .podio-pedestal {
-            width: 400px; height: 200px;
-            background: linear-gradient(180deg, rgba(255,215,0,0.3), rgba(255,165,0,0.15));
-            border: 2px solid rgba(255,215,0,0.5);
-            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+            height: 160px;
+            width: 200px;
+            font-size: 32px;
+            background: linear-gradient(180deg, rgba(255,215,0,0.3) 0%, rgba(180,140,0,0.5) 100%);
+            border-color: rgba(255,215,0,0.6);
+            box-shadow: 0 12px 50px rgba(255,215,0,0.5);
         }
 
         .podio-player.place-2 .podio-pedestal {
-            width: 400px; height: 130px;
-            background: linear-gradient(180deg, rgba(192,192,192,0.2), rgba(169,169,169,0.1));
-            border: 2px solid rgba(192,192,192,0.4);
+            height: 130px;
+            background: linear-gradient(180deg, rgba(192,192,192,0.3) 0%, rgba(130,130,130,0.5) 100%);
+            border-color: rgba(192,192,192,0.6);
+            box-shadow: 0 10px 40px rgba(192,192,192,0.4);
         }
 
         .podio-player.place-3 .podio-pedestal {
-            width: 400px; height: 80px;
-            background: linear-gradient(180deg, rgba(205,127,50,0.2), rgba(184,115,51,0.1));
-            border: 2px solid rgba(205,127,50,0.4);
+            height: 110px;
+            background: linear-gradient(180deg, rgba(205,127,50,0.3) 0%, rgba(150,90,30,0.5) 100%);
+            border-color: rgba(205,127,50,0.6);
+            box-shadow: 0 10px 40px rgba(205,127,50,0.4);
         }
 
-        .destaques-bottom {
+        /* TABLE */
+        .table-view {
+            display: none;
+        }
+
+        .table-view.active {
+            display: block;
+        }
+
+        .info-banner {
             display: flex;
-            flex-direction: row;
-            gap: 10px;
-            padding: 8px 12px;
-            width: 100%;
-            overflow-x: auto;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .destaque-card-bottom {
+        .info-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            min-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #00FF88;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .table-container {
             flex: 1;
-            min-width: 140px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .table-header {
+            display: flex;
+            gap: 10px;
+            padding: 16px 20px;
+            background: rgba(0, 120, 255, 0.15);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 180, 255, 0.3);
+        }
+
+        .header-pos { width: 50px; text-align: center; }
+        .header-player { flex: 1; }
+        .header-pts { width: 80px; text-align: center; }
+        .header-time { width: 120px; text-align: center; }
+
+        .table-row {
+            display: flex;
+            gap: 10px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .table-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+            border-color: rgba(0, 180, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 180, 255, 0.2);
+        }
+
+        .row-pos {
+            width: 50px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 20px;
+            color: #00D4FF;
+        }
+
+        .row-player {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .player-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(0, 180, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 180, 255, 0.3);
+        }
+
+        .player-info {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 12px 10px;
-            border-radius: 14px;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            transition: all 0.3s ease;
+        }
+
+        .player-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFF;
+        }
+
+        .player-nickname {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
+        .row-pts {
+            width: 80px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            color: #00FF88;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+        }
+
+        .row-time {
+            width: 120px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .highlights-section {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            color: #00D4FF;
+            text-shadow: 0 0 20px rgba(0, 180, 255, 0.6);
+        }
+
+        .highlight-cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .highlight-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
         }
 
-       .destaque-card-bottom:hover { transform: translateY(-4px); }
+        .highlight-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
 
-       .destaque-card-bottom.gold-glow   { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.green-glow  { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.blue-glow   { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.purple-glow { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.cyan-glow   { background: transparent; border: none; box-shadow: none; }
+        .highlight-player {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+        }
 
-        .destaque-card-bottom .db-icon  { font-size: 24px; }
-        .destaque-card-bottom .db-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
-        .destaque-card-bottom .db-name  { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Orbitron', sans-serif; }
-        .destaque-card-bottom .db-value { font-size: 12px; font-weight: 700; color: #00D4FF; background: rgba(0,212,255,0.15); padding: 3px 10px; border-radius: 20px; }
-   .stadium-field {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 55%;
-    background:
-        linear-gradient(180deg,
-            transparent 0%,
-            rgba(0, 40, 10, 0.15) 30%,
-            rgba(0, 80, 20, 0.2) 60%,
-            rgba(0, 60, 15, 0.25) 100%
-        );
-    perspective: 800px;
-}
+        .highlight-player img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 180, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 180, 255, 0.4);
+        }
 
-.stadium-field::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%) perspective(600px) rotateX(60deg);
-    width: 70%; height: 80%;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 40px,
-            rgba(0, 180, 60, 0.06) 40px,
-            rgba(0, 180, 60, 0.06) 80px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 60px,
-            rgba(0, 180, 60, 0.04) 60px,
-            rgba(0, 180, 60, 0.04) 120px
-        ),
-        radial-gradient(ellipse at 50% 50%, rgba(0, 200, 80, 0.08) 0%, transparent 70%);
-    border: 1px solid rgba(0, 200, 80, 0.08);
-    border-radius: 4px;
-}
+        .highlight-player div {
+            text-align: left;
+        }
 
-.stadium-field::after {
-    content: '';
-    position: absolute;
-    bottom: 5%; left: 50%;
-    transform: translateX(-50%) perspective(600px) rotateX(60deg);
-    width: 20%; height: 30%;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 50%;
-}
+        .highlight-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFF;
+        }
 
-.stadium-lights {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-}
+        .highlight-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #00FF88;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+        }
 
-.stadium-lights::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 60%;
-    background:
-        radial-gradient(ellipse at 15% 10%, rgba(0, 160, 255, 0.18) 0%, transparent 35%),
-        radial-gradient(ellipse at 85% 10%, rgba(0, 160, 255, 0.18) 0%, transparent 35%),
-        radial-gradient(ellipse at 50% 0%, rgba(100, 180, 255, 0.1) 0%, transparent 40%);
-}
+        .bottom-section {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
 
-.stadium-lights::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background:
-        radial-gradient(ellipse at 10% 15%, rgba(255,255,255,0.07) 0%, transparent 15%),
-        radial-gradient(ellipse at 90% 15%, rgba(255,255,255,0.07) 0%, transparent 15%),
-        radial-gradient(ellipse at 30% 5%, rgba(255,255,255,0.05) 0%, transparent 10%),
-        radial-gradient(ellipse at 70% 5%, rgba(255,255,255,0.05) 0%, transparent 10%);
-}
-    
+        .ranking-times,
+        .perigo-rebaixamento {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .time-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .time-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(0, 180, 255, 0.5);
+        }
+
+        .time-name {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 600;
+            color: #FFF;
+        }
+
+        .time-pts {
+            font-size: 18px;
+            font-weight: 800;
+            color: #00FF88;
+            text-shadow: 0 0 12px rgba(0, 255, 136, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 40px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .footer-highlight {
+            color: #00D4FF;
+            font-weight: 700;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-wrapper,
+        .highlights-section,
+        .bottom-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0, 120, 255, 0.2);
+            border: 2px solid rgba(0, 180, 255, 0.5);
+            color: #FFF;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 120, 255, 0.4);
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 150, 255, 0.4);
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(0, 150, 255, 0.6);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        #contentContainer.fading {
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+        }
+
+        #contentContainer {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
     </style>
 </head>
 <body>
-
-    <div class="mode-indicator" id="modeIndicator">
-        <span class="mode-icon"></span>
-        <span class="mode-text" id="modeText">CLOSER</span>
+    <div class="background-effects">
+        <div class="gradient-mesh"></div>
+        <div class="grid-overlay"></div>
     </div>
 
-    <div class="pause-button" id="pauseButton"></div>
-
-    <div class="content-container" id="contentContainer">
-
-        <div class="background-container">
-    <div class="gradient-mesh"></div>
-    <div class="stadium-field"></div>
-    <div class="stadium-lights"></div>
-    <div class="particles">
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div>
-    </div>
-    <div class="grid-overlay"></div>
-    <div class="glow-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-</div>
-
-        <header class="epic-header" id="mainHeader">
-            <div class="logo-container">
-                <img src="https://cdn.prod.website-files.com/5f99af040fc8a6ae400fc29d/6673221b3ce01287894e61e3_suri_logo.png" alt="SURI" class="suri-logo">
-            </div>
-            <div class="title-section">
-                <div class="mtd-metrics-header">
-                    <div class="mtd-metrics-grid">
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">Meta mensal</div>
-                            <div class="mtd-value" id="meta-mensal">R$ 300.038,53</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">% Realizado mensal</div>
-                            <div class="mtd-value orange-glow" id="perc-realizado-mensal">10,37%</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">MTD Hoje</div>
-                            <div class="mtd-value cyan-glow" id="mtd-hoje">34,08%</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">Realizado mensal</div>
-                            <div class="mtd-value green-glow" id="realizado-mensal">R$ 31.124,25</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">% Realizado semanal</div>
-                            <div class="mtd-value orange-glow" id="perc-realizado-semanal">19,73%</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">MTD Ontem</div>
-                            <div class="mtd-value" id="mtd-ontem">34,95%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="live-indicator">
-                <span class="live-dot"></span>
-                <span class="live-text">AO VIVO</span>
+    <div class="container">
+        <header class="epic-header">
+            <h1>🏆 CHAMPIONS SURI 🏆</h1>
+            <div class="mode-indicator">
+                <span class="pulse-dot"></span>
+                <span id="modeText">CLOSER</span>
             </div>
         </header>
 
-        <div id="tableView">
-            <div class="main-container" style="grid-template-columns: 1fr; height: auto;">
-                <div class="table-section">
-                    <div style="display: grid; grid-template-columns: 75% 25%; gap: 12px; align-items: start;">
-                        <div class="two-column-grid">
-                            <div class="table-column">
-                                <table class="championship-table compact">
-                                    <thead>
-                                        <tr id="tableHeader1">
-                                            <th>#</th>
-                                            <th>Jogador</th>
-                                            <th>Time</th>
-                                            <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
-                                            <th><span class="icon" id="statJIcon"></span> <span id="statJLabel">Score</span></th>
-                                            <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
-                                            <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
-                                            <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
-                                            <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
-                                            <th><span class="icon"></span> PTS</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableColumn1"></tbody>
-                                </table>
-                            </div>
-                            <div class="table-column">
-                                <table class="championship-table compact">
-                                    <thead>
-                                        <tr id="tableHeader2">
-                                            <th>#</th>
-                                            <th>Jogador</th>
-                                            <th>Time</th>
-                                            <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
-                                            <th><span class="icon" id="statJIcon2"></span> <span id="statJLabel2">Score</span></th>
-                                            <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
-                                            <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
-                                            <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
-                                            <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
-                                            <th><span class="icon"></span> PTS</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableColumn2"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="sidebar-section" style="background: transparent; border: none; box-shadow: none; padding: 4px;">
-                            <div class="ranking-times-card" style="background: transparent; border: none; box-shadow: none;">
-                                <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
-                                <div id="teamRankings"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="destaques-bottom" id="highlights"></div>
+        <div id="contentContainer">
+            <!-- PODIO CLOSER -->
+            <div id="podioCloserView" class="podio-view">
+                <div class="podio-block">
+                    <h2 class="podio-section-title">🏆 Pódio Closer 🏆</h2>
+                    <div class="podio-stage" id="podioCloserStage"></div>
                 </div>
             </div>
 
-            <footer>
-                <div class="footer-content">
-                    <div class="suri-branding">
-                        Powered by Mika &bull; Sales Ops | <a href="https://www.suri.ai" target="_blank">©SURI By ChatbotMaker &bull; Uma solução TOTVS</a>
+            <!-- PODIO SDR -->
+            <div id="podioSDRView" class="podio-view" style="display:none;">
+                <div class="podio-block">
+                    <h2 class="podio-section-title">🏆 Pódio SDR 🏆</h2>
+                    <div class="podio-stage" id="podioSDRStage"></div>
+                </div>
+            </div>
+
+            <!-- TABLE VIEW -->
+            <div id="tableView" class="table-view">
+                <div class="info-banner" id="infoBanner"></div>
+                <div class="content-wrapper">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <div class="header-pos">#</div>
+                            <div class="header-player">Jogador</div>
+                            <div class="header-pts" id="headerPts">PTS</div>
+                            <div class="header-time" id="headerTime">Time</div>
+                        </div>
+                        <div id="tableColumn1"></div>
+                    </div>
+                    <div class="table-container">
+                        <div class="table-header">
+                            <div class="header-pos">#</div>
+                            <div class="header-player">Jogador</div>
+                            <div class="header-pts" id="headerPts2">PTS</div>
+                            <div class="header-time" id="headerTime2">Time</div>
+                        </div>
+                        <div id="tableColumn2"></div>
                     </div>
                 </div>
-            </footer>
-            </div>
-        
-        <div class="podio-view" id="podioView">
-            <div class="podio-block">
-                <div class="podio-section-title">🏆 PÓDIO DO MÊS — CLOSER</div>
-                <div class="podio-stage" id="podioCloser"></div>
-            </div>
-            <div class="podio-divider"></div>
-            <div class="podio-block">
-                <div class="podio-section-title">🏆 PÓDIO DO MÊS — SDR</div>
-                <div class="podio-stage" id="podioSDR"></div>
+
+                <div class="highlights-section">
+                    <h2 class="section-title">⭐ Destaques da Rodada</h2>
+                    <div class="highlight-cards" id="highlightsContainer"></div>
+                </div>
+
+                <div class="bottom-section">
+                    <div class="ranking-times">
+                        <h2 class="section-title">🥇 Ranking de Times</h2>
+                        <div id="rankingTimesContainer"></div>
+                    </div>
+                    <div class="perigo-rebaixamento">
+                        <h2 class="section-title">⚠️ Perigo de Rebaixamento</h2>
+                        <div id="perigoContainer"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <footer class="footer">
+            <p class="footer-text">
+                Dashboard atualizado em tempo real • 
+                <span class="footer-highlight">Champions Suri 2025</span>
+            </p>
+        </footer>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" id="pauseBtn" title="Pausar">⏸</button>
+        <button class="control-btn" id="nextBtn" title="Próximo">⏭</button>
     </div>
 
     <script>
+        const SPREADSHEET_ID = '1YOBnG_CfLQDwXvY-sYg_kKuOiUWNxP-fJf-ThnykB6Q';
+        const API_KEY = 'AIzaSyB6G_W22Od3HV2jVAh4h-BWs0_0pz6o-Vg';
+
+        const CLOSER_RANGE = 'closer!A2:J50';
+        const SDR_RANGE = 'sdr!A2:J50';
+
+        const MODE_SEQUENCE = ['closer', 'sdr', 'podio-closer', 'podio-sdr'];
+        const MODE_DURATIONS = {
+            'closer': 45000,
+            'sdr': 45000,
+            'podio-closer': 15000,
+            'podio-sdr': 15000
+        };
+
         let currentMode = 'closer';
         let currentPlayers = [];
+        let switchTimer = null;
         let isPaused = false;
-        let autoSwitchTimer = null;
-        let autoRefreshTimer = null;
-        let currentMotivationalPhraseIndex = 0;
-
-        const MODE_SEQUENCE = ['closer', 'sdr', 'podio'];
-        const MODE_DURATIONS = { closer: 45000, sdr: 45000, podio: 30000 };
 
         let cachedCloserPlayers = [];
-        let cachedSDRPlayers    = [];
+        let cachedSDRPlayers = [];
 
         const CLOSER_PHOTOS = {
-            'Alex Ucha':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
-            'Alex Uchoa':          'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
-            'Amanda Ribeiro':      'https://lh3.googleusercontent.com/d/1zJft4i-3pZ_ASY0a1YE2AZt1P8GnEdsk',
-            'André Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
-            'Andre Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
-            'Brena Carvalho':      'https://lh3.googleusercontent.com/d/150nv2Csf3V3UQsNL8lfLPZS4R41woFHh',
-            'Clailton Nascimento': 'https://lh3.googleusercontent.com/d/11iTMXwG6K32AV-pSdlnr_oyw5LcnckPb',
-            'Emerson Rocha':       'https://lh3.googleusercontent.com/d/1e0n_M3AGh1-MqK1aFm8RmxcS-JnJ2fq3',
-            'Gleice Moraes':       'https://lh3.googleusercontent.com/d/1y4qetBRh6leCZ3gzz-jQmnuac0-J4_bP',
-            'Jéssika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
-            'Jessika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
-            'João Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
-            'Joao Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
-            'Jossiane':            'https://lh3.googleusercontent.com/d/1N4lCr55HU8oHOV2__EogHqZ78G3X-NSm',
-            'Lucas Machado':       'https://lh3.googleusercontent.com/d/1r0HUosc_S3USRbwmvsl1lWc-gD6Ftdb6',
-            'Patricio Felix':      'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
-            'Patrcio Felix':      'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
-            'Rafael Lima':         'https://lh3.googleusercontent.com/d/1wMT6AqUWGBQ431cx8Dvubu_WryAUGOVL'
+            'Ramon Gonçalves': 'https://lh3.googleusercontent.com/d/1r3kU2l3zRw5sQk1-8Sl_UxEwVCLpVhfx',
+            'Filipe Siqueira': 'https://lh3.googleusercontent.com/d/16FDbk0I5qvYhXQJPxNmAhMZ1YMLZ_3w_',
+            'Vinicius Terra': 'https://lh3.googleusercontent.com/d/1rqCrzX3c6NJEZ8eFwdpg5lVZscO1Fgbp',
+            'Gustavo Salla': 'https://lh3.googleusercontent.com/d/1DLEczHnSi15EZOyY5WnMPyXGPmzxXDZM',
+            'José Ferreira': 'https://lh3.googleusercontent.com/d/1DmcGILJO2Y-m0qEiXnqGMLdHKP09A-zv',
+            'Gean Henrique': 'https://lh3.googleusercontent.com/d/1DiBHcVSF3oHSvNRw2VbkBACvxqVR86xU',
+            'Vinicius Melchiades': 'https://lh3.googleusercontent.com/d/1DkU9DF4sGIkc1NzSj-Y_KFBM6J9Dt3a9',
+            'Carlos Eduardo': 'https://lh3.googleusercontent.com/d/1K6IZzBmHbVVCdfEPSjDBGbHMSm2o9V3o',
+            'Matheus Portella': 'https://lh3.googleusercontent.com/d/1KGWFx0kCgEqCFbRK-8vJEqR7aDx_TKKU',
+            'Gabriel Viana': 'https://lh3.googleusercontent.com/d/1KXbZgYlQ-hZ88cXVR4n98uVVhMPaXuXL',
+            'Ryan Willians': 'https://lh3.googleusercontent.com/d/1KlcRYH-uOBLQ_mePB28RUXPvVMz0x7g6',
+            'João Gabriel': 'https://lh3.googleusercontent.com/d/1KrlVCJlIwjaTqS_Dq9V-KlI0OGSlHB0I',
+            'Johnathan Cruz': 'https://lh3.googleusercontent.com/d/1KrxiHWWiAfzgXFH7rqZcV7gaxUc0D1Fw',
+            'Pedro Schvartzaid': 'https://lh3.googleusercontent.com/d/1LAVhQGQiH5Kax3gRPJVuZ6p_wD1wg_YB',
+            'Lucas Amaral': 'https://lh3.googleusercontent.com/d/1LUEO10LuPPVBj0gM1A9ZM2YjPJMt_tGG',
+            'Edson Luis': 'https://lh3.googleusercontent.com/d/1LX0h77p1L0XKYsHdhgfM2LcaxcQ59uJz',
+            'Renato Lacerda': 'https://lh3.googleusercontent.com/d/1LqCXj4Guz4rp1E0CX1t1FDMCz2kVgfQI',
+            'Pedro Moreira': 'https://lh3.googleusercontent.com/d/1M-98wm3i-l-tHxEPV-iiJwdVYGSqIwXO',
+            'Hugo Ramos': 'https://lh3.googleusercontent.com/d/1MCmjUx6Z4RIrxl99HHJKgpSRsEfVHLIq',
+            'Marcilio Júnior': 'https://lh3.googleusercontent.com/d/1ME0JH2eqMCqzJm_p9YLLTrZq7w97b4TP',
+            'Samuel Vital': 'https://lh3.googleusercontent.com/d/1MF7Qs2hIQsSTDIokKxZhLhQxRlOL0T1U'
         };
 
         const SDR_PHOTOS = {
-            'Cida Gomes':       'https://lh3.googleusercontent.com/d/1L73zILGelKxvyLspXuJyuzcSIesSV7Id',
-            'Cintia Cifoni':    'https://lh3.googleusercontent.com/d/1PpFpK3wbai-SIwSIidt8TwffL80Flbp3',
-            'Daniele Carvalho': 'https://lh3.googleusercontent.com/d/1JRi7GxFAVe0X1f4TYso7OOw3gFQea3Zw',
-            'Dara Barroso':     'https://lh3.googleusercontent.com/d/1oJt4ENPVf9mbzLYfFQ0JPODNAJASQ0r_',
-            'Driele Rodrigues': 'https://lh3.googleusercontent.com/d/1XFatPpyQsaZTTubyMzeuLn2kjUKJPA5x',
-            'Iara Jssica':     'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
-            'Iara Jessica':     'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
-            'Júnior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
-            'Junior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
-            'Matheus Lima':     'https://lh3.googleusercontent.com/d/1dHEKu-VqT0NDIPpHog3vW3FAk6cwXJ-_',
-            'Pedro Roncalli':   'https://lh3.googleusercontent.com/d/1XOat3HSo5WBv0CWsVjhJdrqPTNv-qhZZ',
-            'Sâmela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
-            'Samela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
-            'Thiago de Brito':  'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
+            'Igor Damasceno': 'https://lh3.googleusercontent.com/d/1M22Z98SnPGzwFcevhDnmIDVHRl9aJ6FV',
+            'Kauã Silva': 'https://lh3.googleusercontent.com/d/1M5KMQvW5iK1drmFv5p04JBEr-LfBQYsQ',
+            'Rafael Henrique': 'https://lh3.googleusercontent.com/d/1M9CKkGBvd2AkHSQUqCTpKAkpQRqvUkKv',
+            'Julia Lemos': 'https://lh3.googleusercontent.com/d/1MIOk4kNQMHsJtPYvVS3LOvjRTSmzj0Vq',
+            'Guilherme Teles': 'https://lh3.googleusercontent.com/d/1MWWxV8NZiXtEXWr0fY0A2xoIgXXOiL0I',
+            'Nicolly Emidio': 'https://lh3.googleusercontent.com/d/1MrFLWHjxoIFTu_4Bt6BRi7qjJaQ2VNOH',
+            'João Calixto': 'https://lh3.googleusercontent.com/d/1MtmEqIjxpGjCOZL4iTCDKIy7VQ5f1Rcp',
+            'Lucas Henrique': 'https://lh3.googleusercontent.com/d/1N4Z3BLKxcmTDrUQKB2-8bW5v0tUFqv8Y',
+            'Thainara Cristhina': 'https://lh3.googleusercontent.com/d/1NGjjxDMmDv9rDYxnHYBmwqF17QEeRV8A',
+            'Andreza Kelly': 'https://lh3.googleusercontent.com/d/1NMWj5l90bpwz7JcQ4KOV7qPYZ3gq7xKZ',
+            'Leticia Godoi': 'https://lh3.googleusercontent.com/d/1NRKy8OQ5RUCLNzbjjKrCFLXW7cJ6y52Y',
+            'Stephany Ferreira': 'https://lh3.googleusercontent.com/d/1NUGMr51hzjGNnl0G5Ndu2Pb46JWLp10Q'
         };
 
-        function extractGoogleDriveId(url) {
-            const match = url && url.match(/\/d\/([^/?]+)/);
-            return match ? match[1] : null;
-        }
-
-        function buildGooglePhotoSources(url) {
-            const fileId = extractGoogleDriveId(url);
-            if (!fileId) return [url].filter(Boolean);
-            return [
-                url,
-                `https://lh3.googleusercontent.com/d/${fileId}`,
-                `https://drive.google.com/uc?export=view&id=${fileId}`,
-                `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`,
-                `https://drive.usercontent.google.com/download?id=${fileId}&export=view&authuser=0`
-            ].filter(Boolean);
-        }
-
-        function createPhotoImgHTML(photoUrl, className, altText, fallbackText) {
-            return `<img class="${className}" src="${photoUrl}" alt="${altText}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="${className}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${fallbackText}</div>`;
-}
-        function handlePhotoFallback(img) {
-            const sources = JSON.parse(img.dataset.photoSources || '[]');
-            let index = parseInt(img.dataset.photoIndex || '0', 10);
-            index += 1;
-            if (index < sources.length) {
-                img.dataset.photoIndex = String(index);
-                img.src = sources[index];
-                return;
-            }
-            img.style.display = 'none';
-            if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
-        }
-
-        function getPlayerPhoto(name) {
-            if (CLOSER_PHOTOS[name]) return CLOSER_PHOTOS[name];
-            const firstName = name.split(' ')[0].toLowerCase();
-            for (const key of Object.keys(CLOSER_PHOTOS)) {
-                if (key.toLowerCase().startsWith(firstName)) return CLOSER_PHOTOS[key];
-            }
-            return null;
-        }
-
-        function getSDRPhoto(name) {
-            if (SDR_PHOTOS[name]) return SDR_PHOTOS[name];
-            const firstName = name.split(' ')[0].toLowerCase();
-            for (const key of Object.keys(SDR_PHOTOS)) {
-                if (key.toLowerCase().startsWith(firstName)) return SDR_PHOTOS[key];
-            }
-            return null;
-        }
-
-        function getAvatarHTML(name, position, totalPlayers) {
-            const photoUrl = currentMode === 'closer' ? getPlayerPhoto(name) : getSDRPhoto(name);
-            const isTop5   = position <= 5;
-            const isDanger = position > (totalPlayers - 4);
-            const avatarClass = `player-avatar ${isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '')}`.trim();
-            if (photoUrl) {
-                return createPhotoImgHTML(photoUrl, avatarClass, name, name.charAt(0));
-            }
-            return `<div class="${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
-        }
-
-        function buildPodioPlayer(player, place, usePhoto) {
-            const medals  = ['🥇','🥈','🥉'];
-            const classes = ['place-1','place-2','place-3'];
-            const medal   = medals[place - 1];
-            const cls     = classes[place - 1];
-            const photoUrl = usePhoto ? (getPlayerPhoto(player.name) || getSDRPhoto(player.name)) : null;
-
-            const avatarTag = photoUrl
-                ? createPhotoImgHTML(photoUrl, 'podio-avatar', player.name, player.name.charAt(0))
-                : `<div class="podio-avatar" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`;
-
-            return `
-                <div class="podio-player ${cls}">
-                    <div class="podio-medal">${medal}</div>
-                    ${avatarTag}
-                    <div class="podio-name">${player.name}</div>
-                    <div class="podio-nickname">${player.nickname || ''}</div>
-                    <div class="podio-pts">${Math.round(player.points)} pts</div>
-                    <div class="podio-pedestal">${place}</div>
-                </div>`;
-        }
-
-        function renderPodio() {
-            const cp = cachedCloserPlayers.slice(0, 3);
-            if (cp.length >= 3) {
-                document.getElementById('podioCloser').innerHTML =
-                    buildPodioPlayer(cp[1], 2, true) +
-                    buildPodioPlayer(cp[0], 1, true) +
-                    buildPodioPlayer(cp[2], 3, true);
-            }
-            const sp = cachedSDRPlayers.slice(0, 3);
-            if (sp.length >= 3) {
-                document.getElementById('podioSDR').innerHTML =
-                    buildPodioPlayer(sp[1], 2, true) +
-                    buildPodioPlayer(sp[0], 1, true) +
-                    buildPodioPlayer(sp[2], 3, true);
-            }
-        }
-
-        const DATA_SOURCES = {
-            closer: {
-                players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
-                mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1112498764'
-            },
-            sdr: {
-                players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=337038684',
-                mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1235747938'
-            }
-        };
-
-        function parseCSVLine(line) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                if (char === '"') { inQuotes = !inQuotes; }
-                else if (char === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
-                else { current += char; }
-            }
-            result.push(current.trim());
-            return result;
-        }
-
-        function parseCSV(csv, mode) {
-            const lines = csv.split('\n');
-            const players = [];
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (!line) continue;
-                const cols = parseCSVLine(line);
-                if (cols.length >= 9 && cols[1] && cols[8]) {
-                    if (mode === 'closer') {
-                        players.push({
-                            rank: parseInt(cols[0]) || i,
-                            name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
-                            revenue: cols[4].trim(), meetings: parseInt(cols[5]) || 0,
-                            sales: parseInt(cols[6]) || 0, conversion: cols[7] ? cols[7].trim() : '0%',
-                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00', score: cols[9] ? cols[9].trim() : '-',
-                            points: parseFloat(cols[10]) || 0
-                        });
-                    } else {
-                        players.push({
-                            rank: parseInt(cols[0]) || i,
-                            name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
-                            meetings: parseInt(cols[5]) || 0, shows: parseInt(cols[6]) || 0,
-                            noshow: cols[7] ? cols[7].trim() : '0', sales: parseInt(cols[4]) || 0,
-                            points: parseFloat(cols[8]) || 0
-                        });
-                    }
-                }
-            }
-            return players.sort((a, b) => a.rank - b.rank);
-        }
-
-        async function fetchMTDMetrics() {
-            const modeForMTD = (currentMode === 'podio') ? 'closer' : currentMode;
+        async function fetchSheetData(range) {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
             try {
-                const url = DATA_SOURCES[modeForMTD].mtd + `&_=${Date.now()}`;
                 const response = await fetch(url);
-                const csvText  = await response.text();
-                const lines    = csvText.trim().split('\n');
-                if (lines.length < 2) return;
-                let values = [];
-                const row2 = lines[1];
-                let cur = ''; let inQ = false;
-                for (let i = 0; i < row2.length; i++) {
-                    const c = row2[i];
-                    if (c === '"') { inQ = !inQ; }
-                    else if (c === ',' && !inQ) { values.push(cur.trim()); cur = ''; }
-                    else { cur += c; }
-                }
-                values.push(cur.trim());
-                if (values.length >= 8) {
-                    const fbC = ['34,95%','34,08%','R$ 300.038,53','R$ 31.124,25','10,37%','R$ 91.859,33','R$ 18.127,35','19,73%'];
-                    const fbS = ['55,99%','47,82%','1.344','752','55,95%','467','229','49,04%'];
-                    for (let i = 0; i < values.length; i++) {
-                        if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') {
-                            values[i] = (modeForMTD === 'sdr' ? fbS : fbC)[i] || '0';
-                        }
-                    }
-                }
-                document.getElementById('mtd-ontem').textContent              = values[0];
-                document.getElementById('mtd-hoje').textContent               = values[1];
-                document.getElementById('meta-mensal').textContent            = values[2];
-                document.getElementById('realizado-mensal').textContent       = values[3];
-                document.getElementById('perc-realizado-mensal').textContent  = values[4];
-                document.getElementById('perc-realizado-semanal').textContent = values[7];
-                updateMetricColors();
-            } catch (e) { console.error('MTD error:', e); }
+                if (!response.ok) throw new Error(`Erro ${response.status}`);
+                const data = await response.json();
+                return data.values || [];
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+                return null;
+            }
         }
 
-        function updateMetricColors() {
-            const pm = document.getElementById('perc-realizado-mensal');
-            const vm = parseFloat(pm.textContent.replace(',','.').replace('%',''));
-            pm.className = 'mtd-value';
-            pm.classList.add(vm < 30 ? 'orange-glow' : vm < 70 ? 'cyan-glow' : 'green-glow');
-            const ps = document.getElementById('perc-realizado-semanal');
-            const vs = parseFloat(ps.textContent.replace(',','.').replace('%',''));
-            ps.className = 'mtd-value';
-            ps.classList.add(vs < 30 ? 'orange-glow' : vs < 70 ? 'cyan-glow' : 'green-glow');
+        function parsePlayerData(rows, photoMap) {
+            return rows.map(r => ({
+                name: r[0] || '',
+                nickname: r[1] || '',
+                pts: parseFloat(r[2]) || 0,
+                team: r[3] || '',
+                photo: photoMap[r[0]] || ''
+            })).sort((a, b) => b.pts - a.pts);
         }
 
         async function fetchPlayerData(mode) {
-            try {
-                const url = DATA_SOURCES[mode].players + `&_=${Date.now()}`;
-                const response = await fetch(url);
-                const csvText  = await response.text();
-                return parseCSV(csvText, mode);
-            } catch (e) { console.error('Player data error:', e); return null; }
+            const range = mode === 'closer' ? CLOSER_RANGE : SDR_RANGE;
+            const photoMap = mode === 'closer' ? CLOSER_PHOTOS : SDR_PHOTOS;
+            const rows = await fetchSheetData(range);
+            if (!rows) return null;
+            return parsePlayerData(rows, photoMap);
+        }
+
+        async function fetchMTDMetrics() {
+            // Implementação futura se necessário
         }
 
         function updateModeIndicator() {
-            const indicator = document.getElementById('modeIndicator');
-            const modeText  = document.getElementById('modeText');
-            document.body.classList.remove('mode-closer', 'mode-sdr', 'mode-podio');
-            indicator.classList.remove('sdr-mode', 'podio-mode');
-            if (currentMode === 'sdr') {
-                document.body.classList.add('mode-sdr');
-                indicator.classList.add('sdr-mode');
-                modeText.textContent = 'SDR';
-            } else if (currentMode === 'podio') {
-                document.body.classList.add('mode-podio');
-                indicator.classList.add('podio-mode');
-                modeText.textContent = 'PÓDIO';
-            } else {
-                document.body.classList.add('mode-closer');
+            const modeText = document.getElementById('modeText');
+            if (currentMode === 'closer') {
                 modeText.textContent = 'CLOSER';
+            } else if (currentMode === 'sdr') {
+                modeText.textContent = 'SDR';
+            } else if (currentMode === 'podio-closer') {
+                modeText.textContent = 'PÓDIO CLOSER';
+            } else if (currentMode === 'podio-sdr') {
+                modeText.textContent = 'PÓDIO SDR';
             }
-        }
-
-        function showTableView() {
-            document.getElementById('tableView').style.display = 'block';
-            document.getElementById('podioView').classList.remove('active');
-            document.getElementById('mainHeader').style.display = 'flex';
         }
 
         function showPodioView() {
-            document.getElementById('tableView').style.display = 'none';
-            document.getElementById('podioView').classList.add('active');
-            document.getElementById('mainHeader').style.display = 'none';
-            renderPodio();
+            document.getElementById('tableView').classList.remove('active');
+            document.getElementById('podioCloserView').style.display = 'none';
+            document.getElementById('podioSDRView').style.display = 'none';
+        }
+
+        function showTableView() {
+            document.getElementById('tableView').classList.add('active');
+            document.getElementById('podioCloserView').style.display = 'none';
+            document.getElementById('podioSDRView').style.display = 'none';
+        }
+
+        function renderPodio() {
+            if (currentMode === 'podio-closer') {
+                document.getElementById('podioCloserView').style.display = 'flex';
+                document.getElementById('podioSDRView').style.display = 'none';
+                const top3 = cachedCloserPlayers.slice(0, 3);
+                const stage = document.getElementById('podioCloserStage');
+                stage.innerHTML = '';
+                if (top3[1]) stage.appendChild(createPodioPlayer(top3[1], 2));
+                if (top3[0]) stage.appendChild(createPodioPlayer(top3[0], 1));
+                if (top3[2]) stage.appendChild(createPodioPlayer(top3[2], 3));
+            } else if (currentMode === 'podio-sdr') {
+                document.getElementById('podioCloserView').style.display = 'none';
+                document.getElementById('podioSDRView').style.display = 'flex';
+                const top3 = cachedSDRPlayers.slice(0, 3);
+                const stage = document.getElementById('podioSDRStage');
+                stage.innerHTML = '';
+                if (top3[1]) stage.appendChild(createPodioPlayer(top3[1], 2));
+                if (top3[0]) stage.appendChild(createPodioPlayer(top3[0], 1));
+                if (top3[2]) stage.appendChild(createPodioPlayer(top3[2], 3));
+            }
+        }
+
+        function createPodioPlayer(player, place) {
+            const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
+            const div = document.createElement('div');
+            div.className = `podio-player place-${place}`;
+            div.innerHTML = `
+                <div class="avatar-container">
+                    <img src="${player.photo}" alt="${player.name}" class="avatar">
+                    <div class="podio-medal">${medals[place]}</div>
+                </div>
+                <div class="podio-name">${player.name}</div>
+                <div class="podio-nickname">${player.nickname}</div>
+                <div class="podio-pts">${player.pts.toFixed(1)} pts</div>
+                <div class="podio-pedestal">${place}º Lugar</div>
+            `;
+            return div;
         }
 
         function updateTableHeaders() {
-            if (currentMode === 'closer') {
-                document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
-                document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'Score';
-                document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
-                document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
-                document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
-                document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
-                document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
-                document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
-                document.getElementById('statJIcon2').textContent = '⭐️'; document.getElementById('statJLabel2').textContent = 'Score';
-                document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
-                document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
-                document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
-                document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
-                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
-            } else if (currentMode === 'sdr') {
-                document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent = 'Agend';
-                document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent = 'Shows';
-                document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent = 'No-show';
-                document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent = 'Vendas';
-                document.getElementById('stat5Icon').textContent  = '🎯'; document.getElementById('stat5Label').textContent = 'PTS';
-                document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
-                document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
-                document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
-                document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
-                document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
-                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
-                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
-            }
-        }
-
-        function renderTableRows(players, startPosition) {
-            return players.map((player, index) => {
-                const position     = startPosition + index;
-                const totalPlayers = currentPlayers.length;
-                let zoneIcon = ''; let rowClass = '';
-                if (position <= 5) { zoneIcon = '🏆'; rowClass = 'top-5-safe'; }
-                else if (position > (totalPlayers - 4)) { zoneIcon = '⚠️'; rowClass = 'bottom-4-danger'; }
-
-                let teamColor = '#8B5CF6'; let teamClass = '';
-                if (currentMode === 'closer') {
-                    if (player.team.toUpperCase().includes('TITANS'))    { teamColor = '#8B5CF6'; teamClass = 'team-TITANS'; }
-                    else if (player.team.toUpperCase().includes('MAORI')) { teamColor = '#10B981'; teamClass = 'team-MAORI'; }
-                } else {
-                    if (player.team.toUpperCase().includes('EAGLES'))         { teamColor = '#FFD700'; teamClass = 'team-EAGLES'; }
-                    else if (player.team.toUpperCase().includes('PROCURANDO')) { teamColor = '#B026FF'; teamClass = 'team-PROCURANDO-DEMO'; }
-                }
-
-                let stat1, stat2, stat3, stat4, stat5 = '';
-                if (currentMode === 'closer') {
-                    stat1 = player.revenue; stat2 = player.meetings; stat3 = player.sales;
-                    stat4 = player.ticket;
-                    stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`;
-                } else {
-                    stat1 = player.meetings; stat2 = player.shows;
-                    stat3 = player.noshow; stat4 = player.sales;
-                    stat5 = '';
-                }
-
-                const fifthColumn = currentMode === 'closer' ? `<td class="conversion-cell">${stat5}</td>` : '';
-                const avatarHTML  = getAvatarHTML(player.name, position, totalPlayers);
-
-                return `<tr class="${rowClass}">
-                    <td class="position-cell">
-                        <div class="position-wrapper">
-                            <div class="avatar-wrapper">${avatarHTML}<div class="position-number">${position}</div></div>
-                            <span class="zone-icon">${zoneIcon}</span>
-                        </div>
-                    </td>
-                    <td class="player-cell"><div class="player-name">${player.name}</div><div class="player-nickname">${player.nickname}</div></td>
-                    <td class="team-cell"><span class="team-badge ${teamClass}" style="background-color:${teamColor}"></span>${player.team}</td>
-                    <td class="revenue-cell">${stat1}</td>
-                    ${currentMode === 'closer' ? `<td class="score-cell">${player.score || '-'}</td>` : ''}
-                    <td class="meetings-cell">${stat2}</td>
-                    <td class="sales-cell">${stat3}</td>
-                    <td class="ticket-cell">${stat4}</td>
-                    ${fifthColumn}
-                    <td class="points-cell">${Math.round(player.points)}</td>
-                </tr>`;
-            }).join('');
+            document.getElementById('headerPts').textContent = 'PTS';
+            document.getElementById('headerPts2').textContent = 'PTS';
+            document.getElementById('headerTime').textContent = 'Time';
+            document.getElementById('headerTime2').textContent = 'Time';
         }
 
         function updateTable(players) {
-    const column1 = document.getElementById('tableColumn1');
-    const column2 = document.getElementById('tableColumn2');
-    if (!column1 || !column2 || !players) return;
-    currentPlayers = players;
-    let col1Players, col2Players;
-    if (currentMode === 'closer') {
-        col1Players = players.slice(0, 7); col2Players = players.slice(7);
-    } else {
-        const mid = Math.ceil(players.length / 2);
-        col1Players = players.slice(0, mid); 
-        col2Players = players.slice(mid);
-    }
-    column1.innerHTML = renderTableRows(col1Players, 1);
-    column2.innerHTML = renderTableRows(col2Players, col1Players.length + 1);
-    updateDestaques(players);
-    updateRankingTimes(players);
-    updatePerigoRebaixamento(players);
-}
+            const column1 = document.getElementById('tableColumn1');
+            const column2 = document.getElementById('tableColumn2');
+            if (!column1 || !column2 || !players) return;
+            currentPlayers = players;
 
-        function getPhotoForDestaque(name) {
-            const url = getPlayerPhoto(name) || getSDRPhoto(name);
-            if (!url) return null;
-            return url;
+            let col1Players, col2Players;
+            if (currentMode === 'closer') {
+                col1Players = players.slice(0, 7);
+                col2Players = players.slice(7);
+            } else {
+                const mid = Math.ceil(players.length / 2);
+                col1Players = players.slice(0, mid);
+                col2Players = players.slice(mid);
+            }
+
+            column1.innerHTML = renderTableRows(col1Players, 1);
+            column2.innerHTML = renderTableRows(col2Players, col1Players.length + 1);
+
+            updateDestaques(players);
+            updateRankingTimes(players);
+            updatePerigoRebaixamento(players);
         }
 
-        function destaqueAvatarHTML(name) {
-    const url = getPhotoForDestaque(name);
-    const photoHTML = url
-        ? `<img src="${url}" alt="${name}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div style="display:none;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`
-        : `<div style="display:flex;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
-    return `<div style="position:relative;flex-shrink:0;">${photoHTML}<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:14px;filter:drop-shadow(0 0 6px #FFD700);animation:floatMedal 2.5s ease-in-out infinite;">⭐</span></div>`;
-}
-
+        function renderTableRows(players, startPos) {
+            return players.map((p, i) => `
+                <div class="table-row">
+                    <div class="row-pos">${startPos + i}</div>
+                    <div class="row-player">
+                        <img src="${p.photo}" alt="${p.name}" class="player-avatar">
+                        <div class="player-info">
+                            <div class="player-name">${p.name}</div>
+                            <div class="player-nickname">${p.nickname}</div>
+                        </div>
+                    </div>
+                    <div class="row-pts">${p.pts.toFixed(1)}</div>
+                    <div class="row-time">${p.team}</div>
+                </div>
+            `).join('');
+        }
 
         function updateDestaques(players) {
-            if (!players || players.length === 0) return;
-            const container = document.getElementById('highlights');
-            let html = '';
-            if (currentMode === 'closer') {
-                const top = players[0];
-                html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
-                const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topRev.name)}<div><div class="db-icon">💰</div><div class="db-label">Maior Receita</div><div class="db-name">${topRev.nickname}</div><div class="db-value">${topRev.revenue}</div></div></div>`;
-                const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topTkt.name)}<div><div class="db-icon">🎫</div><div class="db-label">Maior Ticket</div><div class="db-name">${topTkt.nickname}</div><div class="db-value">${topTkt.ticket}</div></div></div>`;
-                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-                html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Mais Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
-                const topConv = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-card-bottom cyan-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topConv.name)}<div><div class="db-icon">📊</div><div class="db-label">Melhor Conversão</div><div class="db-name">${topConv.nickname}</div><div class="db-value">${topConv.conversion}</div></div></div>`;
-            } else {
-                const top = players[0];
-                html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
-                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-                html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Maior Qtd Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
-                const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
-                html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topShows.name)}<div><div class="db-icon">✅</div><div class="db-label">Mais Shows</div><div class="db-name">${topShows.nickname}</div><div class="db-value">${topShows.shows} shows</div></div></div>`;
-                const topMeet = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
-                html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topMeet.name)}<div><div class="db-icon">📅</div><div class="db-label">Mais Agendamentos</div><div class="db-name">${topMeet.nickname}</div><div class="db-value">${topMeet.meetings} agend.</div></div></div>`;
-            }
-            container.innerHTML = html;
+            const container = document.getElementById('highlightsContainer');
+            if (!container) return;
+            const top = players[0];
+            if (!top) return;
+            container.innerHTML = `
+                <div class="highlight-card">
+                    <h3>🏆 Líder</h3>
+                    <div class="highlight-player">
+                        <img src="${top.photo}" alt="${top.name}">
+                        <div>
+                            <div class="highlight-name">${top.name}</div>
+                            <div class="highlight-value">${top.pts.toFixed(1)} pts</div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         function updateRankingTimes(players) {
-            if (!players || players.length === 0) return;
-            const teams = {};
-            if (currentMode === 'closer') {
-                teams['TITANS'] = { points: 0, count: 0, color: 'titans-glow' };
-                teams['MAORI']  = { points: 0, count: 0, color: 'maori-glow' };
-            } else {
-                teams['EAGLES']          = { points: 0, count: 0, color: 'eagles-glow' };
-                teams['Procurando Demo'] = { points: 0, count: 0, color: 'procurando-glow' };
-            }
+            const container = document.getElementById('rankingTimesContainer');
+            if (!container) return;
+            const teamMap = {};
             players.forEach(p => {
-                const tn = p.team.toUpperCase().trim();
-                let found = null;
-                for (const [key] of Object.entries(teams)) {
-                    const k = key.toUpperCase().replace(/\s+/g,'');
-                    const t = tn.replace(/\s+/g,'');
-                    if (t.includes(k) || k.includes(t) || (k === 'PROCURANDODEMO' && t.includes('PROCURANDO'))) { found = key; break; }
-                }
-                if (found) { teams[found].points += p.points; teams[found].count += 1; }
+                if (!teamMap[p.team]) teamMap[p.team] = { pts: 0, players: [] };
+                teamMap[p.team].pts += p.pts;
+                teamMap[p.team].players.push(p);
             });
-            const sorted = Object.entries(teams).sort(([,a],[,b]) => {
-                const avgA = a.count > 0 ? a.points / a.count : 0;
-                const avgB = b.count > 0 ? b.points / b.count : 0;
-                return avgB - avgA;
-            });
-            let html = '';
-            sorted.forEach(([name, data], i) => {
-                const cls = ['first-place','second-place','third-place'][i] || 'third-place';
-                const medal = ['🥇','🥈','🥉'][i] || '🥉';
-                const avg = data.count > 0 ? (data.points / data.count).toFixed(1) : '0.0';
-                html += `<div class="time-card ${cls}"><div class="position-medal">${medal}</div><div class="team-info"><div class="team-badge-large ${data.color}"></div><div class="team-details"><div class="team-name">${name}</div><div class="team-count">👥 ${data.count} jogadores</div></div></div><div class="team-score-big"><div class="score-number">${Math.round(data.points)}</div><div class="score-avg">⚡ Avg: ${avg}</div></div></div>`;
-            });
-            document.getElementById('teamRankings').innerHTML = html;
+            const sorted = Object.keys(teamMap).map(t => ({
+                name: t,
+                pts: teamMap[t].pts,
+                photo: teamMap[t].players[0].photo
+            })).sort((a, b) => b.pts - a.pts);
+
+            container.innerHTML = sorted.slice(0, 3).map(t => `
+                <div class="time-item">
+                    <img src="${t.photo}" alt="${t.name}" class="time-avatar">
+                    <div class="time-name">${t.name}</div>
+                    <div class="time-pts">${t.pts.toFixed(1)}</div>
+                </div>
+            `).join('');
         }
 
         function updatePerigoRebaixamento(players) {
-    if (!players || players.length === 0) return;
-    const el = document.getElementById('relegationPositions');
-    if (!el) return;
-    const total = players.length;
-    const start = total - 3;
-    let html = '';
-    for (let i = 0; i < 4; i++) {
-        const pos   = start + i;
-        const label = i < 2 ? 'RISCO' : (i === 2 ? 'PERIGO' : 'CRÍTICO');
-        html += `<div class="position-danger">${pos}° ${label}</div>`;
-    }
-    el.innerHTML = html;
-}
-        function togglePause() {
-            const btn = document.getElementById('pauseButton');
-            isPaused = !isPaused;
-            if (isPaused) {
-                btn.textContent = '⏸'; btn.classList.add('paused');
-                if (autoSwitchTimer) { clearInterval(autoSwitchTimer); autoSwitchTimer = null; }
-            } else {
-                btn.textContent = '▶'; btn.classList.remove('paused');
-                scheduleNextSwitch();
-            }
+            const container = document.getElementById('perigoContainer');
+            if (!container) return;
+            const bottom = players.slice(-3).reverse();
+            container.innerHTML = bottom.map(p => `
+                <div class="time-item">
+                    <img src="${p.photo}" alt="${p.name}" class="time-avatar">
+                    <div class="time-name">${p.name}</div>
+                    <div class="time-pts">${p.pts.toFixed(1)}</div>
+                </div>
+            `).join('');
         }
 
-        function scheduleNextSwitch() {
-            if (autoSwitchTimer) clearTimeout(autoSwitchTimer);
-            const duration = MODE_DURATIONS[currentMode] || 45000;
-            autoSwitchTimer = setTimeout(switchModeWithTransition, duration);
+        async function loadCurrentModeData() {
+            if (currentMode === 'closer') {
+                const players = await fetchPlayerData('closer');
+                if (players) {
+                    cachedCloserPlayers = players;
+                    updateTable(players);
+                }
+            } else if (currentMode === 'sdr') {
+                const players = await fetchPlayerData('sdr');
+                if (players) {
+                    cachedSDRPlayers = players;
+                    updateTable(players);
+                }
+            }
         }
 
         async function switchModeWithTransition() {
-    const cc = document.getElementById('contentContainer');
-    
-    const idx = MODE_SEQUENCE.indexOf(currentMode);
-    currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
+            const cc = document.getElementById('contentContainer');
 
-    updateModeIndicator();
+            const idx = MODE_SEQUENCE.indexOf(currentMode);
+            currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
 
-    cc.classList.add('fading');
+            updateModeIndicator();
 
-    if (currentMode === 'podio') {
-        showPodioView();
-        await new Promise(r => setTimeout(r, 300));
-        const cp = await fetchPlayerData('closer');
-        const sp = await fetchPlayerData('sdr');
-        if (cp) cachedCloserPlayers = cp;
-        if (sp) cachedSDRPlayers    = sp;
-        await fetchMTDMetrics();
-        renderPodio();
-    } else {
-        showTableView();
-        updateTableHeaders();
-        await new Promise(r => setTimeout(r, 300));
-        await loadCurrentModeData();
-    }
+            cc.classList.add('fading');
 
-    cc.classList.remove('fading');
-    if (!isPaused) scheduleNextSwitch();
-}
-
-        async function loadCurrentModeData() {
-            await fetchMTDMetrics();
-            const data = await fetchPlayerData(currentMode);
-            if (data && data.length > 0) {
-                if (currentMode === 'closer') cachedCloserPlayers = data;
-                if (currentMode === 'sdr')    cachedSDRPlayers    = data;
-                updateTable(data);
-            }
-        }
-
-        async function autoRefresh() {
-            if (isPaused) return;
-            if (document.getElementById('contentContainer').classList.contains('fading')) return;
-            if (currentMode === 'podio') {
+            if (currentMode === 'podio-closer' || currentMode === 'podio-sdr') {
+                showPodioView();
+                await new Promise(r => setTimeout(r, 300));
                 const cp = await fetchPlayerData('closer');
                 const sp = await fetchPlayerData('sdr');
                 if (cp) cachedCloserPlayers = cp;
-                if (sp) cachedSDRPlayers    = sp;
+                if (sp) cachedSDRPlayers = sp;
+                await fetchMTDMetrics();
                 renderPodio();
             } else {
+                showTableView();
+                updateTableHeaders();
+                await new Promise(r => setTimeout(r, 300));
                 await loadCurrentModeData();
             }
+
+            cc.classList.remove('fading');
+            if (!isPaused) scheduleNextSwitch();
         }
 
-        document.addEventListener('DOMContentLoaded', async function () {
-    updateModeIndicator();
-    updateTableHeaders();
-    showTableView();
+        function scheduleNextSwitch() {
+            if (switchTimer) clearTimeout(switchTimer);
+            const duration = MODE_DURATIONS[currentMode] || 45000;
+            switchTimer = setTimeout(switchModeWithTransition, duration);
+        }
 
-    document.getElementById('modeIndicator').addEventListener('click', () => {
-        switchModeWithTransition();
-    });
+        async function init() {
+            updateModeIndicator();
+            showTableView();
+            await loadCurrentModeData();
+            scheduleNextSwitch();
+        }
 
-    document.getElementById('pauseButton').addEventListener('click', togglePause);
-    document.getElementById('pauseButton').textContent = '⏸';
+        function autoRefresh() {
+            setInterval(async () => {
+                if (currentMode === 'closer' || currentMode === 'sdr') {
+                    await loadCurrentModeData();
+                } else if (currentMode === 'podio-closer' || currentMode === 'podio-sdr') {
+                    const cp = await fetchPlayerData('closer');
+                    const sp = await fetchPlayerData('sdr');
+                    if (cp) cachedCloserPlayers = cp;
+                    if (sp) cachedSDRPlayers = sp;
+                    renderPodio();
+                }
+            }, 60000);
+        }
 
-    scheduleNextSwitch();
-    autoRefreshTimer = setInterval(autoRefresh, 10000);
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            isPaused = !isPaused;
+            const btn = document.getElementById('pauseBtn');
+            if (isPaused) {
+                clearTimeout(switchTimer);
+                btn.innerHTML = '▶';
+                btn.title = 'Retomar';
+            } else {
+                btn.innerHTML = '⏸';
+                btn.title = 'Pausar';
+                scheduleNextSwitch();
+            }
+        });
 
-    const cp = await fetchPlayerData('closer');
-    const sp = await fetchPlayerData('sdr');
-    if (cp) cachedCloserPlayers = cp;
-    if (sp) cachedSDRPlayers    = sp;
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (switchTimer) clearTimeout(switchTimer);
+            switchModeWithTransition();
+        });
 
-    await loadCurrentModeData();
-});
+        window.addEventListener('DOMContentLoaded', () => {
+            init();
+            autoRefresh();
+        });
     </script>
 </body>
 </html>
