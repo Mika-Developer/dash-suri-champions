@@ -1634,31 +1634,34 @@
         }
 
         async function switchModeWithTransition() {
-            const cc = document.getElementById('contentContainer');
-            cc.classList.add('fading');
-            await new Promise(r => setTimeout(r, 500));
+    const cc = document.getElementById('contentContainer');
+    
+    const idx = MODE_SEQUENCE.indexOf(currentMode);
+    currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
 
-            const idx = MODE_SEQUENCE.indexOf(currentMode);
-            currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
+    updateModeIndicator();
 
-            updateModeIndicator();
+    cc.classList.add('fading');
 
-            if (currentMode === 'podio') {
-                const cp = await fetchPlayerData('closer');
-                const sp = await fetchPlayerData('sdr');
-                if (cp) cachedCloserPlayers = cp;
-                if (sp) cachedSDRPlayers    = sp;
-                await fetchMTDMetrics();
-                showPodioView();
-            } else {
-                showTableView();
-                updateTableHeaders();
-                await loadCurrentModeData();
-            }
+    if (currentMode === 'podio') {
+        showPodioView();
+        await new Promise(r => setTimeout(r, 300));
+        const cp = await fetchPlayerData('closer');
+        const sp = await fetchPlayerData('sdr');
+        if (cp) cachedCloserPlayers = cp;
+        if (sp) cachedSDRPlayers    = sp;
+        await fetchMTDMetrics();
+        renderPodio();
+    } else {
+        showTableView();
+        updateTableHeaders();
+        await new Promise(r => setTimeout(r, 300));
+        await loadCurrentModeData();
+    }
 
-            cc.classList.remove('fading');
-            if (!isPaused) scheduleNextSwitch();
-        }
+    cc.classList.remove('fading');
+    if (!isPaused) scheduleNextSwitch();
+}
 
         async function loadCurrentModeData() {
             await fetchMTDMetrics();
