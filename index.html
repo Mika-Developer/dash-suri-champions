@@ -298,7 +298,7 @@
             background-clip: text;
             text-align: center;
             text-shadow: none;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             animation: shimmerTitle 3s ease-in-out infinite;
         }
 
@@ -307,12 +307,40 @@
             50% { filter: brightness(1.3); }
         }
 
+        .uv-deal-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));
+            animation: pulseValue 2s ease-in-out infinite;
+            margin-bottom: 6px;
+        }
+
+        @keyframes pulseValue {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(255,215,0,0.5)); }
+            50% { filter: drop-shadow(0 0 60px rgba(255,215,0,0.9)); }
+        }
+
+        .uv-deal-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
         .uv-players-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 60px;
-            margin-bottom: 40px;
+            gap: 80px;
+            margin-bottom: 30px;
         }
 
         .uv-player-card {
@@ -331,8 +359,11 @@
             color: rgba(255,255,255,0.5);
         }
 
+        /* Anel rotativo — apenas visual, sem duplicar a foto */
         .uv-avatar-ring {
             position: relative;
+            width: 176px;
+            height: 176px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -341,10 +372,10 @@
         .uv-avatar-ring::before {
             content: '';
             position: absolute;
-            inset: -6px;
+            inset: 0;
             border-radius: 50%;
-            padding: 6px;
             animation: rotateBorder 4s linear infinite;
+            z-index: 0;
         }
 
         .uv-player-card.closer .uv-avatar-ring::before {
@@ -355,8 +386,18 @@
             background: conic-gradient(#10B981, #FFD700, #10B981);
         }
 
+        /* Máscara branca que cobre o centro do anel, deixando só a borda */
+        .uv-avatar-ring::after {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            background: transparent;
+            z-index: 1;
+        }
+
         @keyframes rotateBorder {
-            0% { transform: rotate(0deg); }
+            0%   { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
@@ -368,8 +409,9 @@
             object-position: center top;
             display: block;
             position: relative;
-            z-index: 1;
+            z-index: 2;
             animation: floatAvatar 3s ease-in-out infinite;
+            flex-shrink: 0;
         }
 
         .uv-avatar-fallback {
@@ -379,11 +421,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 900;
             color: #fff;
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            flex-shrink: 0;
+            animation: floatAvatar 3s ease-in-out infinite;
         }
 
         .uv-player-card.closer .uv-avatar-fallback { background: linear-gradient(135deg, #00D4FF, #8B5CF6); }
@@ -393,9 +437,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 20px;
             font-weight: 800;
-            color: #ffffff;
             text-align: center;
-            text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
 
         .uv-player-card.closer .uv-player-name { color: #00F0FF; text-shadow: 0 0 15px rgba(0,240,255,0.6); }
@@ -416,37 +458,9 @@
 
         .uv-vs-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
+            font-size: 24px;
             font-weight: 900;
-            color: rgba(255,255,255,0.3);
-        }
-
-        .uv-deal-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 72px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-align: center;
-            filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));
-            animation: pulseValue 2s ease-in-out infinite;
-            margin-bottom: 10px;
-        }
-
-        @keyframes pulseValue {
-            0%, 100% { filter: drop-shadow(0 0 30px rgba(255,215,0,0.5)); }
-            50% { filter: drop-shadow(0 0 60px rgba(255,215,0,0.9)); }
-        }
-
-        .uv-deal-name {
-            font-family: 'Inter', sans-serif;
-            font-size: 18px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.7);
-            text-align: center;
-            margin-bottom: 30px;
+            color: rgba(255,255,255,0.4);
         }
 
         .uv-frase-container {
@@ -488,14 +502,13 @@
             text-align: right;
         }
 
-        /* Confetti particles on sale screen */
+        /* Confetti */
         .uv-confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
             border-radius: 2px;
             animation: confettiFall 4s ease-in infinite;
             opacity: 0;
+            pointer-events: none;
         }
 
         @keyframes confettiFall {
@@ -814,9 +827,7 @@
                 <!-- Closer -->
                 <div class="uv-player-card closer">
                     <div class="uv-player-label">⚡ Closer</div>
-                    <div class="uv-avatar-ring">
-                        <div id="uvCloserAvatar"></div>
-                    </div>
+                    <div class="uv-avatar-ring" id="uvCloserRing"></div>
                     <div class="uv-player-name" id="uvCloserName">—</div>
                 </div>
 
@@ -829,9 +840,7 @@
                 <!-- SDR -->
                 <div class="uv-player-card sdr">
                     <div class="uv-player-label">🎯 SDR</div>
-                    <div class="uv-avatar-ring">
-                        <div id="uvSDRAvatar"></div>
-                    </div>
+                    <div class="uv-avatar-ring" id="uvSDRRing"></div>
                     <div class="uv-player-name" id="uvSDRName">—</div>
                 </div>
             </div>
@@ -852,7 +861,7 @@
     <script>
     // ===================== CONFIGURAÇÕES =====================
     // SUBSTITUA pela URL do seu Google Apps Script proxy
-    const PIPEDRIVE_PROXY_URL = 'https://script.google.com/macros/s/AKfycbwLVX0bcN_EGFpV4lVZb56kXatixWEjf_FztMU1HCrejXLuEjMSsTi1V0ce-Lmt2sjB4A/exec';
+    const PIPEDRIVE_PROXY_URL = 'https://script.google.com/macros/s/SEU_APPS_SCRIPT_ID/exec';
 
     // Campos customizados do Pipedrive
     const FIELD_FRASE = 'cfe4686c420c52d0ecfb49b352665e6489b736da';
@@ -1073,22 +1082,30 @@
         const frase      = sale[FIELD_FRASE] || sale.frase || '';
         const dealName   = sale.title || '';
 
-        document.getElementById('uvDealValue').textContent = value;
-        document.getElementById('uvDealName').textContent  = dealName;
+        document.getElementById('uvDealValue').textContent  = value;
+        document.getElementById('uvDealName').textContent   = dealName;
         document.getElementById('uvCloserName').textContent = closerName;
         document.getElementById('uvSDRName').textContent    = sdrName;
 
-        // Avatar Closer
+        // Avatar Closer — só a foto OU só o fallback, nunca os dois
         const closerPhoto = getPlayerPhoto(closerName);
-        document.getElementById('uvCloserAvatar').innerHTML = closerPhoto
-            ? `<img class="uv-avatar" src="${closerPhoto}" alt="${closerName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#00D4FF,#8B5CF6);">${closerName.charAt(0)}</div>`
-            : `<div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#00D4FF,#8B5CF6);">${closerName.charAt(0)}</div>`;
+        const closerRing  = document.getElementById('uvCloserRing');
+        if (closerPhoto) {
+            closerRing.innerHTML = `<img class="uv-avatar" src="${closerPhoto}" alt="${closerName}"
+                onerror="this.outerHTML='<div class=\\'uv-avatar-fallback\\'style=\\'background:linear-gradient(135deg,#00D4FF,#8B5CF6)\\'>${closerName.charAt(0)}</div>';">`;
+        } else {
+            closerRing.innerHTML = `<div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#00D4FF,#8B5CF6);">${closerName.charAt(0)}</div>`;
+        }
 
-        // Avatar SDR
+        // Avatar SDR — só a foto OU só o fallback, nunca os dois
         const sdrPhoto = getSDRPhoto(sdrName);
-        document.getElementById('uvSDRAvatar').innerHTML = sdrPhoto
-            ? `<img class="uv-avatar" src="${sdrPhoto}" alt="${sdrName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#10B981,#FFD700);">${sdrName.charAt(0)}</div>`
-            : `<div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#10B981,#FFD700);">${sdrName.charAt(0)}</div>`;
+        const sdrRing  = document.getElementById('uvSDRRing');
+        if (sdrPhoto) {
+            sdrRing.innerHTML = `<img class="uv-avatar" src="${sdrPhoto}" alt="${sdrName}"
+                onerror="this.outerHTML='<div class=\\'uv-avatar-fallback\\'style=\\'background:linear-gradient(135deg,#10B981,#FFD700)\\'>${sdrName.charAt(0)}</div>';">`;
+        } else {
+            sdrRing.innerHTML = `<div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#10B981,#FFD700);">${sdrName.charAt(0)}</div>`;
+        }
 
         // Frase
         const fraseContainer = document.getElementById('uvFraseContainer');
