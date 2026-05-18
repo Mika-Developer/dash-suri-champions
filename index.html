@@ -516,194 +516,196 @@
             100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
         }
 
-        /* ===================== POPUP NOTIFICAÇÃO — FOGUETE ÉPICO ===================== */
+        /* ===================== POPUP NOTIFICAÇÃO — FOGUETE FLUTUANTE ===================== */
 
+        /* Overlay: escurece e blura o fundo, sem tocar no conteúdo */
         .rocket-overlay {
             position: fixed; inset: 0; z-index: 9990;
-            background: rgba(0,0,0,0); pointer-events: none;
-            transition: background 0.5s ease;
+            background: rgba(0,0,10,0); backdrop-filter: blur(0px);
+            pointer-events: none;
+            transition: background 0.5s ease, backdrop-filter 0.5s ease;
         }
         .rocket-overlay.visible {
-            background: rgba(0,0,10,0.75);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,10,0.72);
+            backdrop-filter: blur(6px);
             pointer-events: all;
         }
 
-        /* Container — sobe de baixo, vai pro centro */
+        /* Container flutuante — sem fundo, sem bordas */
         .sale-notification {
             position: fixed;
             left: 50%; bottom: -110vh;
-            transform: translateX(-50%) scale(0.6) rotate(-10deg);
-            width: min(860px, 92vw);
+            transform: translateX(-50%) scale(0.5) rotate(-12deg);
+            width: min(820px, 90vw);
             z-index: 9999; pointer-events: none;
             transition:
-                bottom 0.8s cubic-bezier(0.22, 1.3, 0.36, 1),
-                transform 0.8s cubic-bezier(0.22, 1.3, 0.36, 1);
+                bottom 0.85s cubic-bezier(0.22, 1.4, 0.36, 1),
+                transform 0.85s cubic-bezier(0.22, 1.4, 0.36, 1);
             display: flex; flex-direction: column; align-items: center; gap: 0;
+            /* SEM background, SEM border, SEM box-shadow */
         }
         .sale-notification.visible {
-            bottom: calc(50vh - 300px);
+            bottom: calc(50vh - 310px);
             transform: translateX(-50%) scale(1) rotate(0deg);
             pointer-events: all;
         }
         .sale-notification.leaving {
             bottom: 110vh;
-            transform: translateX(-50%) scale(0.5) rotate(15deg);
+            transform: translateX(-50%) scale(0.4) rotate(18deg);
             transition:
-                bottom 0.65s cubic-bezier(0.55, 0, 1, 0.45),
-                transform 0.65s cubic-bezier(0.55, 0, 1, 0.45);
+                bottom 0.6s cubic-bezier(0.55, 0, 1, 0.45),
+                transform 0.6s cubic-bezier(0.55, 0, 1, 0.45);
         }
 
         /* Foguete */
         .sn-rocket {
-            font-size: 110px; line-height: 1;
-            filter: drop-shadow(0 0 40px rgba(255,150,0,1)) drop-shadow(0 0 80px rgba(255,60,0,0.7));
+            font-size: 120px; line-height: 1;
+            filter: drop-shadow(0 0 40px rgba(255,140,0,1)) drop-shadow(0 0 80px rgba(255,60,0,0.8));
             animation: rocketWobble 0.35s ease-in-out infinite alternate;
-            margin-bottom: -14px; position: relative; z-index: 2;
+            margin-bottom: -18px; position: relative; z-index: 2;
         }
         @keyframes rocketWobble {
             0%   { transform: rotate(-5deg) scale(1); }
-            100% { transform: rotate(5deg) scale(1.06); }
+            100% { transform: rotate(5deg) scale(1.07); }
         }
 
-        /* Chama */
+        /* Chama embaixo do foguete */
         .sn-flame {
-            font-size: 60px; line-height: 1; margin-top: -24px;
-            filter: drop-shadow(0 0 25px rgba(255,100,0,1));
+            font-size: 64px; line-height: 1; margin-top: -28px;
+            filter: drop-shadow(0 0 30px rgba(255,100,0,1));
             animation: flameFlicker 0.15s ease-in-out infinite alternate;
         }
         @keyframes flameFlicker {
-            0%   { transform: scaleY(1) scaleX(0.85); opacity: 1; }
-            100% { transform: scaleY(1.4) scaleX(1.15); opacity: 0.75; }
+            0%   { transform: scaleY(1) scaleX(0.8); opacity: 1; }
+            100% { transform: scaleY(1.5) scaleX(1.2); opacity: 0.7; }
         }
 
-        /* Card principal */
-        .sn-card {
-            width: 100%;
-            background: linear-gradient(160deg, rgba(4,8,28,0.98) 0%, rgba(8,16,48,0.98) 100%);
-            border-radius: 32px;
-            padding: 32px 44px 28px;
-            position: relative; overflow: hidden;
-            box-shadow:
-                0 0 0 1px rgba(255,215,0,0.25),
-                0 0 80px rgba(255,140,0,0.45),
-                0 0 160px rgba(255,60,0,0.2),
-                0 40px 100px rgba(0,0,0,0.8);
-        }
-        .sn-card::before {
-            content: ''; position: absolute; inset: 0; border-radius: 32px;
-            background: conic-gradient(from 0deg at 50% 0%, transparent 0deg, rgba(255,215,0,0.07) 60deg, transparent 120deg);
-            animation: cardShine 2.5s linear infinite;
-        }
-        @keyframes cardShine { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
-
-        /* Badge */
+        /* Título VENDA FECHADA — sem fundo, texto puro com glow */
         .sn-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: linear-gradient(135deg, #FFD700, #FF8C00);
-            color: #000; font-family: 'Orbitron', sans-serif;
-            font-size: 15px; font-weight: 900; padding: 8px 24px;
-            border-radius: 50px; letter-spacing: 2px; margin-bottom: 20px;
-            animation: badgePulse 0.9s ease-in-out infinite alternate;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px; font-weight: 900;
+            color: #FFD700;
+            text-shadow:
+                0 0 20px rgba(255,215,0,0.9),
+                0 0 50px rgba(255,150,0,0.7),
+                0 0 100px rgba(255,80,0,0.4);
+            letter-spacing: 3px;
+            margin-top: 10px; margin-bottom: 10px;
+            animation: badgeGlow 0.8s ease-in-out infinite alternate;
         }
-        @keyframes badgePulse {
-            0%   { box-shadow: 0 0 20px rgba(255,215,0,0.7); }
-            100% { box-shadow: 0 0 50px rgba(255,215,0,1), 0 0 100px rgba(255,140,0,0.6); }
+        @keyframes badgeGlow {
+            0%   { text-shadow: 0 0 20px rgba(255,215,0,0.9), 0 0 50px rgba(255,150,0,0.7); }
+            100% { text-shadow: 0 0 40px rgba(255,215,0,1), 0 0 90px rgba(255,150,0,1), 0 0 150px rgba(255,80,0,0.6); }
         }
 
         /* Hora */
         .sn-time {
-            position: absolute; top: 20px; right: 28px;
-            font-size: 13px; color: rgba(255,255,255,0.3);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', sans-serif; font-size: 13px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 4px;
         }
 
-        /* Linha do valor */
-        .sn-value-row {
-            text-align: center; margin-bottom: 24px;
-        }
+        /* Valor */
+        .sn-value-row { text-align: center; margin-bottom: 20px; }
         .sn-value {
             font-family: 'Orbitron', sans-serif;
-            font-size: 64px; font-weight: 900;
+            font-size: 80px; font-weight: 900;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background-clip: text; line-height: 1;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,0.9));
             animation: valuePop 0.7s ease-in-out infinite alternate;
-            line-height: 1;
         }
         @keyframes valuePop {
-            0%   { filter: drop-shadow(0 0 15px rgba(255,215,0,0.7)); }
-            100% { filter: drop-shadow(0 0 40px rgba(255,215,0,1)); }
+            0%   { filter: drop-shadow(0 0 20px rgba(255,215,0,0.8)); }
+            100% { filter: drop-shadow(0 0 60px rgba(255,215,0,1)); }
         }
         .sn-deal {
-            font-size: 15px; color: rgba(255,255,255,0.5);
+            font-size: 16px; color: rgba(255,255,255,0.6);
             margin-top: 6px; font-family: 'Inter', sans-serif;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
-        /* Players: closer + SDR lado a lado */
+        /* Players flutuantes — sem card */
         .sn-players {
             display: flex; align-items: flex-start;
-            justify-content: center; gap: 40px;
+            justify-content: center; gap: 60px;
             margin-bottom: 16px;
         }
         .sn-player-card {
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
         }
         .sn-player-label {
-            font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 3px; color: rgba(255,255,255,0.45);
+            font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: rgba(255,255,255,0.5);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
         }
-        .sn-avatar {
-            width: 100px; height: 100px; border-radius: 50%;
-            object-fit: cover; object-position: center top;
-            border: 3px solid #FFD700;
-            box-shadow: 0 0 25px rgba(255,215,0,0.7), 0 0 50px rgba(255,140,0,0.3);
-            flex-shrink: 0; animation: avatarFloat 2s ease-in-out infinite;
-        }
-        @keyframes avatarFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
-        .sn-avatar-fallback {
-            width: 100px; height: 100px; border-radius: 50%;
+
+        /* Avatar flutuante com anel rotativo — igualzinho à tela de última venda */
+        .sn-avatar-ring {
+            position: relative; width: 176px; height: 176px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 32px; font-weight: 900; color: #000;
-            border: 3px solid #FFD700;
-            box-shadow: 0 0 25px rgba(255,215,0,0.7);
-            flex-shrink: 0; animation: avatarFloat 2s ease-in-out infinite;
         }
-        .sn-player-card.closer .sn-avatar,
-        .sn-player-card.closer .sn-avatar-fallback {
-            border-color: #00F0FF;
-            box-shadow: 0 0 25px rgba(0,240,255,0.6), 0 0 50px rgba(0,200,255,0.3);
-            background: linear-gradient(135deg, #00D4FF, #8B5CF6);
+        .sn-avatar-ring::before {
+            content: ''; position: absolute; inset: 0;
+            border-radius: 50%;
+            animation: rotateBorderSN 4s linear infinite; z-index: 0;
         }
-        .sn-player-card.sdr .sn-avatar,
-        .sn-player-card.sdr .sn-avatar-fallback {
-            border-color: #10B981;
-            box-shadow: 0 0 25px rgba(16,185,129,0.6), 0 0 50px rgba(16,185,129,0.3);
-            background: linear-gradient(135deg, #10B981, #FFD700);
+        .sn-player-card.closer .sn-avatar-ring::before {
+            background: conic-gradient(#00F0FF, #8B5CF6, #00F0FF);
         }
+        .sn-player-card.sdr .sn-avatar-ring::before {
+            background: conic-gradient(#10B981, #FFD700, #10B981);
+        }
+        @keyframes rotateBorderSN { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+
+        .sn-avatar {
+            width: 160px; height: 160px; border-radius: 50%;
+            object-fit: cover; object-position: center top;
+            display: block; position: relative; z-index: 2;
+            animation: snAvatarFloat 2.5s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        .sn-avatar-fallback {
+            width: 160px; height: 160px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 52px; font-weight: 900; color: #fff;
+            position: relative; z-index: 2;
+            animation: snAvatarFloat 2.5s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        .sn-player-card.closer .sn-avatar-fallback { background: linear-gradient(135deg,#00D4FF,#8B5CF6); }
+        .sn-player-card.sdr    .sn-avatar-fallback { background: linear-gradient(135deg,#10B981,#FFD700); }
+        @keyframes snAvatarFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+
         .sn-name {
-            font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 800;
+            font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 800;
             text-align: center;
+            text-shadow: 0 0 20px currentColor, 0 4px 15px rgba(0,0,0,0.9);
         }
-        .sn-player-card.closer .sn-name { color: #00F0FF; text-shadow: 0 0 12px rgba(0,240,255,0.6); }
-        .sn-player-card.sdr    .sn-name { color: #10B981; text-shadow: 0 0 12px rgba(16,185,129,0.6); }
+        .sn-player-card.closer .sn-name { color: #00F0FF; }
+        .sn-player-card.sdr    .sn-name { color: #10B981; }
 
         .sn-plus {
-            font-family: 'Orbitron', sans-serif; font-size: 28px; font-weight: 900;
-            color: rgba(255,255,255,0.3); align-self: center; margin-top: 40px;
+            font-family: 'Orbitron', sans-serif; font-size: 32px; font-weight: 900;
+            color: rgba(255,255,255,0.35); align-self: center; margin-top: 80px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
         /* Frase */
         .sn-frase {
-            font-size: 15px; font-style: italic; color: rgba(255,255,255,0.75);
-            border-top: 1px solid rgba(255,215,0,0.2);
-            padding-top: 14px; line-height: 1.6; text-align: center;
+            font-size: 18px; font-style: italic; color: rgba(255,255,255,0.85);
+            text-align: center; line-height: 1.6; max-width: 600px;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.6);
+            margin-bottom: 8px;
         }
 
-        /* Progresso */
+        /* Barra de progresso — fina, flutuante */
         .sn-progress {
-            height: 4px; background: rgba(255,255,255,0.1);
-            border-radius: 2px; overflow: hidden; margin-top: 18px;
+            width: 500px; max-width: 80vw;
+            height: 4px; background: rgba(255,255,255,0.15);
+            border-radius: 2px; overflow: hidden; margin-top: 12px;
         }
         .sn-progress-bar {
             height: 100%;
@@ -713,7 +715,7 @@
 
         /* Estrelas */
         .sn-star {
-            position: absolute; font-size: 22px;
+            position: absolute; font-size: 24px;
             animation: starBurst 1s ease-out forwards; opacity: 0;
         }
         @keyframes starBurst {
@@ -760,48 +762,47 @@
 
     <div class="pause-button" id="pauseButton"></div>
 
-    <!-- OVERLAY -->
+    <!-- OVERLAY blur -->
     <div class="rocket-overlay" id="rocketOverlay"></div>
 
-    <!-- POPUP FOGUETE ÉPICO -->
+    <!-- POPUP FOGUETE FLUTUANTE — sem card, sem fundo -->
     <div class="sale-notification" id="saleNotification">
+
+        <!-- Foguete + chama -->
         <div class="sn-rocket">🚀</div>
         <div class="sn-flame">🔥</div>
-        <div class="sn-card">
-            <span class="sn-time" id="snTime"></span>
 
-            <!-- Badge -->
-            <div style="text-align:center;">
-                <div class="sn-badge">💥 VENDA FECHADA!</div>
-            </div>
+        <!-- Hora + título flutuantes -->
+        <div class="sn-time" id="snTime"></div>
+        <div class="sn-badge">🔥 VENDA FECHADA!</div>
 
-            <!-- Valor grande em destaque -->
-            <div class="sn-value-row">
-                <div class="sn-value" id="snValue"></div>
-                <div class="sn-deal" id="snDeal"></div>
-            </div>
-
-            <!-- Closer + SDR lado a lado -->
-            <div class="sn-players">
-                <div class="sn-player-card closer">
-                    <div class="sn-player-label">⚡ Closer</div>
-                    <div id="snCloserAvatar"></div>
-                    <div class="sn-name" id="snName"></div>
-                </div>
-                <div class="sn-plus">+</div>
-                <div class="sn-player-card sdr">
-                    <div class="sn-player-label">🎯 SDR</div>
-                    <div id="snSDRAvatar"></div>
-                    <div class="sn-name" id="snSDRName"></div>
-                </div>
-            </div>
-
-            <!-- Frase -->
-            <div class="sn-frase" id="snFrase" style="display:none;"></div>
-
-            <!-- Progresso -->
-            <div class="sn-progress"><div class="sn-progress-bar" id="snProgressBar"></div></div>
+        <!-- Valor -->
+        <div class="sn-value-row">
+            <div class="sn-value" id="snValue"></div>
+            <div class="sn-deal" id="snDeal"></div>
         </div>
+
+        <!-- Closer + SDR -->
+        <div class="sn-players">
+            <div class="sn-player-card closer">
+                <div class="sn-player-label">⚡ Closer</div>
+                <div class="sn-avatar-ring" id="snCloserAvatar"></div>
+                <div class="sn-name" id="snName"></div>
+            </div>
+            <div class="sn-plus">+</div>
+            <div class="sn-player-card sdr">
+                <div class="sn-player-label">🎯 SDR</div>
+                <div class="sn-avatar-ring" id="snSDRAvatar"></div>
+                <div class="sn-name" id="snSDRName"></div>
+            </div>
+        </div>
+
+        <!-- Frase -->
+        <div class="sn-frase" id="snFrase" style="display:none;"></div>
+
+        <!-- Barra progresso -->
+        <div class="sn-progress"><div class="sn-progress-bar" id="snProgressBar"></div></div>
+
     </div>
 
     <div class="content-container" id="contentContainer">
@@ -1258,19 +1259,19 @@
         document.getElementById('snValue').textContent = value;
         document.getElementById('snDeal').textContent  = dealName;
 
-        // Avatar Closer
+        // Avatar Closer — anel rotativo igual à última venda
         const closerPhoto = getPlayerPhoto(closerName);
-        const closerAv    = document.getElementById('snCloserAvatar');
-        closerAv.innerHTML = closerPhoto
-            ? `<img class="sn-avatar" src="${closerPhoto}" alt="${closerName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback" style="display:none;">${closerName.charAt(0)}</div>`
+        const closerRingSN = document.getElementById('snCloserAvatar');
+        closerRingSN.innerHTML = closerPhoto
+            ? `<img class="sn-avatar" src="${closerPhoto}" alt="${closerName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback">${closerName.charAt(0)}</div>`
             : `<div class="sn-avatar-fallback">${closerName.charAt(0)}</div>`;
         document.getElementById('snName').textContent = closerName;
 
-        // Avatar SDR
+        // Avatar SDR — anel rotativo igual à última venda
         const sdrPhoto = getSDRPhoto(sdrName);
-        const sdrAv    = document.getElementById('snSDRAvatar');
-        sdrAv.innerHTML = sdrPhoto
-            ? `<img class="sn-avatar" src="${sdrPhoto}" alt="${sdrName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback" style="display:none;">${sdrName.charAt(0)}</div>`
+        const sdrRingSN = document.getElementById('snSDRAvatar');
+        sdrRingSN.innerHTML = sdrPhoto
+            ? `<img class="sn-avatar" src="${sdrPhoto}" alt="${sdrName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback">${sdrName.charAt(0)}</div>`
             : `<div class="sn-avatar-fallback">${sdrName.charAt(0)}</div>`;
         document.getElementById('snSDRName').textContent = sdrName;
 
