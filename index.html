@@ -11,964 +11,650 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    position: relative;
-    background: url('https://lh3.googleusercontent.com/d/1009iyOQbvPprlEemN62ZAZnRgErtnKJU') center center / cover no-repeat;
-    color: #ffffff;
-}
+            margin: 0; padding: 0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            background: url('https://lh3.googleusercontent.com/d/1009iyOQbvPprlEemN62ZAZnRgErtnKJU') center center / cover no-repeat;
+            color: #ffffff;
+        }
 
+        /* ===================== MODE INDICATOR ===================== */
         .mode-indicator {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            position: fixed; top: 20px; left: 20px;
+            display: flex; align-items: center; gap: 8px;
             padding: 8px 16px;
             background: rgba(0, 240, 255, 0.2);
             border: 1px solid rgba(0, 240, 255, 0.4);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            border-radius: 20px; backdrop-filter: blur(10px);
+            z-index: 100; transition: all 0.3s ease; cursor: pointer;
         }
-
-        .mode-indicator.sdr-mode {
-            background: rgba(255, 215, 0, 0.2);
-            border-color: rgba(255, 215, 0, 0.4);
-        }
-
-        .mode-indicator.podio-mode {
-            background: rgba(255, 215, 0, 0.3);
-            border-color: rgba(255, 215, 0, 0.6);
-        }
-
+        .mode-indicator.sdr-mode    { background: rgba(255, 215, 0, 0.2); border-color: rgba(255, 215, 0, 0.4); }
+        .mode-indicator.podio-mode  { background: rgba(255, 215, 0, 0.3); border-color: rgba(255, 215, 0, 0.6); }
+        .mode-indicator.venda-mode  { background: rgba(16, 185, 129, 0.3); border-color: rgba(16, 185, 129, 0.6); }
         .mode-icon { font-size: 16px; }
-
-        .mode-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .mode-text { font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
 
         .pause-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+            position: fixed; top: 20px; right: 20px;
             padding: 8px 16px;
-            background: rgba(0, 240, 255, 0.2);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            cursor: pointer;
-            font-size: 16px;
-            color: #fff;
-            transition: all 0.3s ease;
+            background: rgba(0, 240, 255, 0.2); border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 20px; backdrop-filter: blur(10px);
+            z-index: 100; cursor: pointer; font-size: 16px; color: #fff; transition: all 0.3s ease;
         }
+        .pause-button:hover { background: rgba(0, 240, 255, 0.3); border-color: rgba(0, 240, 255, 0.6); transform: scale(1.05); }
+        .pause-button.paused { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); }
 
-        .pause-button:hover {
-            background: rgba(0, 240, 255, 0.3);
-            border-color: rgba(0, 240, 255, 0.6);
-            transform: scale(1.05);
-        }
-
-        .pause-button.paused {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: rgba(239, 68, 68, 0.4);
-        }
-
-        .content-container {
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
-
+        .content-container { opacity: 1; transition: opacity 0.5s ease-in-out; }
         .content-container.fading { opacity: 0; }
 
-        .background-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
+        /* ===================== BACKGROUND ===================== */
+        .background-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
         .gradient-mesh {
-    position: absolute;
-    width: 200%; height: 200%;
-    top: -50%; left: -50%;
-    background:
-        radial-gradient(ellipse at 50% 100%, rgba(0, 120, 255, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 60%, rgba(0, 60, 180, 0.25) 0%, transparent 50%),
-        radial-gradient(circle at 20% 30%, rgba(0, 180, 255, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 30%, rgba(0, 180, 255, 0.15) 0%, transparent 40%);
-    animation: meshMove 20s ease-in-out infinite alternate;
-}
-
-        @keyframes meshMove {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-5%, -5%) rotate(5deg); }
-            100% { transform: translate(5%, 5%) rotate(-5deg); }
+            position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(0, 120, 255, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 60%, rgba(0, 60, 180, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 20% 30%, rgba(0, 180, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 30%, rgba(0, 180, 255, 0.15) 0%, transparent 40%);
+            animation: meshMove 20s ease-in-out infinite alternate;
         }
-
+        @keyframes meshMove {
+            0% { transform: translate(0,0) rotate(0deg); }
+            50% { transform: translate(-5%,-5%) rotate(5deg); }
+            100% { transform: translate(5%,5%) rotate(-5deg); }
+        }
         .particles { position: absolute; width: 100%; height: 100%; }
-
         .particle {
-            position: absolute;
-            width: 4px; height: 4px;
-            background: rgba(0, 240, 255, 0.6);
-            border-radius: 50%;
+            position: absolute; width: 4px; height: 4px;
+            background: rgba(0, 240, 255, 0.6); border-radius: 50%;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
             animation: floatParticle 15s infinite ease-in-out;
         }
-
-        .particle:nth-child(1)  { left: 10%; top: 20%; animation-delay: 0s;  animation-duration: 12s; }
-        .particle:nth-child(2)  { left: 20%; top: 80%; animation-delay: 2s;  animation-duration: 18s; }
-        .particle:nth-child(3)  { left: 30%; top: 40%; animation-delay: 4s;  animation-duration: 15s; }
-        .particle:nth-child(4)  { left: 40%; top: 60%; animation-delay: 1s;  animation-duration: 20s; }
-        .particle:nth-child(5)  { left: 50%; top: 30%; animation-delay: 3s;  animation-duration: 14s; }
-        .particle:nth-child(6)  { left: 60%; top: 70%; animation-delay: 5s;  animation-duration: 16s; }
-        .particle:nth-child(7)  { left: 70%; top: 50%; animation-delay: 2s;  animation-duration: 19s; }
-        .particle:nth-child(8)  { left: 80%; top: 20%; animation-delay: 4s;  animation-duration: 13s; }
-        .particle:nth-child(9)  { left: 90%; top: 80%; animation-delay: 1s;  animation-duration: 17s; }
-        .particle:nth-child(10) { left: 15%; top: 50%; animation-delay: 3s;  animation-duration: 21s; }
-        .particle:nth-child(11) { left: 25%; top: 15%; animation-delay: 0s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(12) { left: 35%; top: 85%; animation-delay: 2s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(13) { left: 45%; top: 25%; animation-delay: 4s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(14) { left: 55%; top: 65%; animation-delay: 1s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(15) { left: 65%; top: 45%; animation-delay: 3s;  background: rgba(139, 92, 246, 0.6); box-shadow: 0 0 10px rgba(139, 92, 246, 0.8); }
-        .particle:nth-child(16) { left: 75%; top: 75%; animation-delay: 5s;  background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
-        .particle:nth-child(17) { left: 85%; top: 35%; animation-delay: 2s;  background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
-        .particle:nth-child(18) { left: 95%; top: 55%; animation-delay: 4s;  background: rgba(255, 215, 0, 0.5); box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
-        .particle:nth-child(19) { left: 5%;  top: 65%; animation-delay: 1s;  background: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.8); }
-        .particle:nth-child(20) { left: 12%; top: 90%; animation-delay: 3s;  background: rgba(236, 72, 153, 0.5); box-shadow: 0 0 10px rgba(236, 72, 153, 0.8); }
-
+        .particle:nth-child(1)  { left:10%;top:20%;animation-delay:0s;animation-duration:12s; }
+        .particle:nth-child(2)  { left:20%;top:80%;animation-delay:2s;animation-duration:18s; }
+        .particle:nth-child(3)  { left:30%;top:40%;animation-delay:4s;animation-duration:15s; }
+        .particle:nth-child(4)  { left:40%;top:60%;animation-delay:1s;animation-duration:20s; }
+        .particle:nth-child(5)  { left:50%;top:30%;animation-delay:3s;animation-duration:14s; }
+        .particle:nth-child(6)  { left:60%;top:70%;animation-delay:5s;animation-duration:16s; }
+        .particle:nth-child(7)  { left:70%;top:50%;animation-delay:2s;animation-duration:19s; }
+        .particle:nth-child(8)  { left:80%;top:20%;animation-delay:4s;animation-duration:13s; }
+        .particle:nth-child(9)  { left:90%;top:80%;animation-delay:1s;animation-duration:17s; }
+        .particle:nth-child(10) { left:15%;top:50%;animation-delay:3s;animation-duration:21s; }
+        .particle:nth-child(11) { left:25%;top:15%;animation-delay:0s;background:rgba(139,92,246,0.6);box-shadow:0 0 10px rgba(139,92,246,0.8); }
+        .particle:nth-child(12) { left:35%;top:85%;animation-delay:2s;background:rgba(139,92,246,0.6);box-shadow:0 0 10px rgba(139,92,246,0.8); }
+        .particle:nth-child(13) { left:45%;top:25%;animation-delay:4s;background:rgba(139,92,246,0.6);box-shadow:0 0 10px rgba(139,92,246,0.8); }
+        .particle:nth-child(14) { left:55%;top:65%;animation-delay:1s;background:rgba(139,92,246,0.6);box-shadow:0 0 10px rgba(139,92,246,0.8); }
+        .particle:nth-child(15) { left:65%;top:45%;animation-delay:3s;background:rgba(139,92,246,0.6);box-shadow:0 0 10px rgba(139,92,246,0.8); }
+        .particle:nth-child(16) { left:75%;top:75%;animation-delay:5s;background:rgba(255,215,0,0.5);box-shadow:0 0 10px rgba(255,215,0,0.8); }
+        .particle:nth-child(17) { left:85%;top:35%;animation-delay:2s;background:rgba(255,215,0,0.5);box-shadow:0 0 10px rgba(255,215,0,0.8); }
+        .particle:nth-child(18) { left:95%;top:55%;animation-delay:4s;background:rgba(255,215,0,0.5);box-shadow:0 0 10px rgba(255,215,0,0.8); }
+        .particle:nth-child(19) { left:5%;top:65%;animation-delay:1s;background:rgba(236,72,153,0.5);box-shadow:0 0 10px rgba(236,72,153,0.8); }
+        .particle:nth-child(20) { left:12%;top:90%;animation-delay:3s;background:rgba(236,72,153,0.5);box-shadow:0 0 10px rgba(236,72,153,0.8); }
         @keyframes floatParticle {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-            25%       { transform: translateY(-100px) translateX(50px); opacity: 0.8; }
-            50%       { transform: translateY(-200px) translateX(-30px); opacity: 0.5; }
-            75%       { transform: translateY(-100px) translateX(-80px); opacity: 0.9; }
+            0%,100% { transform:translateY(0) translateX(0); opacity:0.3; }
+            25%      { transform:translateY(-100px) translateX(50px); opacity:0.8; }
+            50%      { transform:translateY(-200px) translateX(-30px); opacity:0.5; }
+            75%      { transform:translateY(-100px) translateX(-80px); opacity:0.9; }
         }
-
         .grid-overlay {
-            position: absolute;
-            width: 100%; height: 100%;
-            background-image:
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: gridMove 30s linear infinite;
         }
-
-        @keyframes gridMove {
-            0%   { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
+        @keyframes gridMove { 0% { transform:translate(0,0); } 100% { transform:translate(50px,50px); } }
         .glow-orbs { position: absolute; width: 100%; height: 100%; }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: orbFloat 15s infinite ease-in-out;
-        }
-
-        .orb-1 { width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(0, 100, 255, 0.25) 0%, transparent 70%); bottom: 0%; left: 10%; animation-duration: 20s; border-radius: 50%; }
-        .orb-2 { width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(0, 160, 255, 0.2) 0%, transparent 70%); top: 20%; left: 50%; transform: translateX(-50%); animation-duration: 25s; animation-delay: 5s; border-radius: 50%; }
-        .orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%); top: 5%; left: 50%; transform: translateX(-50%); animation-duration: 18s; animation-delay: 10s; }
-        
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; animation: orbFloat 15s infinite ease-in-out; }
+        .orb-1 { width:800px;height:400px;background:radial-gradient(ellipse,rgba(0,100,255,0.25) 0%,transparent 70%);bottom:0%;left:10%;animation-duration:20s;border-radius:50%; }
+        .orb-2 { width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,160,255,0.2) 0%,transparent 70%);top:20%;left:50%;transform:translateX(-50%);animation-duration:25s;animation-delay:5s;border-radius:50%; }
+        .orb-3 { width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);top:5%;left:50%;transform:translateX(-50%);animation-duration:18s;animation-delay:10s; }
         @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33%       { transform: translate(100px, -80px) scale(1.1); }
-            66%       { transform: translate(-80px, 100px) scale(0.9); }
+            0%,100% { transform:translate(0,0) scale(1); }
+            33%      { transform:translate(100px,-80px) scale(1.1); }
+            66%      { transform:translate(-80px,100px) scale(0.9); }
+        }
+        .stadium-field {
+            position: absolute; bottom:0;left:0; width:100%;height:55%;
+            background: linear-gradient(180deg,transparent 0%,rgba(0,40,10,0.15) 30%,rgba(0,80,20,0.2) 60%,rgba(0,60,15,0.25) 100%);
+            perspective: 800px;
+        }
+        .stadium-field::before {
+            content:''; position:absolute; bottom:0;left:50%; transform:translateX(-50%) perspective(600px) rotateX(60deg);
+            width:70%;height:80%;
+            background: repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(0,180,60,0.06) 40px,rgba(0,180,60,0.06) 80px), repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,180,60,0.04) 60px,rgba(0,180,60,0.04) 120px), radial-gradient(ellipse at 50% 50%,rgba(0,200,80,0.08) 0%,transparent 70%);
+            border:1px solid rgba(0,200,80,0.08); border-radius:4px;
+        }
+        .stadium-lights { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none; }
+        .stadium-lights::before {
+            content:''; position:absolute; top:0;left:0; width:100%;height:60%;
+            background: radial-gradient(ellipse at 15% 10%,rgba(0,160,255,0.18) 0%,transparent 35%), radial-gradient(ellipse at 85% 10%,rgba(0,160,255,0.18) 0%,transparent 35%), radial-gradient(ellipse at 50% 0%,rgba(100,180,255,0.1) 0%,transparent 40%);
         }
 
-        .epic-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    background: transparent;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-}
-
-        .suri-logo {
-            height: 40px;
-            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
-        }
-
-        .mtd-metrics-header {
-            width: 100%;
-            padding: 12px 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .mtd-metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 10px 18px;
-            max-width: 1200px;
-        }
-
-        .mtd-metric-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .mtd-metric-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 240, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .mtd-label {
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        .mtd-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: #ffffff;
-            text-align: center;
-            line-height: 1;
-        }
-
-        .mtd-value.cyan-glow   { color: #00F0FF; text-shadow: 0 0 10px rgba(0, 240, 255, 0.6); }
-        .mtd-value.green-glow  { color: #10B981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.6); }
-        .mtd-value.orange-glow { color: #F97316; text-shadow: 0 0 10px rgba(249, 115, 22, 0.6); }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            background: rgba(220, 38, 38, 0.15);
-            border: 2px solid #DC2626;
-            border-radius: 50px;
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
-        }
-
-        .live-dot {
-            width: 12px; height: 12px;
-            background: #DC2626;
-            border-radius: 50%;
-            animation: pulse-red 1.5s ease-in-out infinite;
-            box-shadow: 0 0 10px #DC2626;
-        }
-
-        @keyframes pulse-red {
-            0%, 100% { opacity: 1; transform: scale(1);   box-shadow: 0 0 10px #DC2626; }
-            50%       { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 20px #DC2626; }
-        }
-
-        .live-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: #DC2626;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .main-container {
-            display: grid;
-            grid-template-columns: 75% 25%;
-            gap: 12px;
-            padding: 12px;
-            max-width: 1920px;
-            margin: 0 auto;
-            height: calc(100vh - 200px);
-        }
-
-        .two-column-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            height: 100%;
-        }
-
-        .table-column { width: 100%; height: 100%; }
-
-        .championship-table.compact {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            height: fit-content;
-        }
-
-        .championship-table.compact thead { background: rgba(0, 240, 255, 0.1); }
-
-        .championship-table.compact thead th {
-            font-size: 11px;
-            padding: 6px 4px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            text-align: center;
-            color: #00D4FF;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
-        }
-
-        .championship-table.compact th .icon { font-size: 13px; margin-right: 4px; }
-
-        .championship-table.compact tbody td {
-            padding: 8px 4px;
-            font-size: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .championship-table.compact tbody tr.top-5-safe {
-            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(0, 240, 255, 0.1));
-            border-left: 3px solid #10B981;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .championship-table.compact th:nth-child(1),
-        .championship-table.compact td:nth-child(1) { width: 52px; min-width: 52px; }
-        .championship-table.compact th:nth-child(2),
-        .championship-table.compact td:nth-child(2) { width: 120px; min-width: 120px; }
-        .championship-table.compact th:nth-child(3),
-        .championship-table.compact td:nth-child(3) { width: 70px; min-width: 70px; }
-        .championship-table.compact th:nth-child(4),
-        .championship-table.compact td:nth-child(4) { width: 65px; min-width: 65px; }
-        .championship-table.compact th:nth-child(5),
-        .championship-table.compact td:nth-child(5) { width: 45px; min-width: 45px; }
-        .championship-table.compact th:nth-child(6),
-        .championship-table.compact td:nth-child(6) { width: 45px; min-width: 45px; }
-        .championship-table.compact th:nth-child(7),
-        .championship-table.compact td:nth-child(7) { width: 70px; min-width: 70px; }
-        .championship-table.compact th:nth-child(8),
-        .championship-table.compact td:nth-child(8) { width: 55px; min-width: 55px; }
-        .championship-table.compact th:nth-child(9),
-        .championship-table.compact td:nth-child(9) { width: 45px; min-width: 45px; }
-
-        .championship-table.compact tbody tr { transition: all 0.3s ease; }
-
-        .championship-table.compact tbody tr:hover {
-            background: rgba(0, 240, 255, 0.1);
-            transform: scale(1.02);
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.2);
-        }
-
-        .championship-table.compact tbody tr.bottom-4-danger {
-            background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)) !important;
-            border-left: 4px solid #EF4444 !important;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3) !important;
-        }
-
-        .championship-table.compact .player-cell { max-width: 120px; text-align: left; }
-        .championship-table.compact .player-name { font-size: 12px; font-weight: 600; color: #ffffff; }
-        .championship-table.compact .player-nickname { font-size: 10px; color: rgba(255, 255, 255, 0.6); font-style: italic; }
-
-        .championship-table.compact .points-cell {
-            font-size: 16px;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-            color: #00D4FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-
-        .championship-table.compact .position-cell {
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .position-wrapper {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .player-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center top;
-            border: 2px solid rgba(0, 240, 255, 0.5);
-            display: block;
-        }
-
-        .avatar-top5   { border-color: #10B981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
-        .avatar-danger { border-color: #EF4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
-
-        .position-number {
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            color: #ffffff;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 9px;
-            font-weight: 700;
-            text-shadow: 0 0 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.7);
-            z-index: 2;
-            line-height: 1;
-        }
-
-        .zone-icon { font-size: 11px; line-height: 1; }
-
-        .championship-table.compact .team-badge {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 3px;
-        }
-
-        .team-badge.team-TITANS        { background: #8B5CF6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
-        .team-badge.team-MAORI         { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
-        .team-badge.team-EAGLES        { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-        .team-badge.team-PROCURANDO-DEMO { background: #B026FF; box-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
-
-        .championship-table.compact .team-cell { font-weight: 600; text-align: left; font-size: 10px; }
-
-        .championship-table.compact .conversion-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 3px 6px;
-            text-align: center;
-        }
-
-        .championship-table.compact .conversion-bar.high   { background: linear-gradient(90deg, rgba(34, 197, 94, 0.3), rgba(34, 197, 94, 0.1));   color: #22C55E; }
-        .championship-table.compact .conversion-bar.medium { background: linear-gradient(90deg, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.1)); color: #FBBF24; }
-        .championship-table.compact .conversion-bar.low    { background: linear-gradient(90deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));   color: #EF4444; }
-
-        .sidebar-section { display: flex; flex-direction: column; gap: 10px; height: 100%; overflow: hidden; }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .ranking-times-card { padding: 0; background: transparent; border: none; box-shadow: none; }
-
-        .ranking-times-card .card-title {
-           font-size: 10px;
-           margin-bottom: 4px;
-           font-family: 'Orbitron', sans-serif;
-           font-weight: 700;
-           text-align: center;
-           color: #00D4FF;
-           text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
-        }
-
-        .ranking-times-card .icon-glow { font-size: 11px; margin-right: 4px; }
-
-        .time-card {
-            padding: 4px 6px;
-            margin-bottom: 2px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .position-medal { font-size: 13px; animation: float 3s ease-in-out infinite; }
-        .team-name    { font-size: 9px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #ffffff; }
-        .team-count   { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
-        .score-number { font-size: 12px; font-weight: 700; font-family: 'Orbitron', sans-serif; color: #00D4FF; }
-        .score-avg    { font-size: 7px; color: rgba(255, 255, 255, 0.6); }
-        .team-badge-large { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-
-        .titans-glow    { background: #8B5CF6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
-        .maori-glow     { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
-        .eagles-glow    { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-        .procurando-glow { background: #B026FF; box-shadow: 0 0 10px rgba(176, 38, 255, 0.5); }
-
-        .team-info    { display: flex; align-items: center; gap: 5px; flex: 1; }
-        .team-details { display: flex; flex-direction: column; }
-        .team-score-big { text-align: right; }
-
-        .destaques-card { padding: 8px; }
-
-        .destaques-card .card-title {
-            font-size: 14px;
-            margin-bottom: 8px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            text-align: center;
-            color: #00D4FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-
-        .destaques-card .icon-glow { font-size: 16px; margin-right: 8px; }
-
-        .destaque-item.compact {
-            padding: 8px 10px;
-            margin: 4px 0;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-left: 3px solid;
-            transition: all 0.3s ease;
-            min-height: 45px;
-        }
-
-        .destaque-item.compact:hover { transform: translateX(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-
-        .destaque-item.gold-glow   { border-color: #FBBF24; background: linear-gradient(90deg, rgba(251, 191, 36, 0.1), transparent); }
-        .destaque-item.green-glow  { border-color: #10B981; background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), transparent); }
-        .destaque-item.blue-glow   { border-color: #3B82F6; background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent); }
-        .destaque-item.purple-glow { border-color: #A855F7; background: linear-gradient(90deg, rgba(168, 85, 247, 0.1), transparent); }
-
-        .destaque-icon    { font-size: 18px; margin-right: 6px; }
-        .destaque-content { flex: 1; }
-        .destaque-label   { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.7); }
-        .destaque-value   { font-size: 13px; font-weight: 600; font-family: 'Inter', sans-serif; color: #ffffff; }
-
-        .points-badge, .money-badge, .count-badge, .percent-badge {
-            font-size: 10px;
-            padding: 3px 6px;
-            border-radius: 12px;
-            margin-left: 4px;
-            background: rgba(0, 240, 255, 0.2);
-            color: #00D4FF;
-            font-weight: 700;
-        }
-
-        footer {
-            padding: 6px;
-            font-size: 10px;
-            background: rgba(10, 22, 40, 0.8);
-            margin-top: 8px;
-            border-top: 1px solid rgba(0, 240, 255, 0.2);
-        }
-
-        .footer-content {
-            max-width: 1920px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .formula, .perigo-rebaixamento, .suri-branding { text-align: center; }
-
-        .formula h3, .perigo-rebaixamento h3 {
-            font-size: 12px;
-            font-family: 'Orbitron', sans-serif;
-            color: #00D4FF;
-            margin-bottom: 3px;
-        }
-
-        .formula p, .perigo-rebaixamento p { font-size: 9px; color: rgba(255, 255, 255, 0.7); }
-
-        .perigo-rebaixamento {
-            padding: 6px;
-            background: rgba(220, 38, 38, 0.1);
-            border: 2px solid #DC2626;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
-        }
-
-        .rebaixamento-positions { display: flex; gap: 5px; justify-content: center; margin-top: 5px; }
-
-        .position-danger {
-            font-size: 10px;
-            padding: 3px 6px;
-            background: #DC2626;
-            color: #ffffff;
-            border-radius: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .suri-branding a { color: #00D4FF; text-decoration: none; font-weight: 600; }
-        .suri-branding a:hover { text-shadow: 0 0 10px rgba(0, 240, 255, 0.8); }
-
-        body.mode-closer #tableView .table-section > div:first-child {
-            grid-template-columns: 84% 16% !important;
-            gap: 6px !important;
-        }
-
-        body.mode-closer .sidebar-section,
-        body.mode-closer .ranking-times-card,
-        body.mode-closer .time-card,
-        body.mode-closer .team-info,
-        body.mode-closer .team-details,
-        body.mode-closer .team-score-big { min-width: 0; }
-
-        body.mode-closer .ranking-times-card { padding: 4px; }
-        body.mode-closer .ranking-times-card .card-title { font-size: 11px; margin-bottom: 4px; }
-        body.mode-closer .ranking-times-card .icon-glow { font-size: 12px; margin-right: 5px; }
-        body.mode-closer .time-card { padding: 4px; gap: 6px; margin-bottom: 2px; }
-        body.mode-closer .position-medal { font-size: 14px; }
-        body.mode-closer .team-badge-large { width: 8px; height: 8px; }
-        body.mode-closer .team-name { font-size: 11px; }
-        body.mode-closer .team-count { font-size: 8px; }
-        body.mode-closer .score-number { font-size: 15px; }
-        body.mode-closer .score-avg { font-size: 8px; }
-
-        body.mode-podio .podio-view { padding: 12px 26px; gap: 0; }
-        body.mode-podio .podio-section-title { font-size: 15px; margin-bottom: 6px; letter-spacing: 1px; }
-        body.mode-podio .podio-block { justify-content: center; }
-        body.mode-podio .podio-divider { margin: 0 30px; }
-        body.mode-podio .podio-stage { max-width: 760px; gap: 14px; }
-        body.mode-podio .podio-player { gap: 6px; }
-        body.mode-podio .podio-medal { font-size: 22px; }
-        body.mode-podio .podio-player.place-1 .podio-avatar { width: 88px; height: 88px; border-width: 3px; }
-        body.mode-podio .podio-player.place-2 .podio-avatar { width: 70px; height: 70px; border-width: 3px; }
-        body.mode-podio .podio-player.place-3 .podio-avatar { width: 64px; height: 64px; border-width: 3px; }
-        body.mode-podio .podio-player.place-1 .podio-name { font-size: 14px; }
-        body.mode-podio .podio-player.place-2 .podio-name,
-        body.mode-podio .podio-player.place-3 .podio-name { font-size: 12px; }
-        body.mode-podio .podio-nickname { font-size: 10px; }
-        body.mode-podio .podio-player.place-1 .podio-pts { font-size: 18px; }
-        body.mode-podio .podio-player.place-2 .podio-pts,
-        body.mode-podio .podio-player.place-3 .podio-pts { font-size: 15px; }
-        body.mode-podio .podio-player.place-1 .podio-pedestal { width: 250px; height: 140px; }
-        body.mode-podio .podio-player.place-2 .podio-pedestal { width: 220px; height: 98px; }
-        body.mode-podio .podio-player.place-3 .podio-pedestal { width: 220px; height: 64px; }
-
-        @media (max-width: 1400px) {
-            .main-container { grid-template-columns: 70% 30%; }
-            .mtd-metrics-grid { gap: 8px 15px; }
-        }
-
-        @media (max-width: 1200px) {
-            .main-container { grid-template-columns: 1fr; gap: 20px; }
-            .sidebar-section { flex-direction: row; gap: 20px; }
-            .ranking-times-card, .destaques-card { flex: 1; }
-        }
-
-        @media (max-width: 768px) {
-            .two-column-grid { grid-template-columns: 1fr; }
-            .sidebar-section { flex-direction: column; }
-            .epic-header { padding: 15px; flex-direction: column; gap: 15px; }
-            .mtd-metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 8px 10px; }
-            .footer-content { flex-direction: column; text-align: center; }
-        }
-
-        .podio-view {
+        /* ===================== HEADER ===================== */
+        .epic-header { display:flex;justify-content:space-between;align-items:center;padding:20px 30px;background:transparent;border-bottom:1px solid rgba(0,240,255,0.2); }
+        .suri-logo { height:40px;filter:drop-shadow(0 0 10px rgba(0,240,255,0.5)); }
+        .mtd-metrics-header { width:100%;padding:12px 0;display:flex;justify-content:center; }
+        .mtd-metrics-grid { display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:10px 18px;max-width:1200px; }
+        .mtd-metric-item { display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;backdrop-filter:blur(10px);transition:all 0.3s ease; }
+        .mtd-metric-item:hover { background:rgba(255,255,255,0.08);border-color:rgba(0,240,255,0.3);transform:translateY(-2px); }
+        .mtd-label { font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.5px;text-align:center;line-height:1.2; }
+        .mtd-value { font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:#ffffff;text-align:center;line-height:1; }
+        .mtd-value.cyan-glow   { color:#00F0FF;text-shadow:0 0 10px rgba(0,240,255,0.6); }
+        .mtd-value.green-glow  { color:#10B981;text-shadow:0 0 10px rgba(16,185,129,0.6); }
+        .mtd-value.orange-glow { color:#F97316;text-shadow:0 0 10px rgba(249,115,22,0.6); }
+        .live-indicator { display:flex;align-items:center;gap:12px;padding:12px 24px;background:rgba(220,38,38,0.15);border:2px solid #DC2626;border-radius:50px;box-shadow:0 0 20px rgba(220,38,38,0.5); }
+        .live-dot { width:12px;height:12px;background:#DC2626;border-radius:50%;animation:pulse-red 1.5s ease-in-out infinite;box-shadow:0 0 10px #DC2626; }
+        @keyframes pulse-red { 0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 10px #DC2626;}50%{opacity:0.6;transform:scale(1.2);box-shadow:0 0 20px #DC2626;} }
+        .live-text { font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:2px; }
+
+        /* ===================== MAIN LAYOUT ===================== */
+        .main-container { display:grid;grid-template-columns:75% 25%;gap:12px;padding:12px;max-width:1920px;margin:0 auto;height:calc(100vh - 200px); }
+        .two-column-grid { display:grid;grid-template-columns:1fr 1fr;gap:15px;height:100%; }
+        .table-column { width:100%;height:100%; }
+
+        /* ===================== TABLE ===================== */
+        .championship-table.compact { width:100%;border-collapse:collapse;font-size:13px;background:rgba(255,255,255,0.02);backdrop-filter:blur(10px);border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.3);height:fit-content; }
+        .championship-table.compact thead { background:rgba(0,240,255,0.1); }
+        .championship-table.compact thead th { font-size:11px;padding:6px 4px;font-family:'Orbitron',sans-serif;font-weight:600;text-align:center;color:#00D4FF;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid rgba(0,240,255,0.3); }
+        .championship-table.compact th .icon { font-size:13px;margin-right:4px; }
+        .championship-table.compact tbody td { padding:8px 4px;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.1);text-align:center; }
+        .championship-table.compact tbody tr.top-5-safe { background:linear-gradient(90deg,rgba(16,185,129,0.1),rgba(0,240,255,0.1));border-left:3px solid #10B981;box-shadow:0 0 15px rgba(16,185,129,0.3); }
+        .championship-table.compact th:nth-child(1), .championship-table.compact td:nth-child(1) { width:52px;min-width:52px; }
+        .championship-table.compact th:nth-child(2), .championship-table.compact td:nth-child(2) { width:120px;min-width:120px; }
+        .championship-table.compact th:nth-child(3), .championship-table.compact td:nth-child(3) { width:70px;min-width:70px; }
+        .championship-table.compact th:nth-child(4), .championship-table.compact td:nth-child(4) { width:65px;min-width:65px; }
+        .championship-table.compact th:nth-child(5), .championship-table.compact td:nth-child(5) { width:45px;min-width:45px; }
+        .championship-table.compact th:nth-child(6), .championship-table.compact td:nth-child(6) { width:45px;min-width:45px; }
+        .championship-table.compact th:nth-child(7), .championship-table.compact td:nth-child(7) { width:70px;min-width:70px; }
+        .championship-table.compact th:nth-child(8), .championship-table.compact td:nth-child(8) { width:55px;min-width:55px; }
+        .championship-table.compact th:nth-child(9), .championship-table.compact td:nth-child(9) { width:45px;min-width:45px; }
+        .championship-table.compact tbody tr { transition:all 0.3s ease; }
+        .championship-table.compact tbody tr:hover { background:rgba(0,240,255,0.1);transform:scale(1.02);box-shadow:0 4px 20px rgba(0,240,255,0.2); }
+        .championship-table.compact tbody tr.bottom-4-danger { background:linear-gradient(90deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1))!important;border-left:4px solid #EF4444!important;box-shadow:0 0 20px rgba(239,68,68,0.3)!important; }
+        .championship-table.compact .player-cell { max-width:120px;text-align:left; }
+        .championship-table.compact .player-name { font-size:12px;font-weight:600;color:#ffffff; }
+        .championship-table.compact .player-nickname { font-size:10px;color:rgba(255,255,255,0.6);font-style:italic; }
+        .championship-table.compact .points-cell { font-size:16px;font-weight:700;font-family:'Orbitron',sans-serif;color:#00D4FF;text-shadow:0 0 10px rgba(0,240,255,0.5); }
+        .championship-table.compact .position-cell { font-weight:700;font-family:'Orbitron',sans-serif; }
+        .position-wrapper { display:inline-flex;flex-direction:column;align-items:center;gap:2px; }
+        .avatar-wrapper { position:relative;display:inline-block; }
+        .player-avatar { width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(0,240,255,0.5);display:block; }
+        .avatar-top5   { border-color:#10B981;box-shadow:0 0 8px rgba(16,185,129,0.6); }
+        .avatar-danger { border-color:#EF4444;box-shadow:0 0 8px rgba(239,68,68,0.6); }
+        .position-number { position:absolute;top:-6px;left:-6px;color:#ffffff;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;text-shadow:0 0 4px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.7);z-index:2;line-height:1; }
+        .zone-icon { font-size:11px;line-height:1; }
+        .championship-table.compact .team-badge { width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:3px; }
+        .team-badge.team-TITANS          { background:#8B5CF6;box-shadow:0 0 10px rgba(139,92,246,0.5); }
+        .team-badge.team-MAORI           { background:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.5); }
+        .team-badge.team-EAGLES          { background:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.5); }
+        .team-badge.team-PROCURANDO-DEMO { background:#B026FF;box-shadow:0 0 10px rgba(176,38,255,0.5); }
+        .championship-table.compact .team-cell { font-weight:600;text-align:left;font-size:10px; }
+        .championship-table.compact .conversion-bar { background:rgba(255,255,255,0.1);border-radius:12px;padding:3px 6px;text-align:center; }
+        .championship-table.compact .conversion-bar.high   { background:linear-gradient(90deg,rgba(34,197,94,0.3),rgba(34,197,94,0.1));color:#22C55E; }
+        .championship-table.compact .conversion-bar.medium { background:linear-gradient(90deg,rgba(251,191,36,0.3),rgba(251,191,36,0.1));color:#FBBF24; }
+        .championship-table.compact .conversion-bar.low    { background:linear-gradient(90deg,rgba(239,68,68,0.3),rgba(239,68,68,0.1));color:#EF4444; }
+
+        /* ===================== SIDEBAR ===================== */
+        .sidebar-section { display:flex;flex-direction:column;gap:10px;height:100%;overflow:hidden; }
+        .glass-card { background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border-radius:16px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.3);flex:1;overflow:hidden; }
+        .ranking-times-card { padding:0;background:transparent;border:none;box-shadow:none; }
+        .ranking-times-card .card-title { font-size:10px;margin-bottom:4px;font-family:'Orbitron',sans-serif;font-weight:700;text-align:center;color:#00D4FF;text-shadow:0 0 8px rgba(0,240,255,0.5); }
+        .ranking-times-card .icon-glow { font-size:11px;margin-right:4px; }
+        .time-card { padding:4px 6px;margin-bottom:2px;border-radius:8px;display:flex;align-items:center;gap:5px;transition:all 0.3s ease; }
+        .position-medal { font-size:13px;animation:float 3s ease-in-out infinite; }
+        .team-name    { font-size:9px;font-weight:700;font-family:'Orbitron',sans-serif;color:#ffffff; }
+        .team-count   { font-size:7px;color:rgba(255,255,255,0.6); }
+        .score-number { font-size:12px;font-weight:700;font-family:'Orbitron',sans-serif;color:#00D4FF; }
+        .score-avg    { font-size:7px;color:rgba(255,255,255,0.6); }
+        .team-badge-large { width:7px;height:7px;border-radius:50%;display:inline-block; }
+        .titans-glow     { background:#8B5CF6;box-shadow:0 0 10px rgba(139,92,246,0.5); }
+        .maori-glow      { background:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.5); }
+        .eagles-glow     { background:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.5); }
+        .procurando-glow { background:#B026FF;box-shadow:0 0 10px rgba(176,38,255,0.5); }
+        .team-info    { display:flex;align-items:center;gap:5px;flex:1; }
+        .team-details { display:flex;flex-direction:column; }
+        .team-score-big { text-align:right; }
+
+        /* ===================== DESTAQUES ===================== */
+        .destaques-bottom { display:flex;flex-direction:row;gap:10px;padding:8px 12px;width:100%;overflow-x:auto; }
+        .destaque-card-bottom { flex:1;min-width:140px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 10px;border-radius:14px;background:transparent;border:none;box-shadow:none;transition:all 0.3s ease;text-align:center; }
+        .destaque-card-bottom:hover { transform:translateY(-4px); }
+        .destaque-card-bottom .db-icon  { font-size:24px; }
+        .destaque-card-bottom .db-label { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:rgba(255,255,255,0.6); }
+        .destaque-card-bottom .db-name  { font-size:13px;font-weight:700;color:#ffffff;font-family:'Orbitron',sans-serif; }
+        .destaque-card-bottom .db-value { font-size:12px;font-weight:700;color:#00D4FF;background:rgba(0,212,255,0.15);padding:3px 10px;border-radius:20px; }
+
+        /* ===================== FOOTER ===================== */
+        footer { padding:6px;font-size:10px;background:rgba(10,22,40,0.8);margin-top:8px;border-top:1px solid rgba(0,240,255,0.2); }
+        .footer-content { max-width:1920px;margin:0 auto;display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:8px; }
+        .suri-branding a { color:#00D4FF;text-decoration:none;font-weight:600; }
+        .suri-branding a:hover { text-shadow:0 0 10px rgba(0,240,255,0.8); }
+
+        /* ===================== PÓDIO ===================== */
+        .podio-view { display:none;padding:20px 40px;height:100vh;width:100%;flex-direction:column;justify-content:center;gap:5px; }
+        .podio-view.active { display:flex; }
+        .podio-section-title { font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;color:#FFD700;text-shadow:0 0 15px rgba(255,215,0,0.6);text-align:center;letter-spacing:2px;margin-bottom:10px; }
+        .podio-block { flex:1;display:flex;flex-direction:column;justify-content:center; }
+        .podio-divider { height:1px;background:linear-gradient(90deg,transparent,rgba(0,240,255,0.4),transparent);margin:0 60px; }
+        .podio-stage { display:flex;justify-content:center;align-items:flex-end;gap:20px;width:100%;max-width:900px;margin:0 auto; }
+        .podio-player { display:flex;flex-direction:column;align-items:center;gap:10px; }
+        .podio-medal { font-size:28px;animation:floatMedal 2.5s ease-in-out infinite; }
+        .podio-player:nth-child(1) .podio-medal { animation-delay:0s; }
+        .podio-player:nth-child(2) .podio-medal { animation-delay:0.4s; }
+        .podio-player:nth-child(3) .podio-medal { animation-delay:0.8s; }
+        @keyframes floatMedal { 0%,100%{transform:translateY(0px);}50%{transform:translateY(-8px);} }
+        .podio-avatar { border-radius:50%;object-fit:cover;object-position:center top;display:block;animation:floatAvatar 3s ease-in-out infinite; }
+        .podio-player.place-1 .podio-avatar { width:110px;height:110px;border:4px solid #FFD700;box-shadow:0 0 25px rgba(255,215,0,0.7),0 0 50px rgba(255,215,0,0.3);animation-delay:0s; }
+        .podio-player.place-2 .podio-avatar { width:85px;height:85px;border:3px solid #C0C0C0;box-shadow:0 0 20px rgba(192,192,192,0.6);animation-delay:0.5s; }
+        .podio-player.place-3 .podio-avatar { width:75px;height:75px;border:3px solid #CD7F32;box-shadow:0 0 15px rgba(205,127,50,0.6);animation-delay:1s; }
+        @keyframes floatAvatar { 0%,100%{transform:translateY(0px);}50%{transform:translateY(-6px);} }
+        @keyframes float { 0%,100%{transform:translateY(0px);}50%{transform:translateY(-5px);} }
+        .podio-name { font-family:'Orbitron',sans-serif;font-weight:700;color:#ffffff;text-align:center; }
+        .podio-player.place-1 .podio-name { font-size:16px; }
+        .podio-player.place-2 .podio-name,
+        .podio-player.place-3 .podio-name { font-size:13px; }
+        .podio-nickname { font-size:11px;color:rgba(255,255,255,0.6);font-style:italic;text-align:center; }
+        .podio-pts { font-family:'Orbitron',sans-serif;font-weight:700;color:#00D4FF;text-shadow:0 0 10px rgba(0,240,255,0.6);text-align:center; }
+        .podio-player.place-1 .podio-pts { font-size:22px; }
+        .podio-player.place-2 .podio-pts,
+        .podio-player.place-3 .podio-pts { font-size:17px; }
+        .podio-pedestal { border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:rgba(255,255,255,0.5); }
+        .podio-player.place-1 .podio-pedestal { width:400px;height:200px;background:linear-gradient(180deg,rgba(255,215,0,0.3),rgba(255,165,0,0.15));border:2px solid rgba(255,215,0,0.5);box-shadow:0 0 20px rgba(255,215,0,0.3); }
+        .podio-player.place-2 .podio-pedestal { width:400px;height:130px;background:linear-gradient(180deg,rgba(192,192,192,0.2),rgba(169,169,169,0.1));border:2px solid rgba(192,192,192,0.4); }
+        .podio-player.place-3 .podio-pedestal { width:400px;height:80px;background:linear-gradient(180deg,rgba(205,127,50,0.2),rgba(184,115,51,0.1));border:2px solid rgba(205,127,50,0.4); }
+
+        /* ===================== ÚLTIMA VENDA (TELA COMPLETA) ===================== */
+        .ultima-venda-view {
             display: none;
-            padding: 20px 40px;
             height: 100vh;
             width: 100%;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 05px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
         }
+        .ultima-venda-view.active { display: flex; }
 
-        .podio-view.active { display: flex; }
-
-        .podio-section-title {
+        .uv-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            font-weight: 800;
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            font-size: 14px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+        }
+
+        .uv-main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00F0FF, #10B981, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-align: center;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            text-shadow: none;
+            margin-bottom: 40px;
+            animation: shimmerTitle 3s ease-in-out infinite;
         }
 
-        .podio-block {
-            flex: 1;
+        @keyframes shimmerTitle {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .uv-players-container {
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            gap: 60px;
+            margin-bottom: 40px;
         }
 
-        .podio-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
-            margin: 0 60px;
-        }
-
-        .podio-stage {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .podio-player {
+        .uv-player-card {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 16px;
         }
 
-        .podio-medal {
-            font-size: 28px;
-            animation: floatMedal 2.5s ease-in-out infinite;
+        .uv-player-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.5);
         }
 
-        .podio-player:nth-child(1) .podio-medal { animation-delay: 0s; }
-        .podio-player:nth-child(2) .podio-medal { animation-delay: 0.4s; }
-        .podio-player:nth-child(3) .podio-medal { animation-delay: 0.8s; }
-
-        @keyframes floatMedal {
-            0%, 100% { transform: translateY(0px); }
-            50%       { transform: translateY(-8px); }
+        .uv-avatar-ring {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .podio-avatar {
+        .uv-avatar-ring::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            padding: 6px;
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        .uv-player-card.closer .uv-avatar-ring::before {
+            background: conic-gradient(#00F0FF, #8B5CF6, #00F0FF);
+        }
+
+        .uv-player-card.sdr .uv-avatar-ring::before {
+            background: conic-gradient(#10B981, #FFD700, #10B981);
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .uv-avatar {
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center top;
             display: block;
+            position: relative;
+            z-index: 1;
             animation: floatAvatar 3s ease-in-out infinite;
         }
 
-        .podio-player.place-1 .podio-avatar {
-            width: 110px; height: 110px;
-            border: 4px solid #FFD700;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 0 50px rgba(255, 215, 0, 0.3);
-            animation-delay: 0s;
-        }
-
-        .podio-player.place-2 .podio-avatar {
-            width: 85px; height: 85px;
-            border: 3px solid #C0C0C0;
-            box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
-            animation-delay: 0.5s;
-        }
-
-        .podio-player.place-3 .podio-avatar {
-            width: 75px; height: 75px;
-            border: 3px solid #CD7F32;
-            box-shadow: 0 0 15px rgba(205, 127, 50, 0.6);
-            animation-delay: 1s;
-        }
-
-        @keyframes floatAvatar {
-            0%, 100% { transform: translateY(0px); }
-            50%       { transform: translateY(-6px); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50%       { transform: translateY(-5px); }
-        }
-
-        .podio-name {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        .podio-player.place-1 .podio-name { font-size: 16px; }
-        .podio-player.place-2 .podio-name { font-size: 13px; }
-        .podio-player.place-3 .podio-name { font-size: 13px; }
-
-        .podio-nickname {
-            font-size: 11px;
-            color: rgba(255,255,255,0.6);
-            font-style: italic;
-            text-align: center;
-        }
-
-        .podio-pts {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            color: #00D4FF;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
-            text-align: center;
-        }
-
-        .podio-player.place-1 .podio-pts { font-size: 22px; }
-        .podio-player.place-2 .podio-pts { font-size: 17px; }
-        .podio-player.place-3 .podio-pts { font-size: 17px; }
-
-        .podio-pedestal {
-            border-radius: 8px 8px 0 0;
+        .uv-avatar-fallback {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 22px;
+            font-size: 48px;
             font-weight: 900;
-            color: rgba(255,255,255,0.5);
+            color: #fff;
+            position: relative;
+            z-index: 1;
         }
 
-        .podio-player.place-1 .podio-pedestal {
-            width: 400px; height: 200px;
-            background: linear-gradient(180deg, rgba(255,215,0,0.3), rgba(255,165,0,0.15));
-            border: 2px solid rgba(255,215,0,0.5);
-            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        .uv-player-card.closer .uv-avatar-fallback { background: linear-gradient(135deg, #00D4FF, #8B5CF6); }
+        .uv-player-card.sdr    .uv-avatar-fallback { background: linear-gradient(135deg, #10B981, #FFD700); }
+
+        .uv-player-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
 
-        .podio-player.place-2 .podio-pedestal {
-            width: 400px; height: 130px;
-            background: linear-gradient(180deg, rgba(192,192,192,0.2), rgba(169,169,169,0.1));
-            border: 2px solid rgba(192,192,192,0.4);
-        }
+        .uv-player-card.closer .uv-player-name { color: #00F0FF; text-shadow: 0 0 15px rgba(0,240,255,0.6); }
+        .uv-player-card.sdr    .uv-player-name { color: #10B981; text-shadow: 0 0 15px rgba(16,185,129,0.6); }
 
-        .podio-player.place-3 .podio-pedestal {
-            width: 400px; height: 80px;
-            background: linear-gradient(180deg, rgba(205,127,50,0.2), rgba(184,115,51,0.1));
-            border: 2px solid rgba(205,127,50,0.4);
-        }
-
-        .destaques-bottom {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            padding: 8px 12px;
-            width: 100%;
-            overflow-x: auto;
-        }
-
-        .destaque-card-bottom {
-            flex: 1;
-            min-width: 140px;
+        .uv-vs-divider {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
-            padding: 12px 10px;
-            border-radius: 14px;
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            transition: all 0.3s ease;
-            text-align: center;
+            gap: 12px;
         }
 
-       .destaque-card-bottom:hover { transform: translateY(-4px); }
+        .uv-vs-line {
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(180deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
 
-       .destaque-card-bottom.gold-glow   { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.green-glow  { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.blue-glow   { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.purple-glow { background: transparent; border: none; box-shadow: none; }
-       .destaque-card-bottom.cyan-glow   { background: transparent; border: none; box-shadow: none; }
+        .uv-vs-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.3);
+        }
 
-        .destaque-card-bottom .db-icon  { font-size: 24px; }
-        .destaque-card-bottom .db-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); }
-        .destaque-card-bottom .db-name  { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'Orbitron', sans-serif; }
-        .destaque-card-bottom .db-value { font-size: 12px; font-weight: 700; color: #00D4FF; background: rgba(0,212,255,0.15); padding: 3px 10px; border-radius: 20px; }
-   .stadium-field {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 55%;
-    background:
-        linear-gradient(180deg,
-            transparent 0%,
-            rgba(0, 40, 10, 0.15) 30%,
-            rgba(0, 80, 20, 0.2) 60%,
-            rgba(0, 60, 15, 0.25) 100%
-        );
-    perspective: 800px;
-}
+        .uv-deal-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,0.5));
+            animation: pulseValue 2s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
 
-.stadium-field::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%) perspective(600px) rotateX(60deg);
-    width: 70%; height: 80%;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 40px,
-            rgba(0, 180, 60, 0.06) 40px,
-            rgba(0, 180, 60, 0.06) 80px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 60px,
-            rgba(0, 180, 60, 0.04) 60px,
-            rgba(0, 180, 60, 0.04) 120px
-        ),
-        radial-gradient(ellipse at 50% 50%, rgba(0, 200, 80, 0.08) 0%, transparent 70%);
-    border: 1px solid rgba(0, 200, 80, 0.08);
-    border-radius: 4px;
-}
+        @keyframes pulseValue {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(255,215,0,0.5)); }
+            50% { filter: drop-shadow(0 0 60px rgba(255,215,0,0.9)); }
+        }
 
-.stadium-field::after {
-    content: '';
-    position: absolute;
-    bottom: 5%; left: 50%;
-    transform: translateX(-50%) perspective(600px) rotateX(60deg);
-    width: 20%; height: 30%;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 50%;
-}
+        .uv-deal-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.stadium-lights {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-}
+        .uv-frase-container {
+            max-width: 700px;
+            text-align: center;
+            padding: 24px 40px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
 
-.stadium-lights::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 60%;
-    background:
-        radial-gradient(ellipse at 15% 10%, rgba(0, 160, 255, 0.18) 0%, transparent 35%),
-        radial-gradient(ellipse at 85% 10%, rgba(0, 160, 255, 0.18) 0%, transparent 35%),
-        radial-gradient(ellipse at 50% 0%, rgba(100, 180, 255, 0.1) 0%, transparent 40%);
-}
+        .uv-frase-container::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: rgba(0,240,255,0.3);
+            line-height: 1;
+        }
 
-.stadium-lights::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background:
-        radial-gradient(ellipse at 10% 15%, rgba(255,255,255,0.07) 0%, transparent 15%),
-        radial-gradient(ellipse at 90% 15%, rgba(255,255,255,0.07) 0%, transparent 15%),
-        radial-gradient(ellipse at 30% 5%, rgba(255,255,255,0.05) 0%, transparent 10%),
-        radial-gradient(ellipse at 70% 5%, rgba(255,255,255,0.05) 0%, transparent 10%);
-}
-    
+        .uv-frase-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+
+        .uv-frase-author {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            color: #00D4FF;
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        /* Confetti particles on sale screen */
+        .uv-confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiFall 4s ease-in infinite;
+            opacity: 0;
+        }
+
+        @keyframes confettiFall {
+            0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===================== POPUP NOTIFICAÇÃO ===================== */
+        .sale-notification {
+            position: fixed;
+            bottom: -200px;
+            right: 30px;
+            width: 380px;
+            background: rgba(10, 20, 40, 0.95);
+            border: 2px solid #10B981;
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 40px rgba(16,185,129,0.5), 0 20px 60px rgba(0,0,0,0.5);
+            z-index: 9999;
+            transition: bottom 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sale-notification.visible { bottom: 30px; }
+
+        .sn-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sn-badge {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            animation: pulse-green 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-green {
+            0%,100% { box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+            50%      { box-shadow: 0 0 20px rgba(16,185,129,0.9); }
+        }
+
+        .sn-time {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            margin-left: auto;
+        }
+
+        .sn-body {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .sn-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            border: 2px solid #10B981;
+            box-shadow: 0 0 15px rgba(16,185,129,0.5);
+            flex-shrink: 0;
+        }
+
+        .sn-avatar-fallback {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00D4FF, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            border: 2px solid #10B981;
+            flex-shrink: 0;
+        }
+
+        .sn-info { flex: 1; }
+
+        .sn-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .sn-deal { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+        .sn-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255,215,0,0.6);
+        }
+
+        .sn-frase {
+            font-size: 12px;
+            font-style: italic;
+            color: rgba(255,255,255,0.7);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 10px;
+            line-height: 1.5;
+        }
+
+        .sn-progress {
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .sn-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10B981, #00F0FF);
+            border-radius: 2px;
+            width: 100%;
+            transition: width linear;
+        }
+
+        /* ===================== ANIMATIONS ===================== */
+        @keyframes celebrationBurst {
+            0%   { transform: scale(0) rotate(0deg);   opacity: 1; }
+            50%  { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        body.mode-podio .podio-view { padding:12px 26px;gap:0; }
+        body.mode-podio .podio-section-title { font-size:15px;margin-bottom:6px;letter-spacing:1px; }
+        body.mode-podio .podio-block { justify-content:center; }
+        body.mode-podio .podio-divider { margin:0 30px; }
+        body.mode-podio .podio-stage { max-width:760px;gap:14px; }
+        body.mode-podio .podio-player { gap:6px; }
+        body.mode-podio .podio-medal { font-size:22px; }
+        body.mode-podio .podio-player.place-1 .podio-avatar { width:88px;height:88px;border-width:3px; }
+        body.mode-podio .podio-player.place-2 .podio-avatar { width:70px;height:70px;border-width:3px; }
+        body.mode-podio .podio-player.place-3 .podio-avatar { width:64px;height:64px;border-width:3px; }
+        body.mode-podio .podio-player.place-1 .podio-name { font-size:14px; }
+        body.mode-podio .podio-player.place-2 .podio-name,
+        body.mode-podio .podio-player.place-3 .podio-name { font-size:12px; }
+        body.mode-podio .podio-nickname { font-size:10px; }
+        body.mode-podio .podio-player.place-1 .podio-pts { font-size:18px; }
+        body.mode-podio .podio-player.place-2 .podio-pts,
+        body.mode-podio .podio-player.place-3 .podio-pts { font-size:15px; }
+        body.mode-podio .podio-player.place-1 .podio-pedestal { width:250px;height:140px; }
+        body.mode-podio .podio-player.place-2 .podio-pedestal { width:220px;height:98px; }
+        body.mode-podio .podio-player.place-3 .podio-pedestal { width:220px;height:64px; }
     </style>
 </head>
 <body>
@@ -980,29 +666,48 @@
 
     <div class="pause-button" id="pauseButton"></div>
 
+    <!-- POPUP NOTIFICAÇÃO DE VENDA -->
+    <div class="sale-notification" id="saleNotification">
+        <div class="sn-header">
+            <div class="sn-badge">🔔 VENDA FECHADA!</div>
+            <span class="sn-time" id="snTime"></span>
+        </div>
+        <div class="sn-body">
+            <div id="snAvatarWrapper"></div>
+            <div class="sn-info">
+                <div class="sn-name" id="snName"></div>
+                <div class="sn-deal" id="snDeal"></div>
+            </div>
+            <div class="sn-value" id="snValue"></div>
+        </div>
+        <div class="sn-frase" id="snFrase"></div>
+        <div class="sn-progress"><div class="sn-progress-bar" id="snProgressBar"></div></div>
+    </div>
+
     <div class="content-container" id="contentContainer">
 
         <div class="background-container">
-    <div class="gradient-mesh"></div>
-    <div class="stadium-field"></div>
-    <div class="stadium-lights"></div>
-    <div class="particles">
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div>
-    </div>
-    <div class="grid-overlay"></div>
-    <div class="glow-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-</div>
+            <div class="gradient-mesh"></div>
+            <div class="stadium-field"></div>
+            <div class="stadium-lights"></div>
+            <div class="particles">
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+                <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+                <div class="particle"></div><div class="particle"></div>
+            </div>
+            <div class="grid-overlay"></div>
+            <div class="glow-orbs">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+            </div>
+        </div>
 
+        <!-- TABLE VIEW -->
         <header class="epic-header" id="mainHeader">
             <div class="logo-container">
                 <img src="https://cdn.prod.website-files.com/5f99af040fc8a6ae400fc29d/6673221b3ce01287894e61e3_suri_logo.png" alt="SURI" class="suri-logo">
@@ -1010,30 +715,12 @@
             <div class="title-section">
                 <div class="mtd-metrics-header">
                     <div class="mtd-metrics-grid">
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">Meta mensal</div>
-                            <div class="mtd-value" id="meta-mensal">R$ 300.038,53</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">% Realizado mensal</div>
-                            <div class="mtd-value orange-glow" id="perc-realizado-mensal">10,37%</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">MTD Hoje</div>
-                            <div class="mtd-value cyan-glow" id="mtd-hoje">34,08%</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">Realizado mensal</div>
-                            <div class="mtd-value green-glow" id="realizado-mensal">R$ 31.124,25</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">% Realizado semanal</div>
-                            <div class="mtd-value orange-glow" id="perc-realizado-semanal">19,73%</div>
-                        </div>
-                        <div class="mtd-metric-item">
-                            <div class="mtd-label">MTD Ontem</div>
-                            <div class="mtd-value" id="mtd-ontem">34,95%</div>
-                        </div>
+                        <div class="mtd-metric-item"><div class="mtd-label">Meta mensal</div><div class="mtd-value" id="meta-mensal">R$ 300.038,53</div></div>
+                        <div class="mtd-metric-item"><div class="mtd-label">% Realizado mensal</div><div class="mtd-value orange-glow" id="perc-realizado-mensal">10,37%</div></div>
+                        <div class="mtd-metric-item"><div class="mtd-label">MTD Hoje</div><div class="mtd-value cyan-glow" id="mtd-hoje">34,08%</div></div>
+                        <div class="mtd-metric-item"><div class="mtd-label">Realizado mensal</div><div class="mtd-value green-glow" id="realizado-mensal">R$ 31.124,25</div></div>
+                        <div class="mtd-metric-item"><div class="mtd-label">% Realizado semanal</div><div class="mtd-value orange-glow" id="perc-realizado-semanal">19,73%</div></div>
+                        <div class="mtd-metric-item"><div class="mtd-label">MTD Ontem</div><div class="mtd-value" id="mtd-ontem">34,95%</div></div>
                     </div>
                 </div>
             </div>
@@ -1044,24 +731,22 @@
         </header>
 
         <div id="tableView">
-            <div class="main-container" style="grid-template-columns: 1fr; height: auto;">
+            <div class="main-container" style="grid-template-columns:1fr;height:auto;">
                 <div class="table-section">
-                    <div style="display: grid; grid-template-columns: 75% 25%; gap: 12px; align-items: start;">
+                    <div style="display:grid;grid-template-columns:75% 25%;gap:12px;align-items:start;">
                         <div class="two-column-grid">
                             <div class="table-column">
                                 <table class="championship-table compact">
                                     <thead>
                                         <tr id="tableHeader1">
-                                            <th>#</th>
-                                            <th>Jogador</th>
-                                            <th>Time</th>
-                                            <th><span class="icon" id="stat1Icon"></span> <span id="stat1Label">R$</span></th>
-                                            <th><span class="icon" id="statJIcon"></span> <span id="statJLabel">Score</span></th>
-                                            <th><span class="icon" id="stat2Icon"></span> <span id="stat2Label">Reun</span></th>
-                                            <th><span class="icon" id="stat3Icon"></span> <span id="stat3Label">Vend</span></th>
-                                            <th><span class="icon" id="stat4Icon"></span> <span id="stat4Label">Ticket</span></th>
-                                            <th><span class="icon" id="stat5Icon"></span> <span id="stat5Label">Conv</span></th>
-                                            <th><span class="icon"></span> PTS</th>
+                                            <th>#</th><th>Jogador</th><th>Time</th>
+                                            <th><span class="icon" id="stat1Icon"></span><span id="stat1Label">R$</span></th>
+                                            <th><span class="icon" id="statJIcon"></span><span id="statJLabel">Score</span></th>
+                                            <th><span class="icon" id="stat2Icon"></span><span id="stat2Label">Reun</span></th>
+                                            <th><span class="icon" id="stat3Icon"></span><span id="stat3Label">Vend</span></th>
+                                            <th><span class="icon" id="stat4Icon"></span><span id="stat4Label">Ticket</span></th>
+                                            <th><span class="icon" id="stat5Icon"></span><span id="stat5Label">Conv</span></th>
+                                            <th><span class="icon"></span>PTS</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tableColumn1"></tbody>
@@ -1071,25 +756,23 @@
                                 <table class="championship-table compact">
                                     <thead>
                                         <tr id="tableHeader2">
-                                            <th>#</th>
-                                            <th>Jogador</th>
-                                            <th>Time</th>
-                                            <th><span class="icon" id="stat1Icon2"></span> <span id="stat1Label2">R$</span></th>
-                                            <th><span class="icon" id="statJIcon2"></span> <span id="statJLabel2">Score</span></th>
-                                            <th><span class="icon" id="stat2Icon2"></span> <span id="stat2Label2">Reun</span></th>
-                                            <th><span class="icon" id="stat3Icon2"></span> <span id="stat3Label2">Vend</span></th>
-                                            <th><span class="icon" id="stat4Icon2"></span> <span id="stat4Label2">Ticket</span></th>
-                                            <th><span class="icon" id="stat5Icon2"></span> <span id="stat5Label2">Conv</span></th>
-                                            <th><span class="icon"></span> PTS</th>
+                                            <th>#</th><th>Jogador</th><th>Time</th>
+                                            <th><span class="icon" id="stat1Icon2"></span><span id="stat1Label2">R$</span></th>
+                                            <th><span class="icon" id="statJIcon2"></span><span id="statJLabel2">Score</span></th>
+                                            <th><span class="icon" id="stat2Icon2"></span><span id="stat2Label2">Reun</span></th>
+                                            <th><span class="icon" id="stat3Icon2"></span><span id="stat3Label2">Vend</span></th>
+                                            <th><span class="icon" id="stat4Icon2"></span><span id="stat4Label2">Ticket</span></th>
+                                            <th><span class="icon" id="stat5Icon2"></span><span id="stat5Label2">Conv</span></th>
+                                            <th><span class="icon"></span>PTS</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tableColumn2"></tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="sidebar-section" style="background: transparent; border: none; box-shadow: none; padding: 4px;">
-                            <div class="ranking-times-card" style="background: transparent; border: none; box-shadow: none;">
-                                <h2 class="card-title"><span class="icon-glow">🏆</span> Ranking por Times</h2>
+                        <div class="sidebar-section" style="background:transparent;border:none;box-shadow:none;padding:4px;">
+                            <div class="ranking-times-card" style="background:transparent;border:none;box-shadow:none;">
+                                <h2 class="card-title"><span class="icon-glow">🏆</span>Ranking por Times</h2>
                                 <div id="teamRankings"></div>
                             </div>
                         </div>
@@ -1097,7 +780,6 @@
                     <div class="destaques-bottom" id="highlights"></div>
                 </div>
             </div>
-
             <footer>
                 <div class="footer-content">
                     <div class="suri-branding">
@@ -1105,8 +787,9 @@
                     </div>
                 </div>
             </footer>
-            </div>
-        
+        </div>
+
+        <!-- PÓDIO VIEW -->
         <div class="podio-view" id="podioView">
             <div class="podio-block">
                 <div class="podio-section-title">🏆 PÓDIO DO MÊS — CLOSER</div>
@@ -1119,599 +802,755 @@
             </div>
         </div>
 
+        <!-- ÚLTIMA VENDA VIEW -->
+        <div class="ultima-venda-view" id="ultimaVendaView">
+            <div class="uv-title">Champions Suri</div>
+            <div class="uv-main-title">🔥 ÚLTIMA VENDA FECHADA 🔥</div>
+
+            <div id="uvDealValue" class="uv-deal-value">R$ 0,00</div>
+            <div id="uvDealName" class="uv-deal-name"></div>
+
+            <div class="uv-players-container">
+                <!-- Closer -->
+                <div class="uv-player-card closer">
+                    <div class="uv-player-label">⚡ Closer</div>
+                    <div class="uv-avatar-ring">
+                        <div id="uvCloserAvatar"></div>
+                    </div>
+                    <div class="uv-player-name" id="uvCloserName">—</div>
+                </div>
+
+                <div class="uv-vs-divider">
+                    <div class="uv-vs-line"></div>
+                    <div class="uv-vs-text">+</div>
+                    <div class="uv-vs-line"></div>
+                </div>
+
+                <!-- SDR -->
+                <div class="uv-player-card sdr">
+                    <div class="uv-player-label">🎯 SDR</div>
+                    <div class="uv-avatar-ring">
+                        <div id="uvSDRAvatar"></div>
+                    </div>
+                    <div class="uv-player-name" id="uvSDRName">—</div>
+                </div>
+            </div>
+
+            <div class="uv-frase-container" id="uvFraseContainer" style="display:none;">
+                <div class="uv-frase-text" id="uvFraseText"></div>
+                <div class="uv-frase-author" id="uvFraseAuthor"></div>
+            </div>
+        </div>
+
     </div>
 
+    <!-- AUDIO -->
+    <audio id="saleSound" preload="auto">
+        <source src="https://freesound.org/data/previews/397/397434_4284968-lq.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-        let currentMode = 'closer';
-        let currentPlayers = [];
-        let isPaused = false;
-        let autoSwitchTimer = null;
-        let autoRefreshTimer = null;
-        let currentMotivationalPhraseIndex = 0;
+    // ===================== CONFIGURAÇÕES =====================
+    // SUBSTITUA pela URL do seu Google Apps Script proxy
+    const PIPEDRIVE_PROXY_URL = 'https://script.google.com/macros/s/AKfycbwLVX0bcN_EGFpV4lVZb56kXatixWEjf_FztMU1HCrejXLuEjMSsTi1V0ce-Lmt2sjB4A/exec';
 
-        const MODE_SEQUENCE = ['closer', 'sdr', 'podio'];
-        const MODE_DURATIONS = { closer: 45000, sdr: 45000, podio: 30000 };
+    // Campos customizados do Pipedrive
+    const FIELD_FRASE = 'cfe4686c420c52d0ecfb49b352665e6489b736da';
+    const FIELD_SDR   = 'd9c692b4d69e7178ccbc351b6d13ea925e26dbe5';
 
-        let cachedCloserPlayers = [];
-        let cachedSDRPlayers    = [];
+    // ===================== ESTADO =====================
+    let currentMode = 'closer';
+    let currentPlayers = [];
+    let isPaused = false;
+    let autoSwitchTimer = null;
+    let cachedCloserPlayers = [];
+    let cachedSDRPlayers    = [];
+    let lastSaleDealId      = null;
+    let notificationTimer   = null;
+    let pipedrivePollingTimer = null;
 
-        const CLOSER_PHOTOS = {
-            'Alex Ucha':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
-            'Alex Uchoa':          'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
-            'Amanda Ribeiro':      'https://lh3.googleusercontent.com/d/1zJft4i-3pZ_ASY0a1YE2AZt1P8GnEdsk',
-            'André Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
-            'Andre Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
-            'Brena Carvalho':      'https://lh3.googleusercontent.com/d/150nv2Csf3V3UQsNL8lfLPZS4R41woFHh',
-            'Clailton Nascimento': 'https://lh3.googleusercontent.com/d/11iTMXwG6K32AV-pSdlnr_oyw5LcnckPb',
-            'Emerson Rocha':       'https://lh3.googleusercontent.com/d/1e0n_M3AGh1-MqK1aFm8RmxcS-JnJ2fq3',
-            'Gleice Moraes':       'https://lh3.googleusercontent.com/d/1y4qetBRh6leCZ3gzz-jQmnuac0-J4_bP',
-            'Jéssika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
-            'Jessika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
-            'João Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
-            'Joao Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
-            'Jossiane':            'https://lh3.googleusercontent.com/d/1N4lCr55HU8oHOV2__EogHqZ78G3X-NSm',
-            'Lucas Machado':       'https://lh3.googleusercontent.com/d/1r0HUosc_S3USRbwmvsl1lWc-gD6Ftdb6',
-            'Patricio Felix':      'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
-            'Patrcio Felix':      'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
-            'Júnior Furtado':     'https://lh3.googleusercontent.com/d/1d36WnExuNkQ0-T8Z1RVEIx3qBYKFcss0',
-            'Rafael Lima':         'https://lh3.googleusercontent.com/d/1wMT6AqUWGBQ431cx8Dvubu_WryAUGOVL'
-        };
+    const MODE_SEQUENCE = ['closer', 'sdr', 'podio', 'ultima-venda'];
+    const MODE_DURATIONS = { closer: 45000, sdr: 45000, podio: 30000, 'ultima-venda': 20000 };
 
-        const SDR_PHOTOS = {
-            'Cida Gomes':       'https://lh3.googleusercontent.com/d/1L73zILGelKxvyLspXuJyuzcSIesSV7Id',
-            'Cintia Cifoni':    'https://lh3.googleusercontent.com/d/1PpFpK3wbai-SIwSIidt8TwffL80Flbp3',
-            'Daniele Carvalho': 'https://lh3.googleusercontent.com/d/1JRi7GxFAVe0X1f4TYso7OOw3gFQea3Zw',
-            'Dara Barroso':     'https://lh3.googleusercontent.com/d/1oJt4ENPVf9mbzLYfFQ0JPODNAJASQ0r_',
-            'Driele Rodrigues': 'https://lh3.googleusercontent.com/d/1XFatPpyQsaZTTubyMzeuLn2kjUKJPA5x',
-            'Iara Jssica':     'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
-            'Iara Jessica':     'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
-            'Júnior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
-            'Junior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
-            'Matheus Lima':     'https://lh3.googleusercontent.com/d/1dHEKu-VqT0NDIPpHog3vW3FAk6cwXJ-_',
-            'Pedro Roncalli':   'https://lh3.googleusercontent.com/d/1XOat3HSo5WBv0CWsVjhJdrqPTNv-qhZZ',
-            'Sâmela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
-            'Samela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
-            'Thiago de Brito':  'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
-        };
+    // ===================== FOTOS =====================
+    const CLOSER_PHOTOS = {
+        'Alex Ucha':           'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
+        'Alex Uchoa':          'https://lh3.googleusercontent.com/d/19AbZDNZPz4VDSWS0xdZPRzWMOq_ln5F8',
+        'Amanda Ribeiro':      'https://lh3.googleusercontent.com/d/1zJft4i-3pZ_ASY0a1YE2AZt1P8GnEdsk',
+        'André Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
+        'Andre Queiroz':       'https://lh3.googleusercontent.com/d/1bD9YLIqVwHho5QcwLojNiRgjmofzriQ5',
+        'Brena Carvalho':      'https://lh3.googleusercontent.com/d/150nv2Csf3V3UQsNL8lfLPZS4R41woFHh',
+        'Clailton Nascimento': 'https://lh3.googleusercontent.com/d/11iTMXwG6K32AV-pSdlnr_oyw5LcnckPb',
+        'Emerson Rocha':       'https://lh3.googleusercontent.com/d/1e0n_M3AGh1-MqK1aFm8RmxcS-JnJ2fq3',
+        'Gleice Moraes':       'https://lh3.googleusercontent.com/d/1y4qetBRh6leCZ3gzz-jQmnuac0-J4_bP',
+        'Jéssika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
+        'Jessika Lima':        'https://lh3.googleusercontent.com/d/1RstiAV8BRQYPja9CXw659IkF_MoCkygT',
+        'João Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
+        'Joao Victor':         'https://lh3.googleusercontent.com/d/1qwsoEozGOMo0BW9iHeXs55SIc8iykzHO',
+        'Jossiane':            'https://lh3.googleusercontent.com/d/1N4lCr55HU8oHOV2__EogHqZ78G3X-NSm',
+        'Lucas Machado':       'https://lh3.googleusercontent.com/d/1r0HUosc_S3USRbwmvsl1lWc-gD6Ftdb6',
+        'Patricio Felix':      'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
+        'Patrcio Felix':       'https://lh3.googleusercontent.com/d/146mraxAe1oK7hfBUD5h5Y69Y958ZQZmf',
+        'Júnior Furtado':      'https://lh3.googleusercontent.com/d/1d36WnExuNkQ0-T8Z1RVEIx3qBYKFcss0',
+        'Rafael Lima':         'https://lh3.googleusercontent.com/d/1wMT6AqUWGBQ431cx8Dvubu_WryAUGOVL'
+    };
 
-        function extractGoogleDriveId(url) {
-            const match = url && url.match(/\/d\/([^/?]+)/);
-            return match ? match[1] : null;
+    const SDR_PHOTOS = {
+        'Cida Gomes':       'https://lh3.googleusercontent.com/d/1L73zILGelKxvyLspXuJyuzcSIesSV7Id',
+        'Cintia Cifoni':    'https://lh3.googleusercontent.com/d/1PpFpK3wbai-SIwSIidt8TwffL80Flbp3',
+        'Daniele Carvalho': 'https://lh3.googleusercontent.com/d/1JRi7GxFAVe0X1f4TYso7OOw3gFQea3Zw',
+        'Dara Barroso':     'https://lh3.googleusercontent.com/d/1oJt4ENPVf9mbzLYfFQ0JPODNAJASQ0r_',
+        'Driele Rodrigues': 'https://lh3.googleusercontent.com/d/1XFatPpyQsaZTTubyMzeuLn2kjUKJPA5x',
+        'Iara Jssica':      'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
+        'Iara Jessica':     'https://lh3.googleusercontent.com/d/1c7IVud181ni1xyf76sqQRvpuZfcprC26',
+        'Júnior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
+        'Junior Lima':      'https://lh3.googleusercontent.com/d/1m_e7Bk9o9gqPiZG2Jh1EUE4DyV0C3SaE',
+        'Matheus Lima':     'https://lh3.googleusercontent.com/d/1dHEKu-VqT0NDIPpHog3vW3FAk6cwXJ-_',
+        'Pedro Roncalli':   'https://lh3.googleusercontent.com/d/1XOat3HSo5WBv0CWsVjhJdrqPTNv-qhZZ',
+        'Sâmela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
+        'Samela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
+        'Thiago de Brito':  'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
+    };
+
+    // ===================== FOTO HELPERS =====================
+    function getPlayerPhoto(name) {
+        if (CLOSER_PHOTOS[name]) return CLOSER_PHOTOS[name];
+        const fn = name.split(' ')[0].toLowerCase();
+        for (const key of Object.keys(CLOSER_PHOTOS)) {
+            if (key.toLowerCase().startsWith(fn)) return CLOSER_PHOTOS[key];
         }
+        return null;
+    }
 
-        function buildGooglePhotoSources(url) {
-            const fileId = extractGoogleDriveId(url);
-            if (!fileId) return [url].filter(Boolean);
-            return [
-                url,
-                `https://lh3.googleusercontent.com/d/${fileId}`,
-                `https://drive.google.com/uc?export=view&id=${fileId}`,
-                `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`,
-                `https://drive.usercontent.google.com/download?id=${fileId}&export=view&authuser=0`
-            ].filter(Boolean);
+    function getSDRPhoto(name) {
+        if (SDR_PHOTOS[name]) return SDR_PHOTOS[name];
+        const fn = name.split(' ')[0].toLowerCase();
+        for (const key of Object.keys(SDR_PHOTOS)) {
+            if (key.toLowerCase().startsWith(fn)) return SDR_PHOTOS[key];
         }
+        return null;
+    }
 
-        function createPhotoImgHTML(photoUrl, className, altText, fallbackText) {
-            return `<img class="${className}" src="${photoUrl}" alt="${altText}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="${className}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${fallbackText}</div>`;
-}
-        function handlePhotoFallback(img) {
-            const sources = JSON.parse(img.dataset.photoSources || '[]');
-            let index = parseInt(img.dataset.photoIndex || '0', 10);
-            index += 1;
-            if (index < sources.length) {
-                img.dataset.photoIndex = String(index);
-                img.src = sources[index];
-                return;
+    function getAnyPhoto(name) {
+        return getPlayerPhoto(name) || getSDRPhoto(name);
+    }
+
+    function buildAvatarImg(url, className, name, fallbackClass) {
+        if (url) {
+            return `<img class="${className}" src="${url}" alt="${name}"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="${fallbackClass}" style="display:none;">${name.charAt(0)}</div>`;
+        }
+        return `<div class="${fallbackClass}">${name.charAt(0)}</div>`;
+    }
+
+    // ===================== DADOS DA PLANILHA =====================
+    const DATA_SOURCES = {
+        closer: {
+            players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
+            mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1112498764'
+        },
+        sdr: {
+            players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=337038684',
+            mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1235747938'
+        }
+    };
+
+    function parseCSVLine(line) {
+        const result = []; let current = ''; let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') { inQuotes = !inQuotes; }
+            else if (char === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
+            else { current += char; }
+        }
+        result.push(current.trim());
+        return result;
+    }
+
+    function parseCSV(csv, mode) {
+        const lines = csv.split('\n');
+        const players = [];
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim(); if (!line) continue;
+            const cols = parseCSVLine(line);
+            if (cols.length >= 9 && cols[1] && cols[8]) {
+                if (mode === 'closer') {
+                    players.push({ rank:parseInt(cols[0])||i, name:cols[1].trim(), nickname:cols[2].trim(), team:cols[3].trim(), revenue:cols[4].trim(), meetings:parseInt(cols[5])||0, sales:parseInt(cols[6])||0, conversion:cols[7]?cols[7].trim():'0%', ticket:cols[8]?cols[8].trim():'R$ 0,00', score:cols[9]?cols[9].trim():'-', points:parseFloat(cols[10])||0 });
+                } else {
+                    players.push({ rank:parseInt(cols[0])||i, name:cols[1].trim(), nickname:cols[2].trim(), team:cols[3].trim(), meetings:parseInt(cols[5])||0, shows:parseInt(cols[6])||0, noshow:cols[7]?cols[7].trim():'0', sales:parseInt(cols[4])||0, points:parseFloat(cols[8])||0 });
+                }
             }
-            img.style.display = 'none';
-            if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
         }
+        return players.sort((a,b) => a.rank - b.rank);
+    }
 
-        function getPlayerPhoto(name) {
-            if (CLOSER_PHOTOS[name]) return CLOSER_PHOTOS[name];
-            const firstName = name.split(' ')[0].toLowerCase();
-            for (const key of Object.keys(CLOSER_PHOTOS)) {
-                if (key.toLowerCase().startsWith(firstName)) return CLOSER_PHOTOS[key];
+    async function fetchPlayerData(mode) {
+        try {
+            const url = DATA_SOURCES[mode].players + `&_=${Date.now()}`;
+            const r = await fetch(url);
+            return parseCSV(await r.text(), mode);
+        } catch(e) { console.error('Player data error:', e); return null; }
+    }
+
+    async function fetchMTDMetrics() {
+        const modeForMTD = (currentMode === 'podio' || currentMode === 'ultima-venda') ? 'closer' : currentMode;
+        try {
+            const url = DATA_SOURCES[modeForMTD].mtd + `&_=${Date.now()}`;
+            const r = await fetch(url);
+            const csvText = await r.text();
+            const lines = csvText.trim().split('\n');
+            if (lines.length < 2) return;
+            let values = []; let cur = ''; let inQ = false;
+            for (let i = 0; i < lines[1].length; i++) {
+                const c = lines[1][i];
+                if (c === '"') { inQ = !inQ; }
+                else if (c === ',' && !inQ) { values.push(cur.trim()); cur = ''; }
+                else { cur += c; }
             }
+            values.push(cur.trim());
+            const fbC = ['34,95%','34,08%','R$ 300.038,53','R$ 31.124,25','10,37%','R$ 91.859,33','R$ 18.127,35','19,73%'];
+            const fbS = ['55,99%','47,82%','1.344','752','55,95%','467','229','49,04%'];
+            for (let i = 0; i < values.length; i++) {
+                if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') values[i] = (modeForMTD === 'sdr' ? fbS : fbC)[i] || '0';
+            }
+            document.getElementById('mtd-ontem').textContent              = values[0];
+            document.getElementById('mtd-hoje').textContent               = values[1];
+            document.getElementById('meta-mensal').textContent            = values[2];
+            document.getElementById('realizado-mensal').textContent       = values[3];
+            document.getElementById('perc-realizado-mensal').textContent  = values[4];
+            document.getElementById('perc-realizado-semanal').textContent = values[7];
+            updateMetricColors();
+        } catch(e) { console.error('MTD error:', e); }
+    }
+
+    function updateMetricColors() {
+        const pm = document.getElementById('perc-realizado-mensal');
+        const vm = parseFloat(pm.textContent.replace(',','.').replace('%',''));
+        pm.className = 'mtd-value'; pm.classList.add(vm < 30 ? 'orange-glow' : vm < 70 ? 'cyan-glow' : 'green-glow');
+        const ps = document.getElementById('perc-realizado-semanal');
+        const vs = parseFloat(ps.textContent.replace(',','.').replace('%',''));
+        ps.className = 'mtd-value'; ps.classList.add(vs < 30 ? 'orange-glow' : vs < 70 ? 'cyan-glow' : 'green-glow');
+    }
+
+    // ===================== PIPEDRIVE POLLING =====================
+    async function fetchLastSale() {
+        try {
+            const url = `${PIPEDRIVE_PROXY_URL}?action=last_sale&_=${Date.now()}`;
+            const r   = await fetch(url);
+            const data = await r.json();
+            return data; // espera: { id, title, value, currency, closer_name, sdr_name, frase, won_time }
+        } catch(e) {
+            console.warn('Pipedrive proxy error (verifique PIPEDRIVE_PROXY_URL):', e);
             return null;
         }
+    }
 
-        function getSDRPhoto(name) {
-            if (SDR_PHOTOS[name]) return SDR_PHOTOS[name];
-            const firstName = name.split(' ')[0].toLowerCase();
-            for (const key of Object.keys(SDR_PHOTOS)) {
-                if (key.toLowerCase().startsWith(firstName)) return SDR_PHOTOS[key];
-            }
-            return null;
+    async function checkNewSale() {
+        const sale = await fetchLastSale();
+        if (!sale || !sale.id) return;
+
+        // Atualiza tela de última venda sempre
+        updateUltimaVendaScreen(sale);
+
+        // Dispara popup só se for venda nova
+        if (sale.id !== lastSaleDealId) {
+            lastSaleDealId = sale.id;
+            showSaleNotification(sale);
+        }
+    }
+
+    function formatCurrency(value, currency) {
+        const num = parseFloat(value) || 0;
+        return 'R$ ' + num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // ===================== TELA ÚLTIMA VENDA =====================
+    function updateUltimaVendaScreen(sale) {
+        const closerName = sale.closer_name || '—';
+        const sdrName    = sale.sdr_name    || '—';
+        const value      = formatCurrency(sale.value, sale.currency);
+        const frase      = sale[FIELD_FRASE] || sale.frase || '';
+        const dealName   = sale.title || '';
+
+        document.getElementById('uvDealValue').textContent = value;
+        document.getElementById('uvDealName').textContent  = dealName;
+        document.getElementById('uvCloserName').textContent = closerName;
+        document.getElementById('uvSDRName').textContent    = sdrName;
+
+        // Avatar Closer
+        const closerPhoto = getPlayerPhoto(closerName);
+        document.getElementById('uvCloserAvatar').innerHTML = closerPhoto
+            ? `<img class="uv-avatar" src="${closerPhoto}" alt="${closerName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#00D4FF,#8B5CF6);">${closerName.charAt(0)}</div>`
+            : `<div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#00D4FF,#8B5CF6);">${closerName.charAt(0)}</div>`;
+
+        // Avatar SDR
+        const sdrPhoto = getSDRPhoto(sdrName);
+        document.getElementById('uvSDRAvatar').innerHTML = sdrPhoto
+            ? `<img class="uv-avatar" src="${sdrPhoto}" alt="${sdrName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#10B981,#FFD700);">${sdrName.charAt(0)}</div>`
+            : `<div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#10B981,#FFD700);">${sdrName.charAt(0)}</div>`;
+
+        // Frase
+        const fraseContainer = document.getElementById('uvFraseContainer');
+        if (frase) {
+            document.getElementById('uvFraseText').textContent   = frase;
+            document.getElementById('uvFraseAuthor').textContent = `— ${closerName}`;
+            fraseContainer.style.display = 'block';
+        } else {
+            fraseContainer.style.display = 'none';
         }
 
-        function getAvatarHTML(name, position, totalPlayers) {
-            const photoUrl = currentMode === 'closer' ? getPlayerPhoto(name) : getSDRPhoto(name);
-            const isTop5   = position <= 5;
-            const isDanger = position > (totalPlayers - 4);
-            const avatarClass = `player-avatar ${isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '')}`.trim();
-            if (photoUrl) {
-                return createPhotoImgHTML(photoUrl, avatarClass, name, name.charAt(0));
-            }
-            return `<div class="${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${name.charAt(0)}</div>`;
+        // Confetti
+        spawnConfetti();
+    }
+
+    function spawnConfetti() {
+        const uvView = document.getElementById('ultimaVendaView');
+        const colors = ['#FFD700','#00F0FF','#10B981','#8B5CF6','#FF6B6B','#ffffff'];
+        // Remove confetti anterior
+        uvView.querySelectorAll('.uv-confetti').forEach(el => el.remove());
+        for (let i = 0; i < 30; i++) {
+            const el = document.createElement('div');
+            el.className = 'uv-confetti';
+            el.style.cssText = `
+                left: ${Math.random()*100}%;
+                background: ${colors[Math.floor(Math.random()*colors.length)]};
+                width: ${6 + Math.random()*8}px;
+                height: ${6 + Math.random()*8}px;
+                animation-delay: ${Math.random()*3}s;
+                animation-duration: ${3 + Math.random()*3}s;
+                border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+            `;
+            uvView.appendChild(el);
+        }
+    }
+
+    // ===================== POPUP NOTIFICAÇÃO =====================
+    function showSaleNotification(sale) {
+        const closerName = sale.closer_name || '—';
+        const value      = formatCurrency(sale.value, sale.currency);
+        const frase      = sale[FIELD_FRASE] || sale.frase || '';
+        const dealName   = sale.title || '';
+
+        const photo = getPlayerPhoto(closerName);
+        const avatarWrapper = document.getElementById('snAvatarWrapper');
+        if (photo) {
+            avatarWrapper.innerHTML = `<img class="sn-avatar" src="${photo}" alt="${closerName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback" style="display:none;">${closerName.charAt(0)}</div>`;
+        } else {
+            avatarWrapper.innerHTML = `<div class="sn-avatar-fallback">${closerName.charAt(0)}</div>`;
         }
 
-        function buildPodioPlayer(player, place, usePhoto) {
-            const medals  = ['🥇','🥈','🥉'];
-            const classes = ['place-1','place-2','place-3'];
-            const medal   = medals[place - 1];
-            const cls     = classes[place - 1];
-            const photoUrl = usePhoto ? (getPlayerPhoto(player.name) || getSDRPhoto(player.name)) : null;
+        document.getElementById('snName').textContent  = closerName;
+        document.getElementById('snDeal').textContent  = dealName;
+        document.getElementById('snValue').textContent = value;
+        document.getElementById('snFrase').textContent = frase ? `"${frase}"` : '';
+        document.getElementById('snFrase').style.display = frase ? 'block' : 'none';
 
-            const avatarTag = photoUrl
-                ? createPhotoImgHTML(photoUrl, 'podio-avatar', player.name, player.name.charAt(0))
-                : `<div class="podio-avatar" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`;
+        const now = new Date();
+        document.getElementById('snTime').textContent = now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
 
-            return `
-                <div class="podio-player ${cls}">
-                    <div class="podio-medal">${medal}</div>
-                    ${avatarTag}
-                    <div class="podio-name">${player.name}</div>
-                    <div class="podio-nickname">${player.nickname || ''}</div>
-                    <div class="podio-pts">${Math.round(player.points)} pts</div>
-                    <div class="podio-pedestal">${place}</div>
-                </div>`;
+        // Toca o sino
+        playSaleSound();
+
+        // Mostra popup
+        const notif = document.getElementById('saleNotification');
+        notif.classList.add('visible');
+
+        // Barra de progresso (8 segundos)
+        const bar = document.getElementById('snProgressBar');
+        bar.style.transition = 'none';
+        bar.style.width = '100%';
+        setTimeout(() => {
+            bar.style.transition = 'width 8s linear';
+            bar.style.width = '0%';
+        }, 100);
+
+        // Esconde após 8 segundos
+        if (notificationTimer) clearTimeout(notificationTimer);
+        notificationTimer = setTimeout(() => {
+            notif.classList.remove('visible');
+        }, 8000);
+    }
+
+    function playSaleSound() {
+        const audio = document.getElementById('saleSound');
+        if (audio) {
+            audio.currentTime = 0;
+            audio.play().catch(e => console.warn('Audio autoplay blocked:', e));
         }
+    }
 
-        function renderPodio() {
-            const cp = cachedCloserPlayers.slice(0, 3);
-            if (cp.length >= 3) {
-                document.getElementById('podioCloser').innerHTML =
-                    buildPodioPlayer(cp[1], 2, true) +
-                    buildPodioPlayer(cp[0], 1, true) +
-                    buildPodioPlayer(cp[2], 3, true);
-            }
-            const sp = cachedSDRPlayers.slice(0, 3);
-            if (sp.length >= 3) {
-                document.getElementById('podioSDR').innerHTML =
-                    buildPodioPlayer(sp[1], 2, true) +
-                    buildPodioPlayer(sp[0], 1, true) +
-                    buildPodioPlayer(sp[2], 3, true);
-            }
+    // ===================== VIEWS =====================
+    function showTableView() {
+        document.getElementById('tableView').style.display         = 'block';
+        document.getElementById('podioView').classList.remove('active');
+        document.getElementById('ultimaVendaView').classList.remove('active');
+        document.getElementById('mainHeader').style.display        = 'flex';
+    }
+
+    function showPodioView() {
+        document.getElementById('tableView').style.display         = 'none';
+        document.getElementById('podioView').classList.add('active');
+        document.getElementById('ultimaVendaView').classList.remove('active');
+        document.getElementById('mainHeader').style.display        = 'none';
+        renderPodio();
+    }
+
+    function showUltimaVendaView() {
+        document.getElementById('tableView').style.display         = 'none';
+        document.getElementById('podioView').classList.remove('active');
+        document.getElementById('ultimaVendaView').classList.add('active');
+        document.getElementById('mainHeader').style.display        = 'none';
+        spawnConfetti();
+    }
+
+    // ===================== MODE =====================
+    function updateModeIndicator() {
+        const indicator = document.getElementById('modeIndicator');
+        const modeText  = document.getElementById('modeText');
+        document.body.classList.remove('mode-closer','mode-sdr','mode-podio','mode-ultima-venda');
+        indicator.classList.remove('sdr-mode','podio-mode','venda-mode');
+        if (currentMode === 'sdr') {
+            document.body.classList.add('mode-sdr'); indicator.classList.add('sdr-mode'); modeText.textContent = 'SDR';
+        } else if (currentMode === 'podio') {
+            document.body.classList.add('mode-podio'); indicator.classList.add('podio-mode'); modeText.textContent = 'PÓDIO';
+        } else if (currentMode === 'ultima-venda') {
+            document.body.classList.add('mode-ultima-venda'); indicator.classList.add('venda-mode'); modeText.textContent = 'ÚLTIMA VENDA';
+        } else {
+            document.body.classList.add('mode-closer'); modeText.textContent = 'CLOSER';
         }
+    }
 
-        const DATA_SOURCES = {
-            closer: {
-                players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
-                mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1112498764'
-            },
-            sdr: {
-                players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=337038684',
-                mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1235747938'
-            }
-        };
+    function scheduleNextSwitch() {
+        if (autoSwitchTimer) clearTimeout(autoSwitchTimer);
+        const duration = MODE_DURATIONS[currentMode] || 45000;
+        autoSwitchTimer = setTimeout(switchModeWithTransition, duration);
+    }
 
-        function parseCSVLine(line) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                if (char === '"') { inQuotes = !inQuotes; }
-                else if (char === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
-                else { current += char; }
-            }
-            result.push(current.trim());
-            return result;
-        }
+    async function switchModeWithTransition() {
+        const cc = document.getElementById('contentContainer');
+        const idx = MODE_SEQUENCE.indexOf(currentMode);
+        currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
+        updateModeIndicator();
+        cc.classList.add('fading');
 
-        function parseCSV(csv, mode) {
-            const lines = csv.split('\n');
-            const players = [];
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (!line) continue;
-                const cols = parseCSVLine(line);
-                if (cols.length >= 9 && cols[1] && cols[8]) {
-                    if (mode === 'closer') {
-                        players.push({
-                            rank: parseInt(cols[0]) || i,
-                            name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
-                            revenue: cols[4].trim(), meetings: parseInt(cols[5]) || 0,
-                            sales: parseInt(cols[6]) || 0, conversion: cols[7] ? cols[7].trim() : '0%',
-                            ticket: cols[8] ? cols[8].trim() : 'R$ 0,00', score: cols[9] ? cols[9].trim() : '-',
-                            points: parseFloat(cols[10]) || 0
-                        });
-                    } else {
-                        players.push({
-                            rank: parseInt(cols[0]) || i,
-                            name: cols[1].trim(), nickname: cols[2].trim(), team: cols[3].trim(),
-                            meetings: parseInt(cols[5]) || 0, shows: parseInt(cols[6]) || 0,
-                            noshow: cols[7] ? cols[7].trim() : '0', sales: parseInt(cols[4]) || 0,
-                            points: parseFloat(cols[8]) || 0
-                        });
-                    }
-                }
-            }
-            return players.sort((a, b) => a.rank - b.rank);
-        }
-
-        async function fetchMTDMetrics() {
-            const modeForMTD = (currentMode === 'podio') ? 'closer' : currentMode;
-            try {
-                const url = DATA_SOURCES[modeForMTD].mtd + `&_=${Date.now()}`;
-                const response = await fetch(url);
-                const csvText  = await response.text();
-                const lines    = csvText.trim().split('\n');
-                if (lines.length < 2) return;
-                let values = [];
-                const row2 = lines[1];
-                let cur = ''; let inQ = false;
-                for (let i = 0; i < row2.length; i++) {
-                    const c = row2[i];
-                    if (c === '"') { inQ = !inQ; }
-                    else if (c === ',' && !inQ) { values.push(cur.trim()); cur = ''; }
-                    else { cur += c; }
-                }
-                values.push(cur.trim());
-                if (values.length >= 8) {
-                    const fbC = ['34,95%','34,08%','R$ 300.038,53','R$ 31.124,25','10,37%','R$ 91.859,33','R$ 18.127,35','19,73%'];
-                    const fbS = ['55,99%','47,82%','1.344','752','55,95%','467','229','49,04%'];
-                    for (let i = 0; i < values.length; i++) {
-                        if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') {
-                            values[i] = (modeForMTD === 'sdr' ? fbS : fbC)[i] || '0';
-                        }
-                    }
-                }
-                document.getElementById('mtd-ontem').textContent              = values[0];
-                document.getElementById('mtd-hoje').textContent               = values[1];
-                document.getElementById('meta-mensal').textContent            = values[2];
-                document.getElementById('realizado-mensal').textContent       = values[3];
-                document.getElementById('perc-realizado-mensal').textContent  = values[4];
-                document.getElementById('perc-realizado-semanal').textContent = values[7];
-                updateMetricColors();
-            } catch (e) { console.error('MTD error:', e); }
-        }
-
-        function updateMetricColors() {
-            const pm = document.getElementById('perc-realizado-mensal');
-            const vm = parseFloat(pm.textContent.replace(',','.').replace('%',''));
-            pm.className = 'mtd-value';
-            pm.classList.add(vm < 30 ? 'orange-glow' : vm < 70 ? 'cyan-glow' : 'green-glow');
-            const ps = document.getElementById('perc-realizado-semanal');
-            const vs = parseFloat(ps.textContent.replace(',','.').replace('%',''));
-            ps.className = 'mtd-value';
-            ps.classList.add(vs < 30 ? 'orange-glow' : vs < 70 ? 'cyan-glow' : 'green-glow');
-        }
-
-        async function fetchPlayerData(mode) {
-            try {
-                const url = DATA_SOURCES[mode].players + `&_=${Date.now()}`;
-                const response = await fetch(url);
-                const csvText  = await response.text();
-                return parseCSV(csvText, mode);
-            } catch (e) { console.error('Player data error:', e); return null; }
-        }
-
-        function updateModeIndicator() {
-            const indicator = document.getElementById('modeIndicator');
-            const modeText  = document.getElementById('modeText');
-            document.body.classList.remove('mode-closer', 'mode-sdr', 'mode-podio');
-            indicator.classList.remove('sdr-mode', 'podio-mode');
-            if (currentMode === 'sdr') {
-                document.body.classList.add('mode-sdr');
-                indicator.classList.add('sdr-mode');
-                modeText.textContent = 'SDR';
-            } else if (currentMode === 'podio') {
-                document.body.classList.add('mode-podio');
-                indicator.classList.add('podio-mode');
-                modeText.textContent = 'PÓDIO';
-            } else {
-                document.body.classList.add('mode-closer');
-                modeText.textContent = 'CLOSER';
-            }
-        }
-
-        function showTableView() {
-            document.getElementById('tableView').style.display = 'block';
-            document.getElementById('podioView').classList.remove('active');
-            document.getElementById('mainHeader').style.display = 'flex';
-        }
-
-        function showPodioView() {
-            document.getElementById('tableView').style.display = 'none';
-            document.getElementById('podioView').classList.add('active');
-            document.getElementById('mainHeader').style.display = 'none';
+        if (currentMode === 'podio') {
+            showPodioView();
+            await new Promise(r => setTimeout(r, 300));
+            const cp = await fetchPlayerData('closer');
+            const sp = await fetchPlayerData('sdr');
+            if (cp) cachedCloserPlayers = cp;
+            if (sp) cachedSDRPlayers    = sp;
+            await fetchMTDMetrics();
             renderPodio();
+        } else if (currentMode === 'ultima-venda') {
+            showUltimaVendaView();
+            await new Promise(r => setTimeout(r, 300));
+            await checkNewSale();
+        } else {
+            showTableView();
+            updateTableHeaders();
+            await new Promise(r => setTimeout(r, 300));
+            await loadCurrentModeData();
         }
 
-        function updateTableHeaders() {
-            if (currentMode === 'closer') {
-                document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent = 'R$';
-                document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent = 'Score';
-                document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent = 'Reun';
-                document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent = 'Vend';
-                document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent = 'Ticket';
-                document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent = 'Conv';
-                document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
-                document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
-                document.getElementById('statJIcon2').textContent = '⭐️'; document.getElementById('statJLabel2').textContent = 'Score';
-                document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
-                document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
-                document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
-                document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
-                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableHeader1 th:nth-child(9), #tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'table-cell');
-                document.querySelectorAll('#tableColumn1 tr td:nth-child(9), #tableColumn2 tr td:nth-child(9)').forEach(c => c.style.display = 'table-cell');
-            } else if (currentMode === 'sdr') {
-                document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent = 'Agend';
-                document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent = 'Shows';
-                document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent = 'No-show';
-                document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent = 'Vendas';
-                document.getElementById('stat5Icon').textContent  = '🎯'; document.getElementById('stat5Label').textContent = 'PTS';
-                document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
-                document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
-                document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
-                document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
-                document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
-                document.querySelectorAll('#tableHeader1 th:nth-child(5), #tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
-                document.querySelectorAll('#tableHeader1 th:nth-child(10), #tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
-            }
-        }
-
-        function renderTableRows(players, startPosition) {
-            return players.map((player, index) => {
-                const position     = startPosition + index;
-                const totalPlayers = currentPlayers.length;
-                let zoneIcon = ''; let rowClass = '';
-                if (position <= 5) { zoneIcon = '🏆'; rowClass = 'top-5-safe'; }
-                else if (position > (totalPlayers - 4)) { zoneIcon = '⚠️'; rowClass = 'bottom-4-danger'; }
-
-                let teamColor = '#8B5CF6'; let teamClass = '';
-                if (currentMode === 'closer') {
-                    if (player.team.toUpperCase().includes('TITANS'))    { teamColor = '#8B5CF6'; teamClass = 'team-TITANS'; }
-                    else if (player.team.toUpperCase().includes('MAORI')) { teamColor = '#10B981'; teamClass = 'team-MAORI'; }
-                } else {
-                    if (player.team.toUpperCase().includes('EAGLES'))         { teamColor = '#FFD700'; teamClass = 'team-EAGLES'; }
-                    else if (player.team.toUpperCase().includes('PROCURANDO')) { teamColor = '#B026FF'; teamClass = 'team-PROCURANDO-DEMO'; }
-                }
-
-                let stat1, stat2, stat3, stat4, stat5 = '';
-                if (currentMode === 'closer') {
-                    stat1 = player.revenue; stat2 = player.meetings; stat3 = player.sales;
-                    stat4 = player.ticket;
-                    stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`;
-                } else {
-                    stat1 = player.meetings; stat2 = player.shows;
-                    stat3 = player.noshow; stat4 = player.sales;
-                    stat5 = '';
-                }
-
-                const fifthColumn = currentMode === 'closer' ? `<td class="conversion-cell">${stat5}</td>` : '';
-                const avatarHTML  = getAvatarHTML(player.name, position, totalPlayers);
-
-                return `<tr class="${rowClass}">
-                    <td class="position-cell">
-                        <div class="position-wrapper">
-                            <div class="avatar-wrapper">${avatarHTML}<div class="position-number">${position}</div></div>
-                            <span class="zone-icon">${zoneIcon}</span>
-                        </div>
-                    </td>
-                    <td class="player-cell"><div class="player-name">${player.name}</div><div class="player-nickname">${player.nickname}</div></td>
-                    <td class="team-cell"><span class="team-badge ${teamClass}" style="background-color:${teamColor}"></span>${player.team}</td>
-                    <td class="revenue-cell">${stat1}</td>
-                    ${currentMode === 'closer' ? `<td class="score-cell">${player.score || '-'}</td>` : ''}
-                    <td class="meetings-cell">${stat2}</td>
-                    <td class="sales-cell">${stat3}</td>
-                    <td class="ticket-cell">${stat4}</td>
-                    ${fifthColumn}
-                    <td class="points-cell">${Math.round(player.points)}</td>
-                </tr>`;
-            }).join('');
-        }
-
-        function updateTable(players) {
-    const column1 = document.getElementById('tableColumn1');
-    const column2 = document.getElementById('tableColumn2');
-    if (!column1 || !column2 || !players) return;
-    currentPlayers = players;
-    let col1Players, col2Players;
-    if (currentMode === 'closer') {
-        col1Players = players.slice(0, 7); col2Players = players.slice(7);
-    } else {
-        const mid = Math.ceil(players.length / 2);
-        col1Players = players.slice(0, mid); 
-        col2Players = players.slice(mid);
+        cc.classList.remove('fading');
+        if (!isPaused) scheduleNextSwitch();
     }
-    column1.innerHTML = renderTableRows(col1Players, 1);
-    column2.innerHTML = renderTableRows(col2Players, col1Players.length + 1);
-    updateDestaques(players);
-    updateRankingTimes(players);
-    updatePerigoRebaixamento(players);
-}
 
-        function getPhotoForDestaque(name) {
+    function togglePause() {
+        const btn = document.getElementById('pauseButton');
+        isPaused = !isPaused;
+        if (isPaused) {
+            btn.textContent = '⏸'; btn.classList.add('paused');
+            if (autoSwitchTimer) { clearTimeout(autoSwitchTimer); autoSwitchTimer = null; }
+        } else {
+            btn.textContent = '▶'; btn.classList.remove('paused');
+            scheduleNextSwitch();
+        }
+    }
+
+    // ===================== TABLE =====================
+    function updateTableHeaders() {
+        if (currentMode === 'closer') {
+            document.getElementById('stat1Icon').textContent  = '💰'; document.getElementById('stat1Label').textContent  = 'R$';
+            document.getElementById('statJIcon').textContent  = '⭐️'; document.getElementById('statJLabel').textContent  = 'Score';
+            document.getElementById('stat2Icon').textContent  = '📅'; document.getElementById('stat2Label').textContent  = 'Reun';
+            document.getElementById('stat3Icon').textContent  = '🛒'; document.getElementById('stat3Label').textContent  = 'Vend';
+            document.getElementById('stat4Icon').textContent  = '🎫'; document.getElementById('stat4Label').textContent  = 'Ticket';
+            document.getElementById('stat5Icon').textContent  = '📊'; document.getElementById('stat5Label').textContent  = 'Conv';
+            document.getElementById('stat1Icon2').textContent = '💰'; document.getElementById('stat1Label2').textContent = 'R$';
+            document.getElementById('statJIcon2').textContent = '⭐️'; document.getElementById('statJLabel2').textContent = 'Score';
+            document.getElementById('stat2Icon2').textContent = '📅'; document.getElementById('stat2Label2').textContent = 'Reun';
+            document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
+            document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
+            document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
+        } else if (currentMode === 'sdr') {
+            document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent  = 'Agend';
+            document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent  = 'Shows';
+            document.getElementById('stat3Icon').textContent  = '❌'; document.getElementById('stat3Label').textContent  = 'No-show';
+            document.getElementById('stat4Icon').textContent  = '🛒'; document.getElementById('stat4Label').textContent  = 'Vendas';
+            document.getElementById('stat5Icon').textContent  = '🎯'; document.getElementById('stat5Label').textContent  = 'PTS';
+            document.getElementById('stat1Icon2').textContent = '📅'; document.getElementById('stat1Label2').textContent = 'Agend';
+            document.getElementById('stat2Icon2').textContent = '✅'; document.getElementById('stat2Label2').textContent = 'Shows';
+            document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
+            document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
+            document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
+        }
+    }
+
+    function renderTableRows(players, startPosition) {
+        return players.map((player, index) => {
+            const position = startPosition + index;
+            const total = currentPlayers.length;
+            let zoneIcon = ''; let rowClass = '';
+            if (position <= 5) { zoneIcon = '🏆'; rowClass = 'top-5-safe'; }
+            else if (position > (total - 4)) { zoneIcon = '⚠️'; rowClass = 'bottom-4-danger'; }
+
+            let teamColor = '#8B5CF6'; let teamClass = '';
+            if (currentMode === 'closer') {
+                if (player.team.toUpperCase().includes('TITANS'))      { teamColor='#8B5CF6'; teamClass='team-TITANS'; }
+                else if (player.team.toUpperCase().includes('MAORI'))  { teamColor='#10B981'; teamClass='team-MAORI'; }
+            } else {
+                if (player.team.toUpperCase().includes('EAGLES'))         { teamColor='#FFD700'; teamClass='team-EAGLES'; }
+                else if (player.team.toUpperCase().includes('PROCURANDO')) { teamColor='#B026FF'; teamClass='team-PROCURANDO-DEMO'; }
+            }
+
+            const photoUrl = currentMode === 'closer' ? getPlayerPhoto(player.name) : getSDRPhoto(player.name);
+            const isTop5 = position <= 5; const isDanger = position > (total - 4);
+            const avatarClass = `player-avatar ${isTop5 ? 'avatar-top5' : (isDanger ? 'avatar-danger' : '')}`.trim();
+            const avatarHTML = photoUrl
+                ? `<img class="${avatarClass}" src="${photoUrl}" alt="${player.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="${avatarClass}" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`
+                : `<div class="${avatarClass}" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`;
+
+            let stat1, stat2, stat3, stat4, stat5 = '';
+            if (currentMode === 'closer') {
+                stat1 = player.revenue; stat2 = player.meetings; stat3 = player.sales; stat4 = player.ticket;
+                stat5 = `<div class="conversion-bar medium"><span>${player.conversion}</span></div>`;
+            } else {
+                stat1 = player.meetings; stat2 = player.shows; stat3 = player.noshow; stat4 = player.sales; stat5 = '';
+            }
+            const fifthColumn = currentMode === 'closer' ? `<td class="conversion-cell">${stat5}</td>` : '';
+
+            return `<tr class="${rowClass}">
+                <td class="position-cell"><div class="position-wrapper"><div class="avatar-wrapper">${avatarHTML}<div class="position-number">${position}</div></div><span class="zone-icon">${zoneIcon}</span></div></td>
+                <td class="player-cell"><div class="player-name">${player.name}</div><div class="player-nickname">${player.nickname}</div></td>
+                <td class="team-cell"><span class="team-badge ${teamClass}" style="background-color:${teamColor}"></span>${player.team}</td>
+                <td class="revenue-cell">${stat1}</td>
+                ${currentMode === 'closer' ? `<td class="score-cell">${player.score || '-'}</td>` : ''}
+                <td class="meetings-cell">${stat2}</td>
+                <td class="sales-cell">${stat3}</td>
+                <td class="ticket-cell">${stat4}</td>
+                ${fifthColumn}
+                <td class="points-cell">${Math.round(player.points)}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    function updateTable(players) {
+        const column1 = document.getElementById('tableColumn1');
+        const column2 = document.getElementById('tableColumn2');
+        if (!column1 || !column2 || !players) return;
+        currentPlayers = players;
+        let col1, col2;
+        if (currentMode === 'closer') { col1 = players.slice(0,7); col2 = players.slice(7); }
+        else { const mid = Math.ceil(players.length/2); col1 = players.slice(0,mid); col2 = players.slice(mid); }
+        column1.innerHTML = renderTableRows(col1, 1);
+        column2.innerHTML = renderTableRows(col2, col1.length + 1);
+        updateDestaques(players);
+        updateRankingTimes(players);
+    }
+
+    function updateDestaques(players) {
+        if (!players || !players.length) return;
+        const container = document.getElementById('highlights');
+        let html = '';
+        function dAvatar(name) {
             const url = getPlayerPhoto(name) || getSDRPhoto(name);
-            if (!url) return null;
-            return url;
+            const ph = url ? `<img src="${url}" alt="${name}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div style="display:none;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>` : `<div style="display:flex;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
+            return `<div style="position:relative;flex-shrink:0;">${ph}<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:14px;filter:drop-shadow(0 0 6px #FFD700);animation:floatMedal 2.5s ease-in-out infinite;">⭐</span></div>`;
         }
-
-        function destaqueAvatarHTML(name) {
-    const url = getPhotoForDestaque(name);
-    const photoHTML = url
-        ? `<img src="${url}" alt="${name}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div style="display:none;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`
-        : `<div style="display:flex;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">${name.charAt(0)}</div>`;
-    return `<div style="position:relative;flex-shrink:0;">${photoHTML}<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:14px;filter:drop-shadow(0 0 6px #FFD700);animation:floatMedal 2.5s ease-in-out infinite;">⭐</span></div>`;
-}
-
-
-        function updateDestaques(players) {
-            if (!players || players.length === 0) return;
-            const container = document.getElementById('highlights');
-            let html = '';
-            if (currentMode === 'closer') {
-                const top = players[0];
-                html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
-                const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topRev.name)}<div><div class="db-icon">💰</div><div class="db-label">Maior Receita</div><div class="db-name">${topRev.nickname}</div><div class="db-value">${topRev.revenue}</div></div></div>`;
-                const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topTkt.name)}<div><div class="db-icon">🎫</div><div class="db-label">Maior Ticket</div><div class="db-name">${topTkt.nickname}</div><div class="db-value">${topTkt.ticket}</div></div></div>`;
-                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-                html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Mais Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
-                const topConv = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
-                html += `<div class="destaque-card-bottom cyan-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topConv.name)}<div><div class="db-icon">📊</div><div class="db-label">Melhor Conversão</div><div class="db-name">${topConv.nickname}</div><div class="db-value">${topConv.conversion}</div></div></div>`;
-            } else {
-                const top = players[0];
-                html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
-                const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
-                html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Maior Qtd Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
-                const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
-                html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topShows.name)}<div><div class="db-icon">✅</div><div class="db-label">Mais Shows</div><div class="db-name">${topShows.nickname}</div><div class="db-value">${topShows.shows} shows</div></div></div>`;
-                const topMeet = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
-                html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${destaqueAvatarHTML(topMeet.name)}<div><div class="db-icon">📅</div><div class="db-label">Mais Agendamentos</div><div class="db-name">${topMeet.nickname}</div><div class="db-value">${topMeet.meetings} agend.</div></div></div>`;
-            }
-            container.innerHTML = html;
+        if (currentMode === 'closer') {
+            const top = players[0];
+            const topRev = players.reduce((m,p) => (parseFloat(p.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.revenue.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+            const topTkt = players.reduce((m,p) => (parseFloat(p.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) > (parseFloat(m.ticket.replace(/[^\d,]/g,'').replace(',','.')) || 0) ? p : m);
+            const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
+            const topConv  = players.reduce((m,p) => (parseFloat(p.conversion.replace('%','').replace(',','.')) || 0) > (parseFloat(m.conversion.replace('%','').replace(',','.')) || 0) ? p : m);
+            html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
+            html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(topRev.name)}<div><div class="db-icon">💰</div><div class="db-label">Maior Receita</div><div class="db-name">${topRev.nickname}</div><div class="db-value">${topRev.revenue}</div></div></div>`;
+            html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(topTkt.name)}<div><div class="db-icon">🎫</div><div class="db-label">Maior Ticket</div><div class="db-name">${topTkt.nickname}</div><div class="db-value">${topTkt.ticket}</div></div></div>`;
+            html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Mais Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
+            html += `<div class="destaque-card-bottom cyan-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(topConv.name)}<div><div class="db-icon">📊</div><div class="db-label">Melhor Conversão</div><div class="db-name">${topConv.nickname}</div><div class="db-value">${topConv.conversion}</div></div></div>`;
+        } else {
+            const top = players[0];
+            const topSales = players.reduce((m,p) => p.sales > m.sales ? p : m);
+            const topShows = players.reduce((m,p) => p.shows > m.shows ? p : m);
+            const topMeet  = players.reduce((m,p) => p.meetings > m.meetings ? p : m);
+            html += `<div class="destaque-card-bottom gold-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(top.name)}<div><div class="db-icon">🥇</div><div class="db-label">Top Performer</div><div class="db-name">${top.nickname}</div><div class="db-value">${Math.round(top.points)} pts</div></div></div>`;
+            html += `<div class="destaque-card-bottom green-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(topSales.name)}<div><div class="db-icon">🛒</div><div class="db-label">Maior Qtd Vendas</div><div class="db-name">${topSales.nickname}</div><div class="db-value">${topSales.sales} vendas</div></div></div>`;
+            html += `<div class="destaque-card-bottom blue-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(topShows.name)}<div><div class="db-icon">✅</div><div class="db-label">Mais Shows</div><div class="db-name">${topShows.nickname}</div><div class="db-value">${topShows.shows} shows</div></div></div>`;
+            html += `<div class="destaque-card-bottom purple-glow" style="flex-direction:row;align-items:center;gap:10px;text-align:left;">${dAvatar(topMeet.name)}<div><div class="db-icon">📅</div><div class="db-label">Mais Agendamentos</div><div class="db-name">${topMeet.nickname}</div><div class="db-value">${topMeet.meetings} agend.</div></div></div>`;
         }
-
-        function updateRankingTimes(players) {
-            if (!players || players.length === 0) return;
-            const teams = {};
-            if (currentMode === 'closer') {
-                teams['TITANS'] = { points: 0, count: 0, color: 'titans-glow' };
-                teams['MAORI']  = { points: 0, count: 0, color: 'maori-glow' };
-            } else {
-                teams['EAGLES']          = { points: 0, count: 0, color: 'eagles-glow' };
-                teams['Procurando Demo'] = { points: 0, count: 0, color: 'procurando-glow' };
-            }
-            players.forEach(p => {
-                const tn = p.team.toUpperCase().trim();
-                let found = null;
-                for (const [key] of Object.entries(teams)) {
-                    const k = key.toUpperCase().replace(/\s+/g,'');
-                    const t = tn.replace(/\s+/g,'');
-                    if (t.includes(k) || k.includes(t) || (k === 'PROCURANDODEMO' && t.includes('PROCURANDO'))) { found = key; break; }
-                }
-                if (found) { teams[found].points += p.points; teams[found].count += 1; }
-            });
-            const sorted = Object.entries(teams).sort(([,a],[,b]) => {
-                const avgA = a.count > 0 ? a.points / a.count : 0;
-                const avgB = b.count > 0 ? b.points / b.count : 0;
-                return avgB - avgA;
-            });
-            let html = '';
-            sorted.forEach(([name, data], i) => {
-                const cls = ['first-place','second-place','third-place'][i] || 'third-place';
-                const medal = ['🥇','🥈','🥉'][i] || '🥉';
-                const avg = data.count > 0 ? (data.points / data.count).toFixed(1) : '0.0';
-                html += `<div class="time-card ${cls}"><div class="position-medal">${medal}</div><div class="team-info"><div class="team-badge-large ${data.color}"></div><div class="team-details"><div class="team-name">${name}</div><div class="team-count">👥 ${data.count} jogadores</div></div></div><div class="team-score-big"><div class="score-number">${Math.round(data.points)}</div><div class="score-avg">⚡ Avg: ${avg}</div></div></div>`;
-            });
-            document.getElementById('teamRankings').innerHTML = html;
-        }
-
-        function updatePerigoRebaixamento(players) {
-    if (!players || players.length === 0) return;
-    const el = document.getElementById('relegationPositions');
-    if (!el) return;
-    const total = players.length;
-    const start = total - 3;
-    let html = '';
-    for (let i = 0; i < 4; i++) {
-        const pos   = start + i;
-        const label = i < 2 ? 'RISCO' : (i === 2 ? 'PERIGO' : 'CRÍTICO');
-        html += `<div class="position-danger">${pos}° ${label}</div>`;
+        container.innerHTML = html;
     }
-    el.innerHTML = html;
-}
-        function togglePause() {
-            const btn = document.getElementById('pauseButton');
-            isPaused = !isPaused;
-            if (isPaused) {
-                btn.textContent = '⏸'; btn.classList.add('paused');
-                if (autoSwitchTimer) { clearInterval(autoSwitchTimer); autoSwitchTimer = null; }
-            } else {
-                btn.textContent = '▶'; btn.classList.remove('paused');
-                scheduleNextSwitch();
+
+    function updateRankingTimes(players) {
+        if (!players || !players.length) return;
+        const teams = {};
+        if (currentMode === 'closer') {
+            teams['TITANS'] = { points:0, count:0, color:'titans-glow' };
+            teams['MAORI']  = { points:0, count:0, color:'maori-glow' };
+        } else {
+            teams['EAGLES']          = { points:0, count:0, color:'eagles-glow' };
+            teams['Procurando Demo'] = { points:0, count:0, color:'procurando-glow' };
+        }
+        players.forEach(p => {
+            const tn = p.team.toUpperCase().trim(); let found = null;
+            for (const [key] of Object.entries(teams)) {
+                const k = key.toUpperCase().replace(/\s+/g,''); const t = tn.replace(/\s+/g,'');
+                if (t.includes(k) || k.includes(t) || (k==='PROCURANDODEMO' && t.includes('PROCURANDO'))) { found=key; break; }
             }
+            if (found) { teams[found].points += p.points; teams[found].count += 1; }
+        });
+        const sorted = Object.entries(teams).sort(([,a],[,b]) => {
+            const avgA = a.count > 0 ? a.points/a.count : 0;
+            const avgB = b.count > 0 ? b.points/b.count : 0;
+            return avgB - avgA;
+        });
+        let html = '';
+        sorted.forEach(([name, data], i) => {
+            const medal = ['🥇','🥈','🥉'][i] || '🥉';
+            const avg = data.count > 0 ? (data.points/data.count).toFixed(1) : '0.0';
+            html += `<div class="time-card"><div class="position-medal">${medal}</div><div class="team-info"><div class="team-badge-large ${data.color}"></div><div class="team-details"><div class="team-name">${name}</div><div class="team-count">👥 ${data.count} jogadores</div></div></div><div class="team-score-big"><div class="score-number">${Math.round(data.points)}</div><div class="score-avg">⚡ Avg: ${avg}</div></div></div>`;
+        });
+        document.getElementById('teamRankings').innerHTML = html;
+    }
+
+    // ===================== PÓDIO =====================
+    function buildPodioPlayer(player, place, isCloser) {
+        const medals  = ['🥇','🥈','🥉'];
+        const classes = ['place-1','place-2','place-3'];
+        const medal   = medals[place-1]; const cls = classes[place-1];
+        const photoUrl = isCloser ? getPlayerPhoto(player.name) : getSDRPhoto(player.name);
+        const avatarTag = photoUrl
+            ? `<img class="podio-avatar" src="${photoUrl}" alt="${player.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="podio-avatar" style="display:none;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`
+            : `<div class="podio-avatar" style="display:flex;background:linear-gradient(135deg,#00D4FF,#8B5CF6);align-items:center;justify-content:center;font-weight:700;color:#fff;">${player.name.charAt(0)}</div>`;
+        return `<div class="podio-player ${cls}"><div class="podio-medal">${medal}</div>${avatarTag}<div class="podio-name">${player.name}</div><div class="podio-nickname">${player.nickname||''}</div><div class="podio-pts">${Math.round(player.points)} pts</div><div class="podio-pedestal">${place}</div></div>`;
+    }
+
+    function renderPodio() {
+        const cp = cachedCloserPlayers.slice(0,3);
+        if (cp.length >= 3) {
+            document.getElementById('podioCloser').innerHTML = buildPodioPlayer(cp[1],2,true) + buildPodioPlayer(cp[0],1,true) + buildPodioPlayer(cp[2],3,true);
         }
-
-        function scheduleNextSwitch() {
-            if (autoSwitchTimer) clearTimeout(autoSwitchTimer);
-            const duration = MODE_DURATIONS[currentMode] || 45000;
-            autoSwitchTimer = setTimeout(switchModeWithTransition, duration);
+        const sp = cachedSDRPlayers.slice(0,3);
+        if (sp.length >= 3) {
+            document.getElementById('podioSDR').innerHTML = buildPodioPlayer(sp[1],2,false) + buildPodioPlayer(sp[0],1,false) + buildPodioPlayer(sp[2],3,false);
         }
+    }
 
-        async function switchModeWithTransition() {
-    const cc = document.getElementById('contentContainer');
-    
-    const idx = MODE_SEQUENCE.indexOf(currentMode);
-    currentMode = MODE_SEQUENCE[(idx + 1) % MODE_SEQUENCE.length];
+    // ===================== LOAD DATA =====================
+    async function loadCurrentModeData() {
+        await fetchMTDMetrics();
+        const data = await fetchPlayerData(currentMode);
+        if (data && data.length > 0) {
+            if (currentMode === 'closer') cachedCloserPlayers = data;
+            if (currentMode === 'sdr')    cachedSDRPlayers    = data;
+            updateTable(data);
+        }
+    }
 
-    updateModeIndicator();
+    async function autoRefresh() {
+        if (isPaused) return;
+        if (document.getElementById('contentContainer').classList.contains('fading')) return;
+        if (currentMode === 'podio') {
+            const cp = await fetchPlayerData('closer');
+            const sp = await fetchPlayerData('sdr');
+            if (cp) cachedCloserPlayers = cp;
+            if (sp) cachedSDRPlayers    = sp;
+            renderPodio();
+        } else if (currentMode === 'ultima-venda') {
+            // Não faz nada, o polling já cuida
+        } else {
+            await loadCurrentModeData();
+        }
+    }
 
-    cc.classList.add('fading');
+    // ===================== INIT =====================
+    document.addEventListener('DOMContentLoaded', async function () {
+        updateModeIndicator();
+        updateTableHeaders();
+        showTableView();
 
-    if (currentMode === 'podio') {
-        showPodioView();
-        await new Promise(r => setTimeout(r, 300));
+        document.getElementById('modeIndicator').addEventListener('click', () => switchModeWithTransition());
+        document.getElementById('pauseButton').addEventListener('click', togglePause);
+        document.getElementById('pauseButton').textContent = '⏸';
+
+        // Polling Pipedrive a cada 30s (em todas as telas — popup aparece sobre qualquer tela)
+        pipedrivePollingTimer = setInterval(checkNewSale, 30000);
+        // Verifica imediatamente ao carregar
+        checkNewSale();
+
+        scheduleNextSwitch();
+        setInterval(autoRefresh, 10000);
+
         const cp = await fetchPlayerData('closer');
         const sp = await fetchPlayerData('sdr');
         if (cp) cachedCloserPlayers = cp;
         if (sp) cachedSDRPlayers    = sp;
-        await fetchMTDMetrics();
-        renderPodio();
-    } else {
-        showTableView();
-        updateTableHeaders();
-        await new Promise(r => setTimeout(r, 300));
+
         await loadCurrentModeData();
-    }
-
-    cc.classList.remove('fading');
-    if (!isPaused) scheduleNextSwitch();
-}
-
-        async function loadCurrentModeData() {
-            await fetchMTDMetrics();
-            const data = await fetchPlayerData(currentMode);
-            if (data && data.length > 0) {
-                if (currentMode === 'closer') cachedCloserPlayers = data;
-                if (currentMode === 'sdr')    cachedSDRPlayers    = data;
-                updateTable(data);
-            }
-        }
-
-        async function autoRefresh() {
-            if (isPaused) return;
-            if (document.getElementById('contentContainer').classList.contains('fading')) return;
-            if (currentMode === 'podio') {
-                const cp = await fetchPlayerData('closer');
-                const sp = await fetchPlayerData('sdr');
-                if (cp) cachedCloserPlayers = cp;
-                if (sp) cachedSDRPlayers    = sp;
-                renderPodio();
-            } else {
-                await loadCurrentModeData();
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', async function () {
-    updateModeIndicator();
-    updateTableHeaders();
-    showTableView();
-
-    document.getElementById('modeIndicator').addEventListener('click', () => {
-        switchModeWithTransition();
     });
-
-    document.getElementById('pauseButton').addEventListener('click', togglePause);
-    document.getElementById('pauseButton').textContent = '⏸';
-
-    scheduleNextSwitch();
-    autoRefreshTimer = setInterval(autoRefresh, 10000);
-
-    const cp = await fetchPlayerData('closer');
-    const sp = await fetchPlayerData('sdr');
-    if (cp) cachedCloserPlayers = cp;
-    if (sp) cachedSDRPlayers    = sp;
-
-    await loadCurrentModeData();
-});
     </script>
+
+    <!-- ===================== GUIA DO APPS SCRIPT =====================
+    
+    COMO CONFIGURAR O GOOGLE APPS SCRIPT PROXY:
+    
+    1. Acesse: https://script.google.com
+    2. Crie um novo projeto
+    3. Cole o código abaixo:
+    
+    ─────────────────────────────────────────────────────
+    const PIPEDRIVE_API_TOKEN = 'SUA_API_TOKEN_AQUI';
+    const PIPEDRIVE_DOMAIN    = 'suaempresa'; // ex: suri (de suri.pipedrive.com)
+    const FIELD_FRASE = 'cfe4686c420c52d0ecfb49b352665e6489b736da';
+    const FIELD_SDR   = 'd9c692b4d69e7178ccbc351b6d13ea925e26dbe5';
+
+    function doGet(e) {
+      const headers = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' };
+      try {
+        const url = `https://${PIPEDRIVE_DOMAIN}.pipedrive.com/api/v1/deals?status=won&sort=won_time DESC&limit=1&api_token=${PIPEDRIVE_API_TOKEN}&fields=${FIELD_FRASE},${FIELD_SDR},value,title,won_time,id`;
+        const response = UrlFetchApp.fetch(url);
+        const json = JSON.parse(response.getContentText());
+        if (!json.data || !json.data.length) {
+          return ContentService.createTextOutput(JSON.stringify({ error: 'no data' })).setMimeType(ContentService.MimeType.JSON);
+        }
+        const deal = json.data[0];
+        const result = {
+          id:           deal.id,
+          title:        deal.title,
+          value:        deal.value,
+          currency:     deal.currency,
+          won_time:     deal.won_time,
+          closer_name:  deal.owner_name || (deal.user_id && deal.user_id.name) || '',
+          sdr_name:     deal[FIELD_SDR]   || '',
+          frase:        deal[FIELD_FRASE] || ''
+        };
+        return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+      } catch(err) {
+        return ContentService.createTextOutput(JSON.stringify({ error: err.toString() })).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+    ─────────────────────────────────────────────────────
+    
+    4. Clique em "Implantar" → "Nova implantação"
+    5. Tipo: "App da Web"
+    6. Executar como: "Eu"
+    7. Quem tem acesso: "Qualquer pessoa"
+    8. Copie a URL gerada e cole em PIPEDRIVE_PROXY_URL no topo do script
+    
+    ===================== -->
+
 </body>
 </html>
