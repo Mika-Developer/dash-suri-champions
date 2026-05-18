@@ -1259,20 +1259,26 @@
         document.getElementById('snValue').textContent = value;
         document.getElementById('snDeal').textContent  = dealName;
 
-        // Avatar Closer — anel rotativo igual à última venda
+        // Avatar Closer — só foto OU só fallback, nunca os dois
         const closerPhoto = getPlayerPhoto(closerName);
         const closerRingSN = document.getElementById('snCloserAvatar');
-        closerRingSN.innerHTML = closerPhoto
-            ? `<img class="sn-avatar" src="${closerPhoto}" alt="${closerName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback">${closerName.charAt(0)}</div>`
-            : `<div class="sn-avatar-fallback">${closerName.charAt(0)}</div>`;
+        if (closerPhoto) {
+            closerRingSN.innerHTML = `<img class="sn-avatar" src="${closerPhoto}" alt="${closerName}"
+                onerror="this.outerHTML='<div class=\'sn-avatar-fallback\'>${closerName.charAt(0)}</div>';">`;
+        } else {
+            closerRingSN.innerHTML = `<div class="sn-avatar-fallback">${closerName.charAt(0)}</div>`;
+        }
         document.getElementById('snName').textContent = closerName;
 
-        // Avatar SDR — anel rotativo igual à última venda
+        // Avatar SDR — só foto OU só fallback, nunca os dois
         const sdrPhoto = getSDRPhoto(sdrName);
         const sdrRingSN = document.getElementById('snSDRAvatar');
-        sdrRingSN.innerHTML = sdrPhoto
-            ? `<img class="sn-avatar" src="${sdrPhoto}" alt="${sdrName}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback">${sdrName.charAt(0)}</div>`
-            : `<div class="sn-avatar-fallback">${sdrName.charAt(0)}</div>`;
+        if (sdrPhoto) {
+            sdrRingSN.innerHTML = `<img class="sn-avatar" src="${sdrPhoto}" alt="${sdrName}"
+                onerror="this.outerHTML='<div class=\'sn-avatar-fallback\'>${sdrName.charAt(0)}</div>';">`;
+        } else {
+            sdrRingSN.innerHTML = `<div class="sn-avatar-fallback">${sdrName.charAt(0)}</div>`;
+        }
         document.getElementById('snSDRName').textContent = sdrName;
 
         // Frase
