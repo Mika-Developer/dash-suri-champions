@@ -516,129 +516,279 @@
             100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
         }
 
-        /* ===================== POPUP NOTIFICAÇÃO ===================== */
+        /* ===================== POPUP NOTIFICAÇÃO — FOGUETE ÉPICO ===================== */
+
+        /* Overlay escurece o fundo levemente */
+        .rocket-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9990;
+            background: rgba(0,0,0,0);
+            pointer-events: none;
+            transition: background 0.4s ease;
+        }
+        .rocket-overlay.visible {
+            background: rgba(0,0,0,0.45);
+            pointer-events: all;
+        }
+
+        /* Container principal — começa embaixo, voa pro centro */
         .sale-notification {
             position: fixed;
-            bottom: -200px;
-            right: 30px;
-            width: 380px;
-            background: rgba(10, 20, 40, 0.95);
-            border: 2px solid #10B981;
-            border-radius: 20px;
-            padding: 20px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 40px rgba(16,185,129,0.5), 0 20px 60px rgba(0,0,0,0.5);
+            left: 50%;
+            bottom: -600px;
+            transform: translateX(-50%) scale(0.7) rotate(-8deg);
+            width: 680px;
             z-index: 9999;
-            transition: bottom 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            transition:
+                bottom 0.7s cubic-bezier(0.22, 1.2, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1.2, 0.36, 1);
             display: flex;
             flex-direction: column;
-            gap: 12px;
-        }
-
-        .sale-notification.visible { bottom: 30px; }
-
-        .sn-header {
-            display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0;
         }
 
+        .sale-notification.visible {
+            bottom: calc(50vh - 220px);
+            transform: translateX(-50%) scale(1) rotate(0deg);
+            pointer-events: all;
+        }
+
+        .sale-notification.leaving {
+            bottom: 110vh;
+            transform: translateX(-50%) scale(0.6) rotate(12deg);
+            transition:
+                bottom 0.6s cubic-bezier(0.55, 0, 1, 0.45),
+                transform 0.6s cubic-bezier(0.55, 0, 1, 0.45);
+        }
+
+        /* Foguete SVG */
+        .sn-rocket {
+            font-size: 90px;
+            line-height: 1;
+            filter: drop-shadow(0 0 30px rgba(255,150,0,0.9)) drop-shadow(0 0 60px rgba(255,80,0,0.6));
+            animation: rocketWobble 0.4s ease-in-out infinite alternate;
+            transform-origin: center bottom;
+            margin-bottom: -10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rocketWobble {
+            0%   { transform: rotate(-4deg) scale(1); }
+            100% { transform: rotate(4deg) scale(1.05); }
+        }
+
+        /* Chama do foguete */
+        .sn-flame {
+            font-size: 50px;
+            line-height: 1;
+            margin-top: -20px;
+            filter: drop-shadow(0 0 20px rgba(255,100,0,0.9));
+            animation: flameFlicker 0.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes flameFlicker {
+            0%   { transform: scaleY(1) scaleX(0.9); opacity: 1; }
+            100% { transform: scaleY(1.3) scaleX(1.1); opacity: 0.8; }
+        }
+
+        /* Card de conteúdo */
+        .sn-card {
+            width: 100%;
+            background: linear-gradient(135deg,
+                rgba(5, 10, 30, 0.97) 0%,
+                rgba(10, 20, 50, 0.97) 100%
+            );
+            border-radius: 28px;
+            padding: 28px 36px 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(255,215,0,0.3),
+                0 0 60px rgba(255,150,0,0.4),
+                0 0 120px rgba(255,80,0,0.2),
+                0 30px 80px rgba(0,0,0,0.7);
+        }
+
+        /* Brilho interno animado */
+        .sn-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(
+                from 0deg at 50% 0%,
+                transparent 0deg,
+                rgba(255,215,0,0.08) 60deg,
+                transparent 120deg
+            );
+            animation: cardShine 2s linear infinite;
+            border-radius: 28px;
+        }
+
+        @keyframes cardShine {
+            0%   { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Badge VENDA FECHADA */
         .sn-badge {
-            background: linear-gradient(135deg, #10B981, #059669);
-            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            color: #000;
             font-family: 'Orbitron', sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            animation: pulse-green 1.5s ease-in-out infinite;
+            font-size: 13px;
+            font-weight: 900;
+            padding: 6px 18px;
+            border-radius: 50px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            animation: badgePulse 1s ease-in-out infinite alternate;
         }
 
-        @keyframes pulse-green {
-            0%,100% { box-shadow: 0 0 10px rgba(16,185,129,0.5); }
-            50%      { box-shadow: 0 0 20px rgba(16,185,129,0.9); }
+        @keyframes badgePulse {
+            0%   { box-shadow: 0 0 20px rgba(255,215,0,0.6); }
+            100% { box-shadow: 0 0 40px rgba(255,215,0,1), 0 0 80px rgba(255,150,0,0.5); }
         }
 
-        .sn-time {
-            font-size: 11px;
-            color: rgba(255,255,255,0.4);
-            margin-left: auto;
-        }
-
+        /* Linha principal: avatar + info + valor */
         .sn-body {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 20px;
+            margin-bottom: 12px;
         }
 
         .sn-avatar {
-            width: 52px;
-            height: 52px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center top;
-            border: 2px solid #10B981;
-            box-shadow: 0 0 15px rgba(16,185,129,0.5);
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 0 40px rgba(255,150,0,0.3);
             flex-shrink: 0;
+            animation: avatarFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes avatarFloat {
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(-6px); }
         }
 
         .sn-avatar-fallback {
-            width: 52px;
-            height: 52px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #00D4FF, #8B5CF6);
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            border: 2px solid #10B981;
+            font-size: 28px;
+            font-weight: 900;
+            color: #000;
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.6);
             flex-shrink: 0;
+            animation: avatarFloat 2s ease-in-out infinite;
         }
 
         .sn-info { flex: 1; }
 
         .sn-name {
             font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
             color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
-        .sn-deal { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .sn-deal {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+            margin-top: 4px;
+        }
 
         .sn-value {
             font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
+            font-size: 38px;
             font-weight: 900;
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255,215,0,0.6);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 15px rgba(255,215,0,0.8));
+            animation: valuePop 0.6s ease-in-out infinite alternate;
+            white-space: nowrap;
         }
 
+        @keyframes valuePop {
+            0%   { filter: drop-shadow(0 0 10px rgba(255,215,0,0.6)); }
+            100% { filter: drop-shadow(0 0 30px rgba(255,215,0,1)); }
+        }
+
+        /* Frase */
         .sn-frase {
-            font-size: 12px;
+            font-size: 14px;
             font-style: italic;
-            color: rgba(255,255,255,0.7);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 10px;
+            color: rgba(255,255,255,0.75);
+            border-top: 1px solid rgba(255,215,0,0.2);
+            padding-top: 12px;
             line-height: 1.5;
+            text-align: center;
         }
 
+        /* Barra de progresso */
         .sn-progress {
-            height: 3px;
+            height: 4px;
             background: rgba(255,255,255,0.1);
             border-radius: 2px;
             overflow: hidden;
+            margin-top: 16px;
         }
 
         .sn-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #10B981, #00F0FF);
+            background: linear-gradient(90deg, #FFD700, #FF8C00, #00F0FF);
             border-radius: 2px;
             width: 100%;
             transition: width linear;
+        }
+
+        /* Partículas de estrelas ao redor */
+        .sn-stars {
+            position: absolute;
+            inset: -40px;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .sn-star {
+            position: absolute;
+            font-size: 20px;
+            animation: starBurst 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes starBurst {
+            0%   { transform: scale(0) rotate(0deg);   opacity: 1; }
+            60%  { opacity: 1; }
+            100% { transform: scale(1) rotate(var(--rot)) translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+
+        /* Hora */
+        .sn-time {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            font-family: 'Orbitron', sans-serif;
         }
 
         /* ===================== ANIMATIONS ===================== */
@@ -679,22 +829,29 @@
 
     <div class="pause-button" id="pauseButton"></div>
 
-    <!-- POPUP NOTIFICAÇÃO DE VENDA -->
+    <!-- OVERLAY ESCURECIMENTO -->
+    <div class="rocket-overlay" id="rocketOverlay"></div>
+
+    <!-- POPUP FOGUETE ÉPICO -->
     <div class="sale-notification" id="saleNotification">
-        <div class="sn-header">
-            <div class="sn-badge">🔔 VENDA FECHADA!</div>
+        <div class="sn-rocket">🚀</div>
+        <div class="sn-flame">🔥</div>
+        <div class="sn-card">
             <span class="sn-time" id="snTime"></span>
-        </div>
-        <div class="sn-body">
-            <div id="snAvatarWrapper"></div>
-            <div class="sn-info">
-                <div class="sn-name" id="snName"></div>
-                <div class="sn-deal" id="snDeal"></div>
+            <div style="text-align:center;">
+                <div class="sn-badge">💥 VENDA FECHADA!</div>
             </div>
-            <div class="sn-value" id="snValue"></div>
+            <div class="sn-body">
+                <div id="snAvatarWrapper"></div>
+                <div class="sn-info">
+                    <div class="sn-name" id="snName"></div>
+                    <div class="sn-deal" id="snDeal"></div>
+                </div>
+                <div class="sn-value" id="snValue"></div>
+            </div>
+            <div class="sn-frase" id="snFrase" style="display:none;"></div>
+            <div class="sn-progress"><div class="sn-progress-bar" id="snProgressBar"></div></div>
         </div>
-        <div class="sn-frase" id="snFrase"></div>
-        <div class="sn-progress"><div class="sn-progress-bar" id="snProgressBar"></div></div>
     </div>
 
     <div class="content-container" id="contentContainer">
@@ -858,7 +1015,7 @@
     <script>
     // ===================== CONFIGURAÇÕES =====================
     // SUBSTITUA pela URL do seu Google Apps Script proxy
-    const PIPEDRIVE_PROXY_URL = 'https://script.google.com/macros/s/AKfycbwLVX0bcN_EGFpV4lVZb56kXatixWEjf_FztMU1HCrejXLuEjMSsTi1V0ce-Lmt2sjB4A/exec';
+    const PIPEDRIVE_PROXY_URL = 'https://script.google.com/macros/s/SEU_APPS_SCRIPT_ID/exec';
 
     // Campos customizados do Pipedrive
     const FIELD_FRASE = 'cfe4686c420c52d0ecfb49b352665e6489b736da';
@@ -1146,6 +1303,7 @@
         const frase      = sale[FIELD_FRASE] || sale.frase || '';
         const dealName   = sale.title || '';
 
+        // Avatar
         const photo = getPlayerPhoto(closerName);
         const avatarWrapper = document.getElementById('snAvatarWrapper');
         if (photo) {
@@ -1157,40 +1315,96 @@
         document.getElementById('snName').textContent  = closerName;
         document.getElementById('snDeal').textContent  = dealName;
         document.getElementById('snValue').textContent = value;
-        document.getElementById('snFrase').textContent = frase ? `"${frase}"` : '';
-        document.getElementById('snFrase').style.display = frase ? 'block' : 'none';
+
+        const fraseEl = document.getElementById('snFrase');
+        if (frase) { fraseEl.textContent = `"${frase}"`; fraseEl.style.display = 'block'; }
+        else { fraseEl.style.display = 'none'; }
 
         const now = new Date();
         document.getElementById('snTime').textContent = now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
 
-        // Toca o sino
+        // Toca o som
         playSaleSound();
 
-        // Mostra popup
-        const notif = document.getElementById('saleNotification');
+        // Overlay + foguete entra voando
+        const notif   = document.getElementById('saleNotification');
+        const overlay = document.getElementById('rocketOverlay');
+        notif.classList.remove('leaving');
+        overlay.classList.add('visible');
         notif.classList.add('visible');
 
-        // Barra de progresso (8 segundos)
+        // Lança estrelas ao redor
+        spawnNotifStars();
+
+        // Barra de progresso (10 segundos)
         const bar = document.getElementById('snProgressBar');
         bar.style.transition = 'none';
         bar.style.width = '100%';
         setTimeout(() => {
-            bar.style.transition = 'width 8s linear';
+            bar.style.transition = 'width 10s linear';
             bar.style.width = '0%';
         }, 100);
 
-        // Esconde após 8 segundos
+        // Foguete VAI EMBORA após 10 segundos
         if (notificationTimer) clearTimeout(notificationTimer);
         notificationTimer = setTimeout(() => {
-            notif.classList.remove('visible');
-        }, 8000);
+            notif.classList.add('leaving');
+            overlay.classList.remove('visible');
+            setTimeout(() => notif.classList.remove('visible', 'leaving'), 700);
+        }, 10000);
+    }
+
+    function spawnNotifStars() {
+        const notif = document.getElementById('saleNotification');
+        // Remove estrelas anteriores
+        notif.querySelectorAll('.sn-star').forEach(s => s.remove());
+        const emojis = ['⭐','🌟','✨','💫','🎉','🏆','💰','🔥'];
+        for (let i = 0; i < 12; i++) {
+            const star = document.createElement('div');
+            star.className = 'sn-star';
+            star.textContent = emojis[i % emojis.length];
+            const angle = (i / 12) * 360;
+            const dist  = 120 + Math.random() * 80;
+            const tx    = Math.cos(angle * Math.PI/180) * dist + 'px';
+            const ty    = Math.sin(angle * Math.PI/180) * dist + 'px';
+            star.style.cssText = `
+                left: 50%; top: 50%;
+                --rot: ${angle}deg;
+                --tx: ${tx};
+                --ty: ${ty};
+                animation-delay: ${Math.random() * 0.3}s;
+                animation-duration: ${0.8 + Math.random() * 0.4}s;
+            `;
+            notif.appendChild(star);
+        }
     }
 
     function playSaleSound() {
         try {
-            const audio = new Audio('https://mika-developer.github.io/dash-suri-champions/699465__m0ments__tpir-claxon.mp3');
-            audio.volume = 0.8;
-            audio.play().catch(e => console.warn('Audio blocked:', e));
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+            function playBell(freq, startTime, duration, gain) {
+                const osc  = ctx.createOscillator();
+                const env  = ctx.createGain();
+                const comp = ctx.createDynamicsCompressor();
+                osc.connect(env);
+                env.connect(comp);
+                comp.connect(ctx.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, startTime);
+                env.gain.setValueAtTime(0, startTime);
+                env.gain.linearRampToValueAtTime(gain, startTime + 0.01);
+                env.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                osc.start(startTime);
+                osc.stop(startTime + duration);
+            }
+
+            // Sino duplo: primeiro ding, segundo mais suave
+            const t = ctx.currentTime;
+            playBell(1318, t,        1.8, 0.6); // Mi5
+            playBell(987,  t,        1.8, 0.3); // Si4 (harmônico)
+            playBell(1318, t + 0.6,  1.4, 0.4); // segundo ding
+            playBell(987,  t + 0.6,  1.4, 0.2);
         } catch(e) {
             console.warn('Audio error:', e);
         }
