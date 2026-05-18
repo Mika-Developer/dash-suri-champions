@@ -1381,30 +1381,9 @@
 
     function playSaleSound() {
         try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-
-            function playBell(freq, startTime, duration, gain) {
-                const osc  = ctx.createOscillator();
-                const env  = ctx.createGain();
-                const comp = ctx.createDynamicsCompressor();
-                osc.connect(env);
-                env.connect(comp);
-                comp.connect(ctx.destination);
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, startTime);
-                env.gain.setValueAtTime(0, startTime);
-                env.gain.linearRampToValueAtTime(gain, startTime + 0.01);
-                env.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-                osc.start(startTime);
-                osc.stop(startTime + duration);
-            }
-
-            // Sino duplo: primeiro ding, segundo mais suave
-            const t = ctx.currentTime;
-            playBell(1318, t,        1.8, 0.6); // Mi5
-            playBell(987,  t,        1.8, 0.3); // Si4 (harmônico)
-            playBell(1318, t + 0.6,  1.4, 0.4); // segundo ding
-            playBell(987,  t + 0.6,  1.4, 0.2);
+            const audio = new Audio('https://mika-developer.github.io/dash-suri-champions/699465__m0ments__tpir-claxon.mp3');
+            audio.volume = 0.8;
+            audio.play().catch(e => console.warn('Audio blocked:', e));
         } catch(e) {
             console.warn('Audio error:', e);
         }
