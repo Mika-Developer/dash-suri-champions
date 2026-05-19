@@ -1458,6 +1458,10 @@
             document.getElementById('stat3Icon2').textContent = '🛒'; document.getElementById('stat3Label2').textContent = 'Vend';
             document.getElementById('stat4Icon2').textContent = '🎫'; document.getElementById('stat4Label2').textContent = 'Ticket';
             document.getElementById('stat5Icon2').textContent = '📊'; document.getElementById('stat5Label2').textContent = 'Conv';
+            // Restaura todas as colunas visíveis no Closer
+            document.querySelectorAll('#tableHeader1 th:nth-child(5),#tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'table-cell');
+            document.querySelectorAll('#tableHeader1 th:nth-child(9),#tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'table-cell');
+            document.querySelectorAll('#tableHeader1 th:nth-child(10),#tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'table-cell');
         } else if (currentMode === 'sdr') {
             document.getElementById('stat1Icon').textContent  = '📅'; document.getElementById('stat1Label').textContent  = 'Agend';
             document.getElementById('stat2Icon').textContent  = '✅'; document.getElementById('stat2Label').textContent  = 'Shows';
@@ -1469,6 +1473,10 @@
             document.getElementById('stat3Icon2').textContent = '❌'; document.getElementById('stat3Label2').textContent = 'No-show';
             document.getElementById('stat4Icon2').textContent = '🛒'; document.getElementById('stat4Label2').textContent = 'Vendas';
             document.getElementById('stat5Icon2').textContent = '🎯'; document.getElementById('stat5Label2').textContent = 'PTS';
+            // Oculta Score(5) e Conv/PTS(9) no SDR — PTS real está na col 10→agora col 9
+            document.querySelectorAll('#tableHeader1 th:nth-child(5),#tableHeader2 th:nth-child(5)').forEach(h => h.style.display = 'none');
+            document.querySelectorAll('#tableHeader1 th:nth-child(9),#tableHeader2 th:nth-child(9)').forEach(h => h.style.display = 'none');
+            document.querySelectorAll('#tableHeader1 th:nth-child(10),#tableHeader2 th:nth-child(10)').forEach(h => h.style.display = 'none');
         }
     }
 
