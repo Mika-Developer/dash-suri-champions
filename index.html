@@ -1026,6 +1026,7 @@
         'Sâmela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
         'Samela Vieira':    'https://lh3.googleusercontent.com/d/1J7-3cKaFHQ5JmZRcofFqPeHqyml9D9Xc',
         'Victória Ferrez':  'https://lh3.googleusercontent.com/d/1OLoJ_5txvXy6TVoZUJDiZf3C294HwCZu',
+        'Victoria Ferrez':  'https://lh3.googleusercontent.com/d/1OLoJ_5txvXy6TVoZUJDiZf3C294HwCZu',
         'Lívia Acácio':     'https://lh3.googleusercontent.com/d/1WMBDOTmhV8kG82g5EgR5UneM9vuu1DzQ',
         'Thiago de Brito':  'https://lh3.googleusercontent.com/d/1boR7AxdyubvJOi5tmfDY-glIvC5kpsmu'
     };
@@ -1044,13 +1045,13 @@
         if (SDR_PHOTOS[name]) return SDR_PHOTOS[name];
         const fn = name.split(' ')[0].toLowerCase();
         for (const key of Object.keys(SDR_PHOTOS)) {
-            if (key.toLowerCase().startsWith(fn)) return SDR_PHOTOS[key];
+            if (key.toLowerCase().startsWith(fn)) return _PHOTOS[key];
         }
         return null;
     }
 
     function getAnyPhoto(name) {
-        return getPlayerPhoto(name) || getSDRPhoto(name);
+        return getPlayerPhoto(name) || getPhoto(name);
     }
 
     function buildAvatarImg(url, className, name, fallbackClass) {
@@ -1068,7 +1069,7 @@
             players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
             mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1112498764'
         },
-        sdr: {
+        : {
             players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=337038684',
             mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1235747938'
         }
@@ -1130,7 +1131,7 @@
             const fbC = ['34,95%','34,08%','R$ 300.038,53','R$ 31.124,25','10,37%','R$ 91.859,33','R$ 18.127,35','19,73%'];
             const fbS = ['55,99%','47,82%','1.344','752','55,95%','467','229','49,04%'];
             for (let i = 0; i < values.length; i++) {
-                if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') values[i] = (modeForMTD === 'sdr' ? fbS : fbC)[i] || '0';
+                if (!values[i] || values[i] === '' || values[i] === '0,00%' || values[i] === '0') values[i] = (modeForMTD === '' ? fbS : fbC)[i] || '0';
             }
             document.getElementById('mtd-ontem').textContent              = values[0];
             document.getElementById('mtd-hoje').textContent               = values[1];
@@ -1157,7 +1158,7 @@
             const url = `${PIPEDRIVE_PROXY_URL}?action=last_sale&_=${Date.now()}`;
             const r   = await fetch(url);
             const data = await r.json();
-            return data; // espera: { id, title, value, currency, closer_name, sdr_name, frase, won_time }
+            return data; // espera: { id, title, value, currency, closer_name, _name, frase, won_time }
         } catch(e) {
             console.warn('Pipedrive proxy error (verifique PIPEDRIVE_PROXY_URL):', e);
             return null;
@@ -1186,7 +1187,7 @@
     // ===================== TELA ÚLTIMA VENDA =====================
     function updateUltimaVendaScreen(sale) {
         const closerName = sale.closer_name || '—';
-        const sdrName    = sale.sdr_name    || '—';
+        const Name    = sale._name    || '—';
         const value      = formatCurrency(sale.value, sale.currency);
         const frase      = sale[FIELD_FRASE] || sale.frase || '';
         const dealName   = sale.title || '';
@@ -1194,7 +1195,7 @@
         document.getElementById('uvDealValue').textContent  = value;
         document.getElementById('uvDealName').textContent   = dealName;
         document.getElementById('uvCloserName').textContent = closerName;
-        document.getElementById('uvSDRName').textContent    = sdrName;
+        document.getElementById('uvName').textContent    = Name;
 
         // Avatar Closer — só a foto OU só o fallback, nunca os dois
         const closerPhoto = getPlayerPhoto(closerName);
@@ -1206,8 +1207,8 @@
             closerRing.innerHTML = `<div class="uv-avatar-fallback" style="background:linear-gradient(135deg,#00D4FF,#8B5CF6);">${closerName.charAt(0)}</div>`;
         }
 
-        // Avatar SDR — só a foto OU só o fallback, nunca os dois
-        const sdrPhoto = getSDRPhoto(sdrName);
+        // Avatar  — só a foto OU só o fallback, nunca os dois
+        const drielePhoto = getdriele Photo(sdrName);
         const sdrRing  = document.getElementById('uvSDRRing');
         if (sdrPhoto) {
             sdrRing.innerHTML = `<img class="uv-avatar" src="${sdrPhoto}" alt="${sdrName}"
