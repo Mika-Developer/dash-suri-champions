@@ -1186,7 +1186,7 @@
     // ===================== TELA ÚLTIMA VENDA =====================
     function updateUltimaVendaScreen(sale) {
         const closerName = sale.closer_name || '—';
-        const Name    = sale._name    || '—';
+        const sdrName    = sale.sdr_name    || '—';
         const value      = formatCurrency(sale.value, sale.currency);
         const frase      = sale[FIELD_FRASE] || sale.frase || '';
         const dealName   = sale.title || '';
