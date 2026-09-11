@@ -1044,7 +1044,7 @@
         if (SDR_PHOTOS[name]) return SDR_PHOTOS[name];
         const fn = name.split(' ')[0].toLowerCase();
         for (const key of Object.keys(SDR_PHOTOS)) {
-            if (key.toLowerCase().startsWith(fn)) return SDR_PHOTOS[key];
+            if (key.toLowerCase().startsWith(fn)) return _PHOTOS[key];
         }
         return null;
     }
@@ -1068,7 +1068,7 @@
             players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=0',
             mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1112498764'
         },
-        sdr: {
+        : {
             players: 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=337038684',
             mtd:     'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=1235747938'
         }
