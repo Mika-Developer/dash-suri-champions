@@ -1152,15 +1152,10 @@
     };
 
     // ===================== NOTAS SALESBUD =====================
-    // Aba da planilha com as notas da Salesbud (uma linha por nota/reunião avaliada).
-    // SUBSTITUA o gid abaixo pelo gid da aba "Salesbud" (aparece na URL ao abrir a aba: ...#gid=XXXX).
-    // Colunas esperadas (cabeçalho na 1ª linha, a ordem não importa):
-    //   Data      → "08/11/2026 14:30", "08/11/2026" ou "2026-11-08T14:30"
-    //   Nome      → nome do SDR/Closer (igual ao usado nas fotos)
-    //   Área      → "Pré-vendas"/"SDR" ou "Vendas"/"Closer"
-    //   Nota      → ex: 8,5 (escala 0–10) ou 85 (escala 0–100)
-    //   Cliente   → (opcional) nome do lead/reunião avaliada
-    const SALESBUD_SOURCE = 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=SUBSTITUA_GID_SALESBUD';
+    // As notas vêm da API da Salesbud (https://docs.salesbud.com.br) através de um proxy no
+    // Google Apps Script, que guarda o client_secret fora deste HTML público.
+    // Código e passo a passo: apps-script/salesbud-proxy.gs → cole aqui a URL /exec da implantação.
+    const SALESBUD_PROXY_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT_SALESBUD';
     const NOTAS_LIMIT = 5;   // quantas notas recentes mostrar / usar na média de cada pessoa
     let cachedNotas = [];
 
@@ -1454,85 +1449,47 @@
         return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
 
-    function normalizeHeader(h) {
-        return h.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
-    }
-
-    function parseNotaDate(str) {
-        if (!str) return null;
-        const s = str.trim();
-        const br = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:[ T,]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
-        if (br) {
-            let y = parseInt(br[3]); if (y < 100) y += 2000;
-            return new Date(y, parseInt(br[2]) - 1, parseInt(br[1]), parseInt(br[4] || 0), parseInt(br[5] || 0), parseInt(br[6] || 0));
-        }
-        const d = new Date(s);
-        return isNaN(d) ? null : d;
-    }
-
-    function parseNotaArea(str) {
-        const a = normalizeHeader(str || '');
-        if (a.includes('pre') || a.includes('sdr') || a.includes('bdr')) return 'sdr';
-        if (a.includes('venda') || a.includes('closer') || a.includes('executiv')) return 'closer';
-        return null;
-    }
-
-    function parseSalesbudCSV(csv) {
-        const lines = csv.replace(/\r/g, '').split('\n').filter(l => l.trim());
-        if (lines.length < 2) return [];
-        const headers = parseCSVLine(lines[0]).map(normalizeHeader);
-        const find = (...keys) => headers.findIndex(h => keys.some(k => h.includes(k)));
-        const iDate   = find('data', 'date', 'quando');
-        const iName   = find('nome', 'vendedor', 'colaborador', 'usuario', 'responsavel');
-        const iArea   = find('area', 'tipo', 'funcao', 'cargo', 'time', 'equipe');
-        const iNota   = find('nota', 'score', 'pontuacao');
-        const iClient = find('cliente', 'lead', 'reuniao', 'empresa', 'deal', 'call');
-        if (iName < 0 || iNota < 0) { console.warn('Salesbud: cabeçalho sem colunas Nome/Nota', headers); return []; }
-
-        const notas = [];
-        for (let i = 1; i < lines.length; i++) {
-            const cols = parseCSVLine(lines[i]);
-            const name = (cols[iName] || '').trim();
-            const nota = parseFloat((cols[iNota] || '').replace('%', '').replace(',', '.'));
-            if (!name || isNaN(nota)) continue;
-            let area = iArea >= 0 ? parseNotaArea(cols[iArea]) : null;
-            if (!area) area = getSDRPhoto(name) && !getPlayerPhoto(name) ? 'sdr' : 'closer';
-            notas.push({
-                name, area, nota,
-                date: iDate >= 0 ? parseNotaDate(cols[iDate]) : null,
-                client: iClient >= 0 ? (cols[iClient] || '').trim() : '',
-                order: i
-            });
-        }
-        return notas;
+    // Converte a resposta do proxy ({ notas: [{ name, area, score, date, client, ... }] })
+    function mapSalesbudNotas(json) {
+        if (!json || json.error) { console.warn('Salesbud proxy:', json && json.error); return null; }
+        return (json.notas || [])
+            .filter(n => n && n.name && typeof n.score === 'number')
+            .map((n, i) => ({
+                name: n.name,
+                area: n.area === 'sdr' ? 'sdr' : 'closer',
+                nota: n.score,
+                date: n.date ? new Date(n.date) : null,
+                client: n.client || '',
+                order: -i   // a lista já vem da mais recente para a mais antiga
+            }));
     }
 
     function demoNotas() {
         const now = Date.now(), m = 60000;
         const rows = [
-            ['Cida Gomes','sdr',9.2,12,'Clínica Bem Estar'], ['Pedro Roncalli','sdr',7.8,40,'Studio Fit'],
-            ['Dara Barroso','sdr',8.6,75,'Odonto Mais'], ['Matheus Lima','sdr',6.9,130,'Pet Shop Amigo'],
-            ['Cintia Cifoni','sdr',9.5,190,'Escola Aprender'], ['Cida Gomes','sdr',8.8,260,'Auto Center'],
-            ['Pedro Roncalli','sdr',8.1,330,'Imobiliária Lar'], ['Driele Rodrigues','sdr',7.4,400,'Ótica Visão'],
-            ['Amanda Ribeiro','closer',8.9,20,'Clínica Sorriso'], ['Lucas Machado','closer',9.4,55,'Rede Farma'],
-            ['Gleice Moraes','closer',7.2,95,'Academia Pulse'], ['Rafael Lima','closer',8.3,150,'Construtora Base'],
-            ['Emerson Rocha','closer',6.8,210,'Moda & Cia'], ['Amanda Ribeiro','closer',9.1,280,'Hotel Mar'],
-            ['Lucas Machado','closer',8.7,350,'Contábil Prime'], ['Brena Carvalho','closer',8.0,420,'Vet Care']
+            ['Cida Gomes','sdr',9,12,'Clínica Bem Estar'], ['Pedro Roncalli','sdr',8,40,'Studio Fit'],
+            ['Dara Barroso','sdr',9,75,'Odonto Mais'], ['Matheus Lima','sdr',6,130,'Pet Shop Amigo'],
+            ['Cintia Cifoni','sdr',10,190,'Escola Aprender'], ['Cida Gomes','sdr',8,260,'Auto Center'],
+            ['Pedro Roncalli','sdr',7,330,'Imobiliária Lar'], ['Driele Rodrigues','sdr',7,400,'Ótica Visão'],
+            ['Amanda Ribeiro','closer',9,20,'Clínica Sorriso'], ['Lucas Machado','closer',10,55,'Rede Farma'],
+            ['Gleice Moraes','closer',7,95,'Academia Pulse'], ['Rafael Lima','closer',8,150,'Construtora Base'],
+            ['Emerson Rocha','closer',5,210,'Moda & Cia'], ['Amanda Ribeiro','closer',8,280,'Hotel Mar'],
+            ['Lucas Machado','closer',9,350,'Contábil Prime'], ['Brena Carvalho','closer',8,420,'Vet Care']
         ];
-        return rows.map(([name, area, nota, ago, client], i) => ({ name, area, nota, client, date: new Date(now - ago * m), order: i }));
+        return rows.map(([name, area, nota, ago, client], i) => ({ name, area, nota, client, date: new Date(now - ago * m), order: -i }));
     }
 
     async function fetchSalesbudNotas() {
         if (URL_PARAMS.has('demo')) return demoNotas();
-        if (SALESBUD_SOURCE.includes('SUBSTITUA')) { console.warn('Salesbud: configure o gid em SALESBUD_SOURCE'); return null; }
+        if (SALESBUD_PROXY_URL.includes('COLE_AQUI')) { console.warn('Salesbud: configure SALESBUD_PROXY_URL'); return null; }
         try {
-            const r = await fetch(SALESBUD_SOURCE + `&_=${Date.now()}`);
-            return parseSalesbudCSV(await r.text());
-        } catch(e) { console.error('Salesbud data error:', e); return null; }
+            const r = await fetch(`${SALESBUD_PROXY_URL}?_=${Date.now()}`);
+            return mapSalesbudNotas(await r.json());
+        } catch(e) { console.error('Salesbud proxy error:', e); return null; }
     }
 
     function sortNotasDesc(list) {
-        // Mais recente primeiro: pela data; sem data, pela ordem da planilha (linha de baixo = mais nova)
+        // Mais recente primeiro: pela data; empate/sem data, pela ordem recebida
         return [...list].sort((a, b) => {
             const da = a.date ? a.date.getTime() : 0, db = b.date ? b.date.getTime() : 0;
             return db - da || b.order - a.order;
@@ -1551,8 +1508,8 @@
     }
 
     function formatNota(nota, scale) {
-        return scale === 10 ? nota.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
-                            : Math.round(nota).toString();
+        if (scale !== 10 || Number.isInteger(nota)) return Math.round(nota).toString();
+        return nota.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     }
 
     function formatNotaWhen(date) {
