@@ -751,6 +751,54 @@
         body.mode-podio .podio-player.place-1 .podio-pedestal { width:250px;height:140px; }
         body.mode-podio .podio-player.place-2 .podio-pedestal { width:220px;height:98px; }
         body.mode-podio .podio-player.place-3 .podio-pedestal { width:220px;height:64px; }
+
+        /* ===================== NOTAS SALESBUD ===================== */
+        .notas-view { display:none;height:100vh;width:100%;flex-direction:column;padding:18px 28px 14px;gap:12px; }
+        .notas-view.active { display:flex; }
+        .notas-header { display:flex;flex-direction:column;align-items:center;gap:2px; }
+        .notas-kicker { font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:4px; }
+        .notas-title { font-family:'Orbitron',sans-serif;font-size:30px;font-weight:900;background:linear-gradient(135deg,#00F0FF,#8B5CF6,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmerTitle 3s ease-in-out infinite;text-align:center; }
+        .notas-subtitle { font-size:12px;color:rgba(255,255,255,0.55); }
+        .notas-grid { flex:1;display:grid;grid-template-columns:1fr 1fr;gap:20px;min-height:0; }
+        .notas-col { display:flex;flex-direction:column;gap:12px;padding:16px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;backdrop-filter:blur(10px);box-shadow:0 8px 32px rgba(0,0,0,0.3);min-height:0;overflow:hidden; }
+        .notas-col.sdr    { border-top:3px solid #10B981; }
+        .notas-col.closer { border-top:3px solid #00F0FF; }
+        .notas-col-title { font-family:'Orbitron',sans-serif;font-size:16px;font-weight:800;text-align:center;letter-spacing:2px; }
+        .notas-col.sdr .notas-col-title    { color:#10B981;text-shadow:0 0 12px rgba(16,185,129,0.6); }
+        .notas-col.closer .notas-col-title { color:#00F0FF;text-shadow:0 0 12px rgba(0,240,255,0.6); }
+        .notas-section-label { font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:2px;display:flex;align-items:center;gap:8px; }
+        .notas-section-label::after { content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(0,240,255,0.4),transparent); }
+
+        .notas-top3 { display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;align-items:end; }
+        .nt-card { display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border-radius:12px;text-align:center;min-width:0; }
+        .nt-card.place-1 { background:linear-gradient(180deg,rgba(255,215,0,0.22),rgba(255,165,0,0.06));border:1px solid rgba(255,215,0,0.5);box-shadow:0 0 20px rgba(255,215,0,0.2);padding-top:14px; }
+        .nt-card.place-2 { background:linear-gradient(180deg,rgba(192,192,192,0.16),rgba(169,169,169,0.04));border:1px solid rgba(192,192,192,0.35); }
+        .nt-card.place-3 { background:linear-gradient(180deg,rgba(205,127,50,0.16),rgba(184,115,51,0.04));border:1px solid rgba(205,127,50,0.35); }
+        .nt-medal { font-size:20px;animation:floatMedal 2.5s ease-in-out infinite; }
+        .nt-avatar { border-radius:50%;object-fit:cover;object-position:center top;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;background:linear-gradient(135deg,#00D4FF,#8B5CF6);flex-shrink:0; }
+        .nt-card .nt-avatar { width:64px;height:64px;font-size:20px;border:3px solid rgba(255,255,255,0.3); }
+        .nt-card.place-1 .nt-avatar { width:80px;height:80px;border-color:#FFD700;box-shadow:0 0 18px rgba(255,215,0,0.6); }
+        .nt-card.place-2 .nt-avatar { border-color:#C0C0C0; }
+        .nt-card.place-3 .nt-avatar { border-color:#CD7F32; }
+        .nt-name { font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+        .nt-avg { font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;line-height:1; }
+        .nt-card.place-1 .nt-avg { font-size:32px; }
+        .nt-avg-label { font-size:11px;color:rgba(255,255,255,0.55); }
+
+        .notas-list { display:flex;flex-direction:column;gap:7px;flex:1;min-height:0; }
+        .nl-row { flex:1;max-height:96px;display:flex;align-items:center;gap:14px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--nota-color,#00D4FF);animation:nlSlideIn 0.5s ease both; }
+        .nl-row:nth-child(2){animation-delay:0.08s}.nl-row:nth-child(3){animation-delay:0.16s}.nl-row:nth-child(4){animation-delay:0.24s}.nl-row:nth-child(5){animation-delay:0.32s}
+        .nl-row.latest { background:linear-gradient(90deg,rgba(0,240,255,0.12),rgba(139,92,246,0.06));box-shadow:0 0 18px rgba(0,240,255,0.15); }
+        @keyframes nlSlideIn { from{opacity:0;transform:translateX(-16px);} to{opacity:1;transform:translateX(0);} }
+        .nl-row .nt-avatar { width:52px;height:52px;font-size:18px;border:2px solid rgba(0,240,255,0.5); }
+        .nl-info { flex:1;min-width:0;display:flex;flex-direction:column;gap:2px; }
+        .nl-name { font-size:17px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .nl-meta { font-size:13px;color:rgba(255,255,255,0.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .nl-new { font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:#0a1628;background:#00F0FF;padding:2px 7px;border-radius:10px;margin-left:6px;letter-spacing:1px;vertical-align:middle;box-shadow:0 0 10px rgba(0,240,255,0.6); }
+        .nl-score { font-family:'Orbitron',sans-serif;font-size:30px;font-weight:900;min-width:110px;text-align:center;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,0.06);color:var(--nota-color,#00D4FF);text-shadow:0 0 12px var(--nota-glow,rgba(0,240,255,0.5)); }
+        .nl-score small { font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-shadow:none; }
+        .notas-empty { flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;color:rgba(255,255,255,0.5);padding:16px;border:1px dashed rgba(255,255,255,0.15);border-radius:12px; }
+        .mode-indicator.notas-mode { background:rgba(139,92,246,0.3);border-color:rgba(139,92,246,0.6); }
     </style>
 </head>
 <body>
@@ -923,6 +971,31 @@
             </div>
         </div>
 
+        <!-- NOTAS SALESBUD VIEW -->
+        <div class="notas-view" id="notasView">
+            <div class="notas-header">
+                <div class="notas-kicker">Champions Suri</div>
+                <div class="notas-title">⭐ NOTAS SALESBUD ⭐</div>
+                <div class="notas-subtitle" id="notasSubtitle">Top 3 pela média das últimas 5 notas de cada um • últimas 5 notas registradas</div>
+            </div>
+            <div class="notas-grid">
+                <div class="notas-col sdr">
+                    <div class="notas-col-title">🎯 PRÉ-VENDAS</div>
+                    <div class="notas-section-label">🏆 Top 3 — Média</div>
+                    <div class="notas-top3" id="notasTop3SDR"></div>
+                    <div class="notas-section-label">🕒 Últimas 5 notas</div>
+                    <div class="notas-list" id="notasListSDR"></div>
+                </div>
+                <div class="notas-col closer">
+                    <div class="notas-col-title">⚡ VENDAS</div>
+                    <div class="notas-section-label">🏆 Top 3 — Média</div>
+                    <div class="notas-top3" id="notasTop3Closer"></div>
+                    <div class="notas-section-label">🕒 Últimas 5 notas</div>
+                    <div class="notas-list" id="notasListCloser"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- ÚLTIMA VENDA VIEW -->
         <div class="ultima-venda-view" id="ultimaVendaView">
             <div class="uv-title">Champions Suri</div>
@@ -983,8 +1056,8 @@
     let notificationTimer   = null;
     let pipedrivePollingTimer = null;
 
-    const MODE_SEQUENCE = ['closer', 'sdr', 'podio', 'ultima-venda'];
-    const MODE_DURATIONS = { closer: 45000, sdr: 45000, podio: 30000, 'ultima-venda': 20000 };
+    const MODE_SEQUENCE = ['closer', 'sdr', 'podio', 'notas', 'ultima-venda'];
+    const MODE_DURATIONS = { closer: 45000, sdr: 45000, podio: 30000, notas: 30000, 'ultima-venda': 20000 };
 
     // ===================== FOTOS =====================
     const CLOSER_PHOTOS = {
@@ -1078,6 +1151,19 @@
         }
     };
 
+    // ===================== NOTAS SALESBUD =====================
+    // Aba da planilha com as notas da Salesbud (uma linha por nota/reunião avaliada).
+    // SUBSTITUA o gid abaixo pelo gid da aba "Salesbud" (aparece na URL ao abrir a aba: ...#gid=XXXX).
+    // Colunas esperadas (cabeçalho na 1ª linha, a ordem não importa):
+    //   Data      → "08/11/2026 14:30", "08/11/2026" ou "2026-11-08T14:30"
+    //   Nome      → nome do SDR/Closer (igual ao usado nas fotos)
+    //   Área      → "Pré-vendas"/"SDR" ou "Vendas"/"Closer"
+    //   Nota      → ex: 8,5 (escala 0–10) ou 85 (escala 0–100)
+    //   Cliente   → (opcional) nome do lead/reunião avaliada
+    const SALESBUD_SOURCE = 'https://docs.google.com/spreadsheets/d/1kDi5WuS5FH7_VElz-ek4EnOks_QLv2CGRcE1_TwX9es/export?format=csv&gid=SUBSTITUA_GID_SALESBUD';
+    const NOTAS_LIMIT = 5;   // quantas notas recentes mostrar / usar na média de cada pessoa
+    let cachedNotas = [];
+
     function parseCSVLine(line) {
         const result = []; let current = ''; let inQuotes = false;
         for (let i = 0; i < line.length; i++) {
@@ -1116,7 +1202,7 @@
     }
 
     async function fetchMTDMetrics() {
-        const modeForMTD = (currentMode === 'podio' || currentMode === 'ultima-venda') ? 'closer' : currentMode;
+        const modeForMTD = (currentMode === 'sdr') ? 'sdr' : 'closer';
         try {
             const url = DATA_SOURCES[modeForMTD].mtd + `&_=${Date.now()}`;
             const r = await fetch(url);
@@ -1361,11 +1447,205 @@
         }
     }
 
+    // ===================== NOTAS SALESBUD — DADOS =====================
+    const URL_PARAMS = new URLSearchParams(window.location.search);
+
+    function escapeHTML(str) {
+        return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function normalizeHeader(h) {
+        return h.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
+    }
+
+    function parseNotaDate(str) {
+        if (!str) return null;
+        const s = str.trim();
+        const br = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:[ T,]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+        if (br) {
+            let y = parseInt(br[3]); if (y < 100) y += 2000;
+            return new Date(y, parseInt(br[2]) - 1, parseInt(br[1]), parseInt(br[4] || 0), parseInt(br[5] || 0), parseInt(br[6] || 0));
+        }
+        const d = new Date(s);
+        return isNaN(d) ? null : d;
+    }
+
+    function parseNotaArea(str) {
+        const a = normalizeHeader(str || '');
+        if (a.includes('pre') || a.includes('sdr') || a.includes('bdr')) return 'sdr';
+        if (a.includes('venda') || a.includes('closer') || a.includes('executiv')) return 'closer';
+        return null;
+    }
+
+    function parseSalesbudCSV(csv) {
+        const lines = csv.replace(/\r/g, '').split('\n').filter(l => l.trim());
+        if (lines.length < 2) return [];
+        const headers = parseCSVLine(lines[0]).map(normalizeHeader);
+        const find = (...keys) => headers.findIndex(h => keys.some(k => h.includes(k)));
+        const iDate   = find('data', 'date', 'quando');
+        const iName   = find('nome', 'vendedor', 'colaborador', 'usuario', 'responsavel');
+        const iArea   = find('area', 'tipo', 'funcao', 'cargo', 'time', 'equipe');
+        const iNota   = find('nota', 'score', 'pontuacao');
+        const iClient = find('cliente', 'lead', 'reuniao', 'empresa', 'deal', 'call');
+        if (iName < 0 || iNota < 0) { console.warn('Salesbud: cabeçalho sem colunas Nome/Nota', headers); return []; }
+
+        const notas = [];
+        for (let i = 1; i < lines.length; i++) {
+            const cols = parseCSVLine(lines[i]);
+            const name = (cols[iName] || '').trim();
+            const nota = parseFloat((cols[iNota] || '').replace('%', '').replace(',', '.'));
+            if (!name || isNaN(nota)) continue;
+            let area = iArea >= 0 ? parseNotaArea(cols[iArea]) : null;
+            if (!area) area = getSDRPhoto(name) && !getPlayerPhoto(name) ? 'sdr' : 'closer';
+            notas.push({
+                name, area, nota,
+                date: iDate >= 0 ? parseNotaDate(cols[iDate]) : null,
+                client: iClient >= 0 ? (cols[iClient] || '').trim() : '',
+                order: i
+            });
+        }
+        return notas;
+    }
+
+    function demoNotas() {
+        const now = Date.now(), m = 60000;
+        const rows = [
+            ['Cida Gomes','sdr',9.2,12,'Clínica Bem Estar'], ['Pedro Roncalli','sdr',7.8,40,'Studio Fit'],
+            ['Dara Barroso','sdr',8.6,75,'Odonto Mais'], ['Matheus Lima','sdr',6.9,130,'Pet Shop Amigo'],
+            ['Cintia Cifoni','sdr',9.5,190,'Escola Aprender'], ['Cida Gomes','sdr',8.8,260,'Auto Center'],
+            ['Pedro Roncalli','sdr',8.1,330,'Imobiliária Lar'], ['Driele Rodrigues','sdr',7.4,400,'Ótica Visão'],
+            ['Amanda Ribeiro','closer',8.9,20,'Clínica Sorriso'], ['Lucas Machado','closer',9.4,55,'Rede Farma'],
+            ['Gleice Moraes','closer',7.2,95,'Academia Pulse'], ['Rafael Lima','closer',8.3,150,'Construtora Base'],
+            ['Emerson Rocha','closer',6.8,210,'Moda & Cia'], ['Amanda Ribeiro','closer',9.1,280,'Hotel Mar'],
+            ['Lucas Machado','closer',8.7,350,'Contábil Prime'], ['Brena Carvalho','closer',8.0,420,'Vet Care']
+        ];
+        return rows.map(([name, area, nota, ago, client], i) => ({ name, area, nota, client, date: new Date(now - ago * m), order: i }));
+    }
+
+    async function fetchSalesbudNotas() {
+        if (URL_PARAMS.has('demo')) return demoNotas();
+        if (SALESBUD_SOURCE.includes('SUBSTITUA')) { console.warn('Salesbud: configure o gid em SALESBUD_SOURCE'); return null; }
+        try {
+            const r = await fetch(SALESBUD_SOURCE + `&_=${Date.now()}`);
+            return parseSalesbudCSV(await r.text());
+        } catch(e) { console.error('Salesbud data error:', e); return null; }
+    }
+
+    function sortNotasDesc(list) {
+        // Mais recente primeiro: pela data; sem data, pela ordem da planilha (linha de baixo = mais nova)
+        return [...list].sort((a, b) => {
+            const da = a.date ? a.date.getTime() : 0, db = b.date ? b.date.getTime() : 0;
+            return db - da || b.order - a.order;
+        });
+    }
+
+    // ===================== NOTAS SALESBUD — RENDER =====================
+    function notaScale(notas) { return notas.some(n => n.nota > 10) ? 100 : 10; }
+
+    function notaColor(nota, scale) {
+        const pct = nota / scale;
+        if (pct >= 0.85) return ['#10B981', 'rgba(16,185,129,0.6)'];
+        if (pct >= 0.70) return ['#00F0FF', 'rgba(0,240,255,0.6)'];
+        if (pct >= 0.50) return ['#FBBF24', 'rgba(251,191,36,0.6)'];
+        return ['#EF4444', 'rgba(239,68,68,0.6)'];
+    }
+
+    function formatNota(nota, scale) {
+        return scale === 10 ? nota.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+                            : Math.round(nota).toString();
+    }
+
+    function formatNotaWhen(date) {
+        if (!date) return '';
+        const diffMin = Math.round((Date.now() - date.getTime()) / 60000);
+        const hhmm = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const hasTime = date.getHours() !== 0 || date.getMinutes() !== 0;
+        const today = new Date(); const yest = new Date(); yest.setDate(today.getDate() - 1);
+        if (date.toDateString() === today.toDateString()) {
+            if (hasTime && diffMin >= 0 && diffMin < 60) return diffMin <= 1 ? 'agora mesmo' : `há ${diffMin} min`;
+            return hasTime ? `hoje, ${hhmm}` : 'hoje';
+        }
+        if (date.toDateString() === yest.toDateString()) return hasTime ? `ontem, ${hhmm}` : 'ontem';
+        const dm = date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+        return hasTime ? `${dm}, ${hhmm}` : dm;
+    }
+
+    function notaAvatar(name, area) {
+        const url = area === 'sdr' ? (getSDRPhoto(name) || getPlayerPhoto(name)) : (getPlayerPhoto(name) || getSDRPhoto(name));
+        const initial = escapeHTML(name.charAt(0));
+        if (url) {
+            return `<img class="nt-avatar" src="${escapeHTML(url)}" alt="${escapeHTML(name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="nt-avatar" style="display:none;">${initial}</div>`;
+        }
+        return `<div class="nt-avatar">${initial}</div>`;
+    }
+
+    function renderNotasColumn(notas, area, top3El, listEl, scale) {
+        const areaNotas = sortNotasDesc(notas.filter(n => n.area === area));
+        if (!areaNotas.length) {
+            top3El.innerHTML = '';
+            listEl.innerHTML = `<div class="notas-empty">Nenhuma nota da Salesbud registrada ainda.</div>`;
+            return;
+        }
+
+        // Top 3: média das últimas N notas de cada pessoa
+        const byPerson = {};
+        areaNotas.forEach(n => {
+            const key = n.name.toLowerCase();
+            if (!byPerson[key]) byPerson[key] = { name: n.name, notas: [] };
+            if (byPerson[key].notas.length < NOTAS_LIMIT) byPerson[key].notas.push(n.nota);
+        });
+        const ranking = Object.values(byPerson)
+            .map(p => ({ ...p, avg: p.notas.reduce((s, v) => s + v, 0) / p.notas.length }))
+            .sort((a, b) => b.avg - a.avg || b.notas.length - a.notas.length)
+            .slice(0, 3);
+
+        const medals = ['🥇', '🥈', '🥉'];
+        const card = (p, place) => {
+            if (!p) return '<div></div>';
+            const [color, glow] = notaColor(p.avg, scale);
+            return `<div class="nt-card place-${place}">
+                <div class="nt-medal">${medals[place - 1]}</div>
+                ${notaAvatar(p.name, area)}
+                <div class="nt-name" title="${escapeHTML(p.name)}">${escapeHTML(p.name)}</div>
+                <div class="nt-avg" style="color:${color};text-shadow:0 0 12px ${glow};">${formatNota(p.avg, scale)}</div>
+                <div class="nt-avg-label">média de ${p.notas.length} nota${p.notas.length > 1 ? 's' : ''}</div>
+            </div>`;
+        };
+        top3El.innerHTML = card(ranking[1], 2) + card(ranking[0], 1) + card(ranking[2], 3);
+
+        // Últimas N notas (cronológico, mais recente no topo)
+        listEl.innerHTML = areaNotas.slice(0, NOTAS_LIMIT).map((n, i) => {
+            const [color, glow] = notaColor(n.nota, scale);
+            const meta = [formatNotaWhen(n.date), n.client].filter(Boolean).map(escapeHTML).join(' • ');
+            return `<div class="nl-row ${i === 0 ? 'latest' : ''}" style="--nota-color:${color};--nota-glow:${glow};">
+                ${notaAvatar(n.name, area)}
+                <div class="nl-info">
+                    <div class="nl-name">${escapeHTML(n.name)}${i === 0 ? '<span class="nl-new">ÚLTIMA</span>' : ''}</div>
+                    <div class="nl-meta">${meta || '&nbsp;'}</div>
+                </div>
+                <div class="nl-score">${formatNota(n.nota, scale)}<small>/${scale}</small></div>
+            </div>`;
+        }).join('');
+    }
+
+    function renderNotas() {
+        const scale = notaScale(cachedNotas);
+        renderNotasColumn(cachedNotas, 'sdr',    document.getElementById('notasTop3SDR'),    document.getElementById('notasListSDR'),    scale);
+        renderNotasColumn(cachedNotas, 'closer', document.getElementById('notasTop3Closer'), document.getElementById('notasListCloser'), scale);
+    }
+
+    async function loadNotas() {
+        const notas = await fetchSalesbudNotas();
+        if (notas) cachedNotas = notas;
+        renderNotas();
+    }
+
     // ===================== VIEWS =====================
     function showTableView() {
         document.getElementById('tableView').style.display         = 'block';
         document.getElementById('podioView').classList.remove('active');
         document.getElementById('ultimaVendaView').classList.remove('active');
+        document.getElementById('notasView').classList.remove('active');
         document.getElementById('mainHeader').style.display        = 'flex';
     }
 
@@ -1373,14 +1653,25 @@
         document.getElementById('tableView').style.display         = 'none';
         document.getElementById('podioView').classList.add('active');
         document.getElementById('ultimaVendaView').classList.remove('active');
+        document.getElementById('notasView').classList.remove('active');
         document.getElementById('mainHeader').style.display        = 'none';
         renderPodio();
+    }
+
+    function showNotasView() {
+        document.getElementById('tableView').style.display         = 'none';
+        document.getElementById('podioView').classList.remove('active');
+        document.getElementById('ultimaVendaView').classList.remove('active');
+        document.getElementById('notasView').classList.add('active');
+        document.getElementById('mainHeader').style.display        = 'none';
+        renderNotas();
     }
 
     function showUltimaVendaView() {
         document.getElementById('tableView').style.display         = 'none';
         document.getElementById('podioView').classList.remove('active');
         document.getElementById('ultimaVendaView').classList.add('active');
+        document.getElementById('notasView').classList.remove('active');
         document.getElementById('mainHeader').style.display        = 'none';
         spawnConfetti();
     }
@@ -1389,12 +1680,14 @@
     function updateModeIndicator() {
         const indicator = document.getElementById('modeIndicator');
         const modeText  = document.getElementById('modeText');
-        document.body.classList.remove('mode-closer','mode-sdr','mode-podio','mode-ultima-venda');
-        indicator.classList.remove('sdr-mode','podio-mode','venda-mode');
+        document.body.classList.remove('mode-closer','mode-sdr','mode-podio','mode-notas','mode-ultima-venda');
+        indicator.classList.remove('sdr-mode','podio-mode','notas-mode','venda-mode');
         if (currentMode === 'sdr') {
             document.body.classList.add('mode-sdr'); indicator.classList.add('sdr-mode'); modeText.textContent = 'SDR';
         } else if (currentMode === 'podio') {
             document.body.classList.add('mode-podio'); indicator.classList.add('podio-mode'); modeText.textContent = 'PÓDIO';
+        } else if (currentMode === 'notas') {
+            document.body.classList.add('mode-notas'); indicator.classList.add('notas-mode'); modeText.textContent = 'NOTAS SALESBUD';
         } else if (currentMode === 'ultima-venda') {
             document.body.classList.add('mode-ultima-venda'); indicator.classList.add('venda-mode'); modeText.textContent = 'ÚLTIMA VENDA';
         } else {
@@ -1424,6 +1717,10 @@
             if (sp) cachedSDRPlayers    = sp;
             await fetchMTDMetrics();
             renderPodio();
+        } else if (currentMode === 'notas') {
+            showNotasView();
+            await new Promise(r => setTimeout(r, 300));
+            await loadNotas();
         } else if (currentMode === 'ultima-venda') {
             showUltimaVendaView();
             await new Promise(r => setTimeout(r, 300));
@@ -1658,6 +1955,8 @@
             if (cp) cachedCloserPlayers = cp;
             if (sp) cachedSDRPlayers    = sp;
             renderPodio();
+        } else if (currentMode === 'notas') {
+            await loadNotas();
         } else if (currentMode === 'ultima-venda') {
             // Não faz nada, o polling já cuida
         } else {
@@ -1667,9 +1966,16 @@
 
     // ===================== INIT =====================
     document.addEventListener('DOMContentLoaded', async function () {
+        // ?view=notas (ou podio, sdr...) abre direto numa tela — útil para testar
+        const startView = URL_PARAMS.get('view');
+        if (startView && MODE_SEQUENCE.includes(startView)) currentMode = startView;
+
         updateModeIndicator();
         updateTableHeaders();
-        showTableView();
+        if (currentMode === 'notas') { showNotasView(); loadNotas(); }
+        else if (currentMode === 'podio') showPodioView();
+        else if (currentMode === 'ultima-venda') showUltimaVendaView();
+        else showTableView();
 
         document.getElementById('modeIndicator').addEventListener('click', () => switchModeWithTransition());
         document.getElementById('pauseButton').addEventListener('click', togglePause);
@@ -1688,7 +1994,9 @@
         if (cp) cachedCloserPlayers = cp;
         if (sp) cachedSDRPlayers    = sp;
 
-        await loadCurrentModeData();
+        if (currentMode === 'closer' || currentMode === 'sdr') await loadCurrentModeData();
+        else if (currentMode === 'podio') renderPodio();
+        loadNotas();
     });
     </script>
 
