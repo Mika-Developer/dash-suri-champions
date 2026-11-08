@@ -33,12 +33,20 @@ const DIAS_JANELA = 14;
 const COLECOES = ['meetings', 'calls'];
 
 // Como separar Pré-vendas de Vendas: pelo nome do time padrão do dono da reunião na Salesbud.
-// Se o nome do time casar com este padrão, é Pré-vendas; senão, Vendas.
-// Ajuste conforme os nomes dos times da Suri (veja no log de `testarSalesbud`).
-const REGEX_TIME_PRE_VENDAS = /pr[eé][\s-]?venda|sdr|bdr|eagles|procurando/i;
+// Times que não casam com nenhum dos dois (CS, Enablement...) ficam fora da tela.
+// Veja os times de cada pessoa no log de `testarSalesbud`.
+const REGEX_TIME_PRE_VENDAS = /^\s*(sdr|bdr|pr[eé][\s-]?vendas?)\s*$/i;
+const REGEX_TIME_VENDAS     = /^\s*(closer|vendas|executivos?)\s*$/i;
 
-// Se o time não ajudar, force a área por e-mail aqui: { 'fulano@suri.ai': 'sdr', 'ciclano@suri.ai': 'closer' }
+// Para forçar a área de alguém por e-mail: { 'fulano@suri.ai': 'sdr', 'ciclano@suri.ai': 'closer', 'beltrano@suri.ai': null }
+// (null = não aparece na tela)
 const AREA_POR_EMAIL = {};
+
+// Domínios da própria empresa: contas com esses domínios não são mostradas como "cliente".
+const DOMINIOS_INTERNOS = ['suri.ai', 'chatbotmaker.io'];
+
+// Quantas notas por pessoa enviar ao dashboard (a tela usa as 5 últimas de cada um).
+const NOTAS_POR_PESSOA = 5;
 
 // Cache da resposta (segundos). O dashboard consulta a cada 10s; isso evita gastar a cota da API.
 const CACHE_RESPOSTA_SEG = 120;
@@ -52,7 +60,7 @@ function doGet() {
     if (cached) {
       body = cached;
     } else {
-      body = JSON.stringify({ updated_at: new Date().toISOString(), notas: buscarNotas_() });
+      body = JSON.stringify({ updated_at: new Date().toISOString(), notas: notasParaDashboard_(buscarNotas_()) });
       if (body.length < 95000) cache.put('notas_resposta', body, CACHE_RESPOSTA_SEG);
     }
   } catch (err) {
@@ -66,10 +74,12 @@ function testarSalesbud() {
   CacheService.getScriptCache().remove('notas_resposta');
   const notas = buscarNotas_();
   const times = {};
-  notas.forEach(n => { times[n.name + ' — ' + (n.team || 'sem time')] = n.area; });
-  Logger.log('Notas encontradas: %s', notas.length);
+  notas.forEach(n => { times[n.name + ' — ' + (n.team || 'sem time')] = n.area || 'fora da tela'; });
+  const dash = notasParaDashboard_(notas);
+  Logger.log('Notas encontradas: %s | enviadas ao dashboard: %s | tamanho: %s bytes',
+    notas.length, dash.length, JSON.stringify(dash).length);
   Logger.log('Pessoa — time → área:\n%s', JSON.stringify(times, null, 2));
-  Logger.log('Mais recentes:\n%s', JSON.stringify(notas.slice(0, 10), null, 2));
+  Logger.log('Mais recentes no dashboard:\n%s', JSON.stringify(dash.slice(0, 10), null, 2));
 }
 
 // ===================== BUSCA =====================
@@ -84,18 +94,16 @@ function buscarNotas_() {
       if (score === null) return;
       const owner = r.owner || {};
       const team = owner.team && owner.team.name || '';
-      const conta = (r.accounts || [])[0];
-      const participante = (r.participants || [])[0];
       notas.push({
         id: r.id,
         kind: r.object,                      // 'meeting' ou 'call'
         name: owner.name || owner.email || '—',
         email: owner.email || '',
         team: team,
-        area: areaDe_(owner.email, team),    // 'sdr' (Pré-vendas) ou 'closer' (Vendas)
+        area: areaDe_(owner.email, team),    // 'sdr' (Pré-vendas), 'closer' (Vendas) ou null (fora da tela)
         score: score,                        // 0 a 10
         date: r.meeting_at,
-        client: (conta && (conta.name || conta.domain)) || (participante && participante.display_name) || r.title || ''
+        client: clienteDe_(r)
       });
     });
   });
@@ -103,10 +111,42 @@ function buscarNotas_() {
   return notas;
 }
 
+// O que vai para o dashboard: só Pré-vendas/Vendas e só as últimas N notas de cada pessoa.
+function notasParaDashboard_(notas) {
+  const porPessoa = {};
+  return notas.filter(n => {
+    if (!n.area) return false;
+    const chave = n.area + '|' + (n.email || n.name).toLowerCase();
+    porPessoa[chave] = (porPessoa[chave] || 0) + 1;
+    return porPessoa[chave] <= NOTAS_POR_PESSOA;
+  }).map(n => ({ name: n.name, area: n.area, score: n.score, date: n.date, client: n.client, kind: n.kind }));
+}
+
 function areaDe_(email, team) {
-  const forced = email && AREA_POR_EMAIL[String(email).toLowerCase()];
-  if (forced) return forced;
-  return REGEX_TIME_PRE_VENDAS.test(team || '') ? 'sdr' : 'closer';
+  const chave = email && String(email).toLowerCase();
+  if (chave && Object.prototype.hasOwnProperty.call(AREA_POR_EMAIL, chave)) return AREA_POR_EMAIL[chave];
+  if (REGEX_TIME_PRE_VENDAS.test(team || '')) return 'sdr';
+  if (REGEX_TIME_VENDAS.test(team || '')) return 'closer';
+  return null;
+}
+
+// Nome do cliente para exibir na TV — sem números de telefone e sem a própria Suri.
+function clienteDe_(r) {
+  const interno = d => DOMINIOS_INTERNOS.some(x => String(d || '').toLowerCase().endsWith(x));
+  const candidatos = []
+    .concat((r.accounts || []).filter(a => !interno(a.domain)).map(a => a.name || a.domain))
+    .concat((r.participants || []).filter(p => !interno(p.email)).map(p => p.display_name));
+  for (const c of candidatos) {
+    const limpo = limpaTexto_(c);
+    if (limpo) return limpo;
+  }
+  return r.object === 'call' ? 'Ligação' : 'Reunião';
+}
+
+function limpaTexto_(txt) {
+  return String(txt || '')
+    .replace(/\+?\d[\d\s().-]{6,}\d/g, '')   // remove telefones
+    .replace(/\s{2,}/g, ' ').trim();
 }
 
 // A listagem traz um resumo da avaliação; se a nota não vier nele, consulta a rota da avaliação
