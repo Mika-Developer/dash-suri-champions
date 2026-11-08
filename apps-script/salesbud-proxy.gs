@@ -40,6 +40,10 @@ const TIMES = {
   'Closer': 'closer'   // → coluna Vendas
 };
 
+// Notas ignoradas por enquanto:
+const NOTA_MINIMA = 1;                 // notas abaixo disso (ou seja, nota 0) não entram
+const DURACAO_MINIMA_LIGACAO_SEG = 60; // ligações com menos de 1 minuto não entram
+
 // Domínios da própria empresa: contas com esses domínios não são mostradas como "cliente".
 const DOMINIOS_INTERNOS = ['suri.ai', 'chatbotmaker.io'];
 
@@ -87,11 +91,12 @@ function buscarNotas_() {
   timesAlvo_().forEach(time => {
     COLECOES.forEach(colecao => {
       // team_id → só reuniões/ligações de quem tem este time como padrão
-      // score_min=0 → só registros com avaliação geral concluída
-      const registros = listarTudo_('/v1/' + colecao, { team_id: time.id, meeting_after: depois, score_min: 0, limit: 100 });
+      // score_min → só registros com avaliação concluída e nota >= NOTA_MINIMA (a API já filtra)
+      const registros = listarTudo_('/v1/' + colecao, { team_id: time.id, meeting_after: depois, score_min: NOTA_MINIMA, limit: 100 });
       registros.forEach(r => {
+        if (r.object === 'call' && Number(r.duration_seconds || 0) < DURACAO_MINIMA_LIGACAO_SEG) return;
         const score = notaDoRegistro_(colecao, r);
-        if (score === null) return;
+        if (score === null || score < NOTA_MINIMA) return;
         const owner = r.owner || {};
         notas.push({
           id: r.id,
