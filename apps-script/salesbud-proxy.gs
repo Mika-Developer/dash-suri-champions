@@ -32,15 +32,13 @@ const DIAS_JANELA = 14;
 // Coleções lidas: 'meetings' (bot / upload) e 'calls' (VoIP). Remova uma se não usar.
 const COLECOES = ['meetings', 'calls'];
 
-// Como separar Pré-vendas de Vendas: pelo nome do time padrão do dono da reunião na Salesbud.
-// Times que não casam com nenhum dos dois (CS, Enablement...) ficam fora da tela.
-// Veja os times de cada pessoa no log de `testarSalesbud`.
-const REGEX_TIME_PRE_VENDAS = /^\s*(sdr|bdr|pr[eé][\s-]?vendas?)\s*$/i;
-const REGEX_TIME_VENDAS     = /^\s*(closer|vendas|executivos?)\s*$/i;
-
-// Para forçar a área de alguém por e-mail: { 'fulano@suri.ai': 'sdr', 'ciclano@suri.ai': 'closer', 'beltrano@suri.ai': null }
-// (null = não aparece na tela)
-const AREA_POR_EMAIL = {};
+// SÓ estes times da Salesbud são consultados (nome exato do time, sem diferenciar maiúsculas).
+// A busca já é filtrada por time na própria API (team_id): notas de CS, Enablement ou
+// qualquer outro time nem chegam a ser baixadas.
+const TIMES = {
+  'SDR':    'sdr',     // → coluna Pré-vendas
+  'Closer': 'closer'   // → coluna Vendas
+};
 
 // Domínios da própria empresa: contas com esses domínios não são mostradas como "cliente".
 const DOMINIOS_INTERNOS = ['suri.ai', 'chatbotmaker.io'];
@@ -74,7 +72,7 @@ function testarSalesbud() {
   CacheService.getScriptCache().remove('notas_resposta');
   const notas = buscarNotas_();
   const times = {};
-  notas.forEach(n => { times[n.name + ' — ' + (n.team || 'sem time')] = n.area || 'fora da tela'; });
+  notas.forEach(n => { times[n.name + ' — ' + n.team] = n.area; });
   const dash = notasParaDashboard_(notas);
   Logger.log('Notas encontradas: %s | enviadas ao dashboard: %s | tamanho: %s bytes',
     notas.length, dash.length, JSON.stringify(dash).length);
@@ -86,24 +84,26 @@ function testarSalesbud() {
 function buscarNotas_() {
   const depois = new Date(Date.now() - DIAS_JANELA * 24 * 3600 * 1000).toISOString();
   const notas = [];
-  COLECOES.forEach(colecao => {
-    // score_min=0 → só registros com avaliação geral concluída
-    const registros = listarTudo_('/v1/' + colecao, { meeting_after: depois, score_min: 0, limit: 100 });
-    registros.forEach(r => {
-      const score = notaDoRegistro_(colecao, r);
-      if (score === null) return;
-      const owner = r.owner || {};
-      const team = owner.team && owner.team.name || '';
-      notas.push({
-        id: r.id,
-        kind: r.object,                      // 'meeting' ou 'call'
-        name: owner.name || owner.email || '—',
-        email: owner.email || '',
-        team: team,
-        area: areaDe_(owner.email, team),    // 'sdr' (Pré-vendas), 'closer' (Vendas) ou null (fora da tela)
-        score: score,                        // 0 a 10
-        date: r.meeting_at,
-        client: clienteDe_(r)
+  timesAlvo_().forEach(time => {
+    COLECOES.forEach(colecao => {
+      // team_id → só reuniões/ligações de quem tem este time como padrão
+      // score_min=0 → só registros com avaliação geral concluída
+      const registros = listarTudo_('/v1/' + colecao, { team_id: time.id, meeting_after: depois, score_min: 0, limit: 100 });
+      registros.forEach(r => {
+        const score = notaDoRegistro_(colecao, r);
+        if (score === null) return;
+        const owner = r.owner || {};
+        notas.push({
+          id: r.id,
+          kind: r.object,                    // 'meeting' ou 'call'
+          name: owner.name || owner.email || '—',
+          email: owner.email || '',
+          team: time.name,
+          area: time.area,                   // 'sdr' (Pré-vendas) ou 'closer' (Vendas)
+          score: score,                      // 0 a 10
+          date: r.meeting_at,
+          client: clienteDe_(r)
+        });
       });
     });
   });
@@ -111,23 +111,26 @@ function buscarNotas_() {
   return notas;
 }
 
-// O que vai para o dashboard: só Pré-vendas/Vendas e só as últimas N notas de cada pessoa.
+// Os times SDR e Closer da Salesbud, com seus ids (GET /v1/teams).
+function timesAlvo_() {
+  const alvo = {};
+  Object.keys(TIMES).forEach(nome => { alvo[nome.trim().toLowerCase()] = TIMES[nome]; });
+  const times = listarTudo_('/v1/teams', { limit: 100 })
+    .filter(t => alvo[String(t.name || '').trim().toLowerCase()])
+    .map(t => ({ id: t.id, name: t.name, area: alvo[String(t.name).trim().toLowerCase()] }));
+  if (!times.length) throw new Error('Nenhum time ' + Object.keys(TIMES).join('/') + ' encontrado na Salesbud.');
+  return times;
+}
+
+// O que vai para o dashboard: só as últimas N notas de cada pessoa.
 function notasParaDashboard_(notas) {
   const porPessoa = {};
   return notas.filter(n => {
-    if (!n.area) return false;
+    if (n.area !== 'sdr' && n.area !== 'closer') return false;
     const chave = n.area + '|' + (n.email || n.name).toLowerCase();
     porPessoa[chave] = (porPessoa[chave] || 0) + 1;
     return porPessoa[chave] <= NOTAS_POR_PESSOA;
   }).map(n => ({ name: n.name, area: n.area, score: n.score, date: n.date, client: n.client, kind: n.kind }));
-}
-
-function areaDe_(email, team) {
-  const chave = email && String(email).toLowerCase();
-  if (chave && Object.prototype.hasOwnProperty.call(AREA_POR_EMAIL, chave)) return AREA_POR_EMAIL[chave];
-  if (REGEX_TIME_PRE_VENDAS.test(team || '')) return 'sdr';
-  if (REGEX_TIME_VENDAS.test(team || '')) return 'closer';
-  return null;
 }
 
 // Nome do cliente para exibir na TV — sem números de telefone e sem a própria Suri.
