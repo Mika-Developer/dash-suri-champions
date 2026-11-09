@@ -151,36 +151,28 @@
 
         /* ===================== MAIN LAYOUT ===================== */
         .main-container { display:grid;grid-template-columns:75% 25%;gap:12px;padding:12px;max-width:1920px;margin:0 auto;height:calc(100vh - 200px); }
-        .two-column-grid { display:grid;grid-template-columns:1fr 1fr;gap:15px;height:100%; }
+        .two-column-grid { display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;height:100%; }
         .table-column { width:100%;height:100%; }
 
         /* ===================== TABLE ===================== */
         .championship-table.compact { width:100%;border-collapse:collapse;font-size:13px;background:rgba(255,255,255,0.02);backdrop-filter:blur(10px);border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.3);height:fit-content; }
         .championship-table.compact thead { background:rgba(0,240,255,0.1); }
-        .championship-table.compact thead th { font-size:11px;padding:6px 4px;font-family:'Orbitron',sans-serif;font-weight:600;text-align:center;color:#00D4FF;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid rgba(0,240,255,0.3); }
+        .championship-table.compact thead th { font-size:12px;padding:8px 3px;font-family:'Orbitron',sans-serif;font-weight:600;text-align:center;color:#00D4FF;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid rgba(0,240,255,0.3); }
         .championship-table.compact th .icon { font-size:13px;margin-right:4px; }
-        .championship-table.compact tbody td { padding:8px 4px;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.1);text-align:center; }
+        .championship-table.compact tbody td { padding:7px 3px;font-size:14px;font-weight:500;border-bottom:1px solid rgba(255,255,255,0.1);text-align:center; }
         .championship-table.compact tbody tr.top-5-safe { background:linear-gradient(90deg,rgba(16,185,129,0.1),rgba(0,240,255,0.1));border-left:3px solid #10B981;box-shadow:0 0 15px rgba(16,185,129,0.3); }
-        .championship-table.compact th:nth-child(1), .championship-table.compact td:nth-child(1) { width:52px;min-width:52px; }
-        .championship-table.compact th:nth-child(2), .championship-table.compact td:nth-child(2) { width:120px;min-width:120px; }
-        .championship-table.compact th:nth-child(3), .championship-table.compact td:nth-child(3) { width:70px;min-width:70px; }
-        .championship-table.compact th:nth-child(4), .championship-table.compact td:nth-child(4) { width:65px;min-width:65px; }
-        .championship-table.compact th:nth-child(5), .championship-table.compact td:nth-child(5) { width:45px;min-width:45px; }
-        .championship-table.compact th:nth-child(6), .championship-table.compact td:nth-child(6) { width:45px;min-width:45px; }
-        .championship-table.compact th:nth-child(7), .championship-table.compact td:nth-child(7) { width:70px;min-width:70px; }
-        .championship-table.compact th:nth-child(8), .championship-table.compact td:nth-child(8) { width:55px;min-width:55px; }
-        .championship-table.compact th:nth-child(9), .championship-table.compact td:nth-child(9) { width:45px;min-width:45px; }
+        .championship-table.compact th:nth-child(2), .championship-table.compact td:nth-child(2) { text-align:left; }
         .championship-table.compact tbody tr { transition:all 0.3s ease; }
         .championship-table.compact tbody tr:hover { background:rgba(0,240,255,0.1);transform:scale(1.02);box-shadow:0 4px 20px rgba(0,240,255,0.2); }
         .championship-table.compact tbody tr.bottom-4-danger { background:linear-gradient(90deg,rgba(239,68,68,0.15),rgba(220,38,38,0.1))!important;border-left:4px solid #EF4444!important;box-shadow:0 0 20px rgba(239,68,68,0.3)!important; }
-        .championship-table.compact .player-cell { max-width:120px;text-align:left; }
-        .championship-table.compact .player-name { font-size:12px;font-weight:600;color:#ffffff; }
-        .championship-table.compact .player-nickname { font-size:10px;color:rgba(255,255,255,0.6);font-style:italic; }
-        .championship-table.compact .points-cell { font-size:16px;font-weight:700;font-family:'Orbitron',sans-serif;color:#00D4FF;text-shadow:0 0 10px rgba(0,240,255,0.5); }
+        .championship-table.compact .player-cell { text-align:left; }
+        .championship-table.compact .player-name { font-size:15px;font-weight:600;color:#ffffff; }
+        .championship-table.compact .player-nickname { font-size:11px;color:rgba(255,255,255,0.6);font-style:italic; }
+        .championship-table.compact .points-cell { font-size:20px;font-weight:700;font-family:'Orbitron',sans-serif;color:#00D4FF;text-shadow:0 0 10px rgba(0,240,255,0.5); }
         .championship-table.compact .position-cell { font-weight:700;font-family:'Orbitron',sans-serif; }
         .position-wrapper { display:inline-flex;flex-direction:column;align-items:center;gap:2px; }
         .avatar-wrapper { position:relative;display:inline-block; }
-        .player-avatar { width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(0,240,255,0.5);display:block; }
+        .player-avatar { width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(0,240,255,0.5);display:block; }
         .avatar-top5   { border-color:#10B981;box-shadow:0 0 8px rgba(16,185,129,0.6); }
         .avatar-danger { border-color:#EF4444;box-shadow:0 0 8px rgba(239,68,68,0.6); }
         .position-number { position:absolute;top:-6px;left:-6px;color:#ffffff;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;text-shadow:0 0 4px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.7);z-index:2;line-height:1; }
@@ -190,7 +182,7 @@
         .team-badge.team-MAORI           { background:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.5); }
         .team-badge.team-EAGLES          { background:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.5); }
         .team-badge.team-PROCURANDO-DEMO { background:#B026FF;box-shadow:0 0 10px rgba(176,38,255,0.5); }
-        .championship-table.compact .team-cell { font-weight:600;text-align:left;font-size:10px; }
+        .championship-table.compact .team-cell { font-weight:600;text-align:left;font-size:11px;white-space:nowrap; }
         .championship-table.compact .conversion-bar { background:rgba(255,255,255,0.1);border-radius:12px;padding:3px 6px;text-align:center; }
         .championship-table.compact .conversion-bar.high   { background:linear-gradient(90deg,rgba(34,197,94,0.3),rgba(34,197,94,0.1));color:#22C55E; }
         .championship-table.compact .conversion-bar.medium { background:linear-gradient(90deg,rgba(251,191,36,0.3),rgba(251,191,36,0.1));color:#FBBF24; }
@@ -200,23 +192,25 @@
         .sidebar-section { display:flex;flex-direction:column;gap:10px;height:100%;overflow:hidden; }
         .glass-card { background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border-radius:16px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.3);flex:1;overflow:hidden; }
         .ranking-times-card { padding:0;background:transparent;border:none;box-shadow:none; }
-        .ranking-times-card .card-title { font-size:15px;margin-bottom:12px;font-family:'Orbitron',sans-serif;font-weight:700;text-align:center;color:#00D4FF;text-shadow:0 0 8px rgba(0,240,255,0.5); }
-        .ranking-times-card .icon-glow { font-size:16px;margin-right:6px; }
-        .time-card { padding:18px 16px;margin-bottom:12px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:18px;transition:all 0.3s ease;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px); }
-        .position-medal { font-size:30px;animation:float 3s ease-in-out infinite; }
-        .team-name    { font-size:20px;font-weight:700;font-family:'Orbitron',sans-serif;color:#ffffff; }
-        .team-count   { font-size:12px;color:rgba(255,255,255,0.6);margin-top:3px; }
-        .score-number { font-size:32px;font-weight:800;font-family:'Orbitron',sans-serif;color:#00D4FF;text-shadow:0 0 12px rgba(0,240,255,0.5);line-height:1; }
-        .score-avg    { font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px; }
-        .team-badge-large { width:12px;height:12px;border-radius:50%;display:inline-block; }
+        .ranking-times-card .card-title { font-size:10px;margin-bottom:6px;font-family:'Orbitron',sans-serif;font-weight:700;text-align:center;color:#00D4FF;text-shadow:0 0 8px rgba(0,240,255,0.5); }
+        .ranking-times-card .icon-glow { font-size:11px;margin-right:4px; }
+        .time-card { padding:6px 8px;margin-bottom:4px;border-radius:8px;display:flex;align-items:center;gap:6px;transition:all 0.3s ease;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08); }
+        .position-medal { font-size:13px;animation:float 3s ease-in-out infinite; }
+        .team-name    { font-size:9px;font-weight:700;font-family:'Orbitron',sans-serif;color:#ffffff; }
+        .team-count   { font-size:7px;color:rgba(255,255,255,0.6); }
+        .score-number { font-size:12px;font-weight:700;font-family:'Orbitron',sans-serif;color:#00D4FF; }
+        .score-avg    { font-size:7px;color:rgba(255,255,255,0.6); }
+        .team-badge-large { width:7px;height:7px;border-radius:50%;display:inline-block; }
         .titans-glow     { background:#8B5CF6;box-shadow:0 0 10px rgba(139,92,246,0.5); }
         .maori-glow      { background:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.5); }
         .eagles-glow     { background:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.5); }
         .procurando-glow { background:#B026FF;box-shadow:0 0 10px rgba(176,38,255,0.5); }
-        .team-info    { display:flex;align-items:center;gap:10px; }
+        .team-info    { display:flex;align-items:center;gap:5px;flex:1; }
         .team-details { display:flex;flex-direction:column; }
-        .team-score-big { text-align:left;padding-left:18px;border-left:1px solid rgba(255,255,255,0.15); }
+        .team-score-big { text-align:right; }
 
+        .table-layout-grid { display:grid;grid-template-columns:minmax(0,1fr) 165px;gap:10px;align-items:start; }
+        .table-layout-grid > .sidebar-section { padding:4px 0 !important; }
         /* SDR: não há mais times distintos → sem "Ranking por Times", tabelas na largura toda */
         body.mode-sdr .table-layout-grid { grid-template-columns:1fr !important; }
         body.mode-sdr .table-layout-grid > .sidebar-section { display:none; }
@@ -799,6 +793,8 @@
         .nl-row:nth-child(2){animation-delay:0.08s}.nl-row:nth-child(3){animation-delay:0.16s}.nl-row:nth-child(4){animation-delay:0.24s}.nl-row:nth-child(5){animation-delay:0.32s}.nl-row:nth-child(6){animation-delay:0.4s}.nl-row:nth-child(7){animation-delay:0.48s}.nl-row:nth-child(8){animation-delay:0.56s}.nl-row:nth-child(9){animation-delay:0.64s}.nl-row:nth-child(10){animation-delay:0.72s}
         .nl-row.latest { background:linear-gradient(90deg,rgba(0,240,255,0.12),rgba(139,92,246,0.06));box-shadow:0 0 18px rgba(0,240,255,0.15); }
         @keyframes nlSlideIn { from{opacity:0;transform:translateX(-16px);} to{opacity:1;transform:translateX(0);} }
+        .nl-pos { font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;color:rgba(255,255,255,0.55);min-width:30px;text-align:center; }
+        .nl-row.top3 .nl-pos { color:#FFD700;text-shadow:0 0 10px rgba(255,215,0,0.6); }
         .nl-row .nt-avatar { width:38px;height:38px;font-size:14px;border:2px solid rgba(0,240,255,0.5); }
         .nl-info { flex:1;min-width:0;display:flex;flex-direction:column;gap:2px; }
         .nl-name { font-size:15px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
@@ -960,7 +956,7 @@
         <div id="tableView">
             <div class="main-container" style="grid-template-columns:1fr;height:auto;">
                 <div class="table-section">
-                    <div class="table-layout-grid" style="display:grid;grid-template-columns:75% 25%;gap:12px;align-items:start;">
+                    <div class="table-layout-grid">
                         <div class="two-column-grid">
                             <div class="table-column">
                                 <table class="championship-table compact">
@@ -1034,20 +1030,20 @@
             <div class="notas-header">
                 <div class="notas-kicker">Champions Suri • Avaliações Salesbud</div>
                 <div class="notas-title-row"><span class="notas-title-emoji">⚽</span><span class="notas-title">CRAQUES DA CALL</span><span class="notas-title-emoji">⚽</span></div>
-                <div class="notas-subtitle" id="notasSubtitle">Pódio pela média das últimas 5 notas de cada um • últimas 10 notas registradas</div>
+                <div class="notas-subtitle" id="notasSubtitle">Ranking pela última nota de cada um • o pódio são os 3 melhores</div>
             </div>
             <div class="notas-grid">
                 <div class="notas-col sdr">
                     <div class="notas-col-title">🏆 PÓDIO — PRÉ-VENDAS</div>
                     <div class="notas-top3" id="notasTop3SDR"></div>
-                    <div class="notas-section-label">🕒 Últimas 10 notas</div>
+                    <div class="notas-section-label">📋 Ranking — última nota de cada um</div>
                     <div class="notas-list" id="notasListSDR"></div>
                 </div>
                 <div class="notas-divider"></div>
                 <div class="notas-col closer">
                     <div class="notas-col-title">🏆 PÓDIO — VENDAS</div>
                     <div class="notas-top3" id="notasTop3Closer"></div>
-                    <div class="notas-section-label">🕒 Últimas 10 notas</div>
+                    <div class="notas-section-label">📋 Ranking — última nota de cada um</div>
                     <div class="notas-list" id="notasListCloser"></div>
                 </div>
             </div>
@@ -1215,8 +1211,6 @@
     // Google Apps Script, que guarda o client_secret fora deste HTML público.
     // Código e passo a passo: apps-script/salesbud-proxy.gs → cole aqui a URL /exec da implantação.
     const SALESBUD_PROXY_URL = 'https://script.google.com/macros/s/AKfycbx9nYkBtK5lLPXl8wxFgD8q_LFVIL8MGWoobNFbcCKvinb5TrPqGh31EbMK9MLHP9exUA/exec';
-    const NOTAS_LISTA = 10;  // quantas notas recentes mostrar na lista de cada coluna
-    const NOTAS_MEDIA = 5;   // quantas notas de cada pessoa entram na média do pódio
     let cachedNotas = [];
 
     function parseCSVLine(line) {
@@ -1316,8 +1310,11 @@
             updateUltimaVendaScreen(sale);
         }
 
-        // Dispara popup só se for venda nova
-        if (sale.id !== lastSaleDealId) {
+        // Popup só quando entra um ganho novo. Na 1ª consulta (abrir/atualizar o dashboard)
+        // apenas memoriza a última venda, sem popup.
+        if (lastSaleDealId === null) {
+            lastSaleDealId = sale.id;
+        } else if (sale.id !== lastSaleDealId) {
             lastSaleDealId = sale.id;
             enqueuePopup(() => showSaleNotification(sale), 10800);
         }
@@ -1413,7 +1410,7 @@
         const closerRingSN = document.getElementById('snCloserAvatar');
         if (closerPhoto) {
             closerRingSN.innerHTML = `<img class="sn-avatar" src="${closerPhoto}" alt="${closerName}"
-                onerror="this.outerHTML='<div class=\'sn-avatar-fallback\'>${closerName.charAt(0)}</div>';">`;
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback" style="display:none;">${closerName.charAt(0)}</div>`;
         } else {
             closerRingSN.innerHTML = `<div class="sn-avatar-fallback">${closerName.charAt(0)}</div>`;
         }
@@ -1424,7 +1421,7 @@
         const sdrRingSN = document.getElementById('snSDRAvatar');
         if (sdrPhoto) {
             sdrRingSN.innerHTML = `<img class="sn-avatar" src="${sdrPhoto}" alt="${sdrName}"
-                onerror="this.outerHTML='<div class=\'sn-avatar-fallback\'>${sdrName.charAt(0)}</div>';">`;
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="sn-avatar-fallback" style="display:none;">${sdrName.charAt(0)}</div>`;
         } else {
             sdrRingSN.innerHTML = `<div class="sn-avatar-fallback">${sdrName.charAt(0)}</div>`;
         }
@@ -1615,39 +1612,41 @@
             return;
         }
 
-        // Top 3: média das últimas N notas de cada pessoa
-        const byPerson = {};
-        areaNotas.forEach(n => {
+        // Ranking: a ÚLTIMA nota de cada pessoa, da maior para a menor.
+        // Empate → quem tirou a nota mais recentemente fica na frente.
+        // Quando a pessoa tem uma nota nova, ela substitui a anterior.
+        const ultimaPorPessoa = new Map();
+        areaNotas.forEach(n => {                       // areaNotas já vem da mais recente para a mais antiga
             const key = n.name.toLowerCase();
-            if (!byPerson[key]) byPerson[key] = { name: n.name, notas: [] };
-            if (byPerson[key].notas.length < NOTAS_MEDIA) byPerson[key].notas.push(n.nota);
+            if (!ultimaPorPessoa.has(key)) ultimaPorPessoa.set(key, n);
         });
-        const ranking = Object.values(byPerson)
-            .map(p => ({ ...p, avg: p.notas.reduce((s, v) => s + v, 0) / p.notas.length }))
-            .sort((a, b) => b.avg - a.avg || b.notas.length - a.notas.length)
-            .slice(0, 3);
+        const time = n => (n.date ? n.date.getTime() : 0);
+        const ranking = [...ultimaPorPessoa.values()].sort((a, b) => b.nota - a.nota || time(b) - time(a));
+        const maisRecente = areaNotas[0];
 
         const medals = ['🥇', '🥈', '🥉'];
-        const card = (p, place) => {
-            if (!p) return '';
+        const card = (n, place) => {
+            if (!n) return '';
             return `<div class="ntp-player place-${place}">
                 <div class="ntp-medal">${medals[place - 1]}</div>
-                ${notaAvatar(p.name, area)}
-                <div class="ntp-name" title="${escapeHTML(p.name)}">${escapeHTML(p.name)}</div>
-                <div class="ntp-avg">${formatNota(p.avg, scale)}<small>média · ${p.notas.length} nota${p.notas.length > 1 ? 's' : ''}</small></div>
+                ${notaAvatar(n.name, area)}
+                <div class="ntp-name" title="${escapeHTML(n.name)}">${escapeHTML(n.name)}</div>
+                <div class="ntp-avg">${formatNota(n.nota, scale)}<small>${escapeHTML(formatNotaWhen(n.date) || 'última nota')}</small></div>
                 <div class="ntp-pedestal">${place}</div>
             </div>`;
         };
         top3El.innerHTML = card(ranking[1], 2) + card(ranking[0], 1) + card(ranking[2], 3);
 
-        // Últimas N notas (cronológico, mais recente no topo)
-        listEl.innerHTML = areaNotas.slice(0, NOTAS_LISTA).map((n, i) => {
+        // Ranking completo: uma linha por pessoa, com a última nota dela
+        listEl.innerHTML = ranking.map((n, i) => {
             const [color, glow] = notaColor(n.nota, scale);
             const meta = [formatNotaWhen(n.date), n.client].filter(Boolean).map(escapeHTML).join(' • ');
-            return `<div class="nl-row ${i === 0 ? 'latest' : ''}" style="--nota-color:${color};--nota-glow:${glow};">
+            const isNew = n === maisRecente;
+            return `<div class="nl-row ${isNew ? 'latest' : ''} ${i < 3 ? 'top3' : ''}" style="--nota-color:${color};--nota-glow:${glow};">
+                <div class="nl-pos">${i + 1}º</div>
                 ${notaAvatar(n.name, area)}
                 <div class="nl-info">
-                    <div class="nl-name">${escapeHTML(n.name)}${i === 0 ? '<span class="nl-new">ÚLTIMA</span>' : ''}</div>
+                    <div class="nl-name">${escapeHTML(n.name)}${isNew ? '<span class="nl-new">MAIS RECENTE</span>' : ''}</div>
                     <div class="nl-meta">${meta || '&nbsp;'}</div>
                 </div>
                 <div class="nl-score">${formatNota(n.nota, scale)}<small>/${scale}</small></div>
