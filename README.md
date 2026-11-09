@@ -1,9 +1,9 @@
 # dash-suri-champions
 Suri Champions
 
-## Tela "Notas Salesbud"
+## Tela "Craques da Call" (notas Salesbud)
 
-Mostra, para **Pré-vendas** e **Vendas**, as últimas 5 notas da Salesbud e o top 3 pela média das últimas 5 notas de cada pessoa.
+Mostra, para **Pré-vendas** (time SDR) e **Vendas** (time Closer), um ranking com a **última nota de cada pessoa**, da maior para a menor; o pódio são os 3 primeiros. Quando sai uma nota nova, ela substitui a anterior da pessoa. Notas 9 ou 10 novas geram um popup.
 
 Os dados vêm da [API da Salesbud](https://docs.salesbud.com.br/) por um proxy no Google Apps Script, para que o `client_secret` não fique no HTML público:
 
