@@ -15,7 +15,7 @@
  *    escopos meetings.read e calls.read. Não configure allowlist de IP nela:
  *    o Apps Script roda em IPs variáveis do Google.
  * 3. Rode a função `testarSalesbud` uma vez no editor (autoriza o script e mostra
- *    no log as notas encontradas e os times de cada pessoa).
+ *    no log quem entrou em cada área e quem foi ignorado).
  * 4. Implantar → Nova implantação → App da Web
  *      Executar como: Eu | Quem tem acesso: Qualquer pessoa
  * 5. Copie a URL /exec e cole em SALESBUD_PROXY_URL no index.html.
@@ -26,18 +26,32 @@
 // ===================== CONFIGURAÇÃO =====================
 const SALESBUD_API = 'https://api.salesbud.com.br';
 
-// Janela de busca: notas dos últimos N dias (a média do top 3 usa as últimas 5 de cada pessoa).
-const DIAS_JANELA = 14;
+// Janela de busca: notas dos últimos N dias (a tela usa a última nota de cada pessoa).
+const DIAS_JANELA = 30;
 
-// Coleções lidas: 'meetings' (bot / upload) e 'calls' (VoIP). Remova uma se não usar.
+// Coleções lidas: 'meetings' (bot / upload) e 'calls' (VoIP).
 const COLECOES = ['meetings', 'calls'];
 
-// SÓ estes times da Salesbud são consultados (nome exato do time, sem diferenciar maiúsculas).
-// A busca já é filtrada por time na própria API (team_id): notas de CS, Enablement ou
-// qualquer outro time nem chegam a ser baixadas.
-const TIMES = {
-  'SDR':    'sdr',     // → coluna Pré-vendas
-  'Closer': 'closer'   // → coluna Vendas
+// ===== QUEM ENTRA E O QUE ENTRA =====
+// Cada área puxa SÓ as reuniões/ligações com a classificação (tag) indicada,
+// e SÓ das pessoas listadas. Qualquer outra pessoa (CS, Enablement...) fica de fora.
+// Nomes: basta nome + sobrenome como aparecem na Salesbud (sem diferenciar acento/maiúscula;
+// o sobrenome é comparado pelas 4 primeiras letras, ex.: "Ferrez" casa com "Ferraz").
+const AREAS = {
+  closer: {                                  // → coluna Vendas
+    tag: 'Reunião Comercial',
+    pessoas: [
+      'André Queiroz', 'Alex Uchôa', 'Lucas Machado', 'Lizandra Rayssa', 'Hadson Souza',
+      'Clailton Nascimento', 'Patrício Felix', 'Júnior Furtado', 'Jéssika Lima'
+    ]
+  },
+  sdr: {                                     // → coluna Pré-vendas
+    tag: 'Ligação de Qualificação',
+    pessoas: [
+      'Lívia Acácio', 'Daniele Carvalho', 'Maria Aparecida', 'Pedro Roncalli', 'Thiago Mendonça',
+      'Sthefany Vasconcelos', 'Thais Giurizatto', 'Iara Jessica', 'Victória Ferraz'
+    ]
+  }
 };
 
 // Notas ignoradas por enquanto:
@@ -47,10 +61,9 @@ const DURACAO_MINIMA_LIGACAO_SEG = 60; // ligações com menos de 1 minuto não 
 // Domínios da própria empresa: contas com esses domínios não são mostradas como "cliente".
 const DOMINIOS_INTERNOS = ['suri.ai', 'chatbotmaker.io'];
 
-// O dashboard mostra as 10 últimas notas de cada coluna e monta o pódio com a média
-// das 5 últimas notas de cada pessoa. O proxy envia o suficiente para os dois.
-const NOTAS_LISTA = 10;
-const NOTAS_POR_PESSOA = 5;
+// O dashboard usa a última nota de cada pessoa; o proxy envia as N mais recentes de cada uma
+// (as extras ajudam a detectar notas novas para o popup de nota 9/10).
+const NOTAS_POR_PESSOA = 3;
 
 // Cache da resposta (segundos). O dashboard consulta a cada 10s; isso evita gastar a cota da API.
 const CACHE_RESPOSTA_SEG = 120;
@@ -78,35 +91,55 @@ function testarSalesbud() {
   CacheService.getScriptCache().remove('notas_resposta');
   const notas = buscarNotas_();
   const times = {};
-  notas.forEach(n => { times[n.name + ' — ' + n.team] = n.area; });
+  notas.forEach(n => { times[n.name] = n.area === 'sdr' ? 'Pré-vendas' : 'Vendas'; });
   const dash = notasParaDashboard_(notas);
   Logger.log('Notas encontradas: %s | enviadas ao dashboard: %s | tamanho: %s bytes',
     notas.length, dash.length, JSON.stringify(dash).length);
-  Logger.log('Pessoa — time → área:\n%s', JSON.stringify(times, null, 2));
+  Logger.log('Pessoas no dashboard → área:\n%s', JSON.stringify(times, null, 2));
+  Logger.log('Ignorados (com a tag, mas fora das listas de pessoas):\n%s', JSON.stringify(IGNORADOS_, null, 2));
+  Object.keys(AREAS).forEach(area => {
+    const encontrados = new Set(notas.filter(n => n.area === area).map(n => n.pessoa));
+    const semNota = AREAS[area].pessoas.filter(p => !encontrados.has(p));
+    if (semNota.length) Logger.log('%s sem nota nos últimos %s dias: %s', area, DIAS_JANELA, semNota.join(', '));
+  });
   Logger.log('Mais recentes no dashboard:\n%s', JSON.stringify(dash.slice(0, 10), null, 2));
 }
 
 // ===================== BUSCA =====================
+const IGNORADOS_ = {};
+
 function buscarNotas_() {
   const depois = new Date(Date.now() - DIAS_JANELA * 24 * 3600 * 1000).toISOString();
+  const tags = tagsPorNome_();
   const notas = [];
-  timesAlvo_().forEach(time => {
+  const vistos = new Set();
+
+  Object.keys(AREAS).forEach(area => {
+    const cfg = AREAS[area];
+    const tag = tags[normaliza_(cfg.tag)];
+    if (!tag) throw new Error('Classificação "' + cfg.tag + '" não encontrada na Salesbud. Classificações disponíveis: ' +
+      Object.values(tags).map(t => t.name).join(', '));
+
     COLECOES.forEach(colecao => {
-      // team_id → só reuniões/ligações de quem tem este time como padrão
-      // score_min → só registros com avaliação concluída e nota >= NOTA_MINIMA (a API já filtra)
-      const registros = listarTudo_('/v1/' + colecao, { team_id: time.id, meeting_after: depois, score_min: NOTA_MINIMA, limit: 100 });
+      // tag_id → só a classificação da área | score_min → só avaliações concluídas com nota >= NOTA_MINIMA
+      const registros = listarTudo_('/v1/' + colecao, { tag_id: tag.id, meeting_after: depois, score_min: NOTA_MINIMA, limit: 100 });
       registros.forEach(r => {
+        const owner = r.owner || {};
+        const nome = owner.name || owner.email || '';
+        const pessoa = pessoaDaLista_(nome, cfg.pessoas);
+        if (!pessoa) { IGNORADOS_[nome + ' (' + cfg.tag + ')'] = true; return; }
         if (r.object === 'call' && Number(r.duration_seconds || 0) < DURACAO_MINIMA_LIGACAO_SEG) return;
+        if (vistos.has(r.id)) return;
         const score = notaDoRegistro_(colecao, r);
         if (score === null || score < NOTA_MINIMA) return;
-        const owner = r.owner || {};
+        vistos.add(r.id);
         notas.push({
           id: r.id,
           kind: r.object,                    // 'meeting' ou 'call'
-          name: owner.name || owner.email || '—',
+          name: nome,
+          pessoa: pessoa,                    // nome como está na lista acima
           email: owner.email || '',
-          team: time.name,
-          area: time.area,                   // 'sdr' (Pré-vendas) ou 'closer' (Vendas)
+          area: area,                        // 'sdr' (Pré-vendas) ou 'closer' (Vendas)
           score: score,                      // 0 a 10
           date: r.meeting_at,
           client: clienteDe_(r)
@@ -118,27 +151,40 @@ function buscarNotas_() {
   return notas;
 }
 
-// Os times SDR e Closer da Salesbud, com seus ids (GET /v1/teams).
-function timesAlvo_() {
-  const alvo = {};
-  Object.keys(TIMES).forEach(nome => { alvo[nome.trim().toLowerCase()] = TIMES[nome]; });
-  const times = listarTudo_('/v1/teams', { limit: 100 })
-    .filter(t => alvo[String(t.name || '').trim().toLowerCase()])
-    .map(t => ({ id: t.id, name: t.name, area: alvo[String(t.name).trim().toLowerCase()] }));
-  if (!times.length) throw new Error('Nenhum time ' + Object.keys(TIMES).join('/') + ' encontrado na Salesbud.');
-  return times;
+// Catálogo de classificações (GET /v1/tags), indexado pelo nome normalizado.
+function tagsPorNome_() {
+  const mapa = {};
+  listarTudo_('/v1/tags', { limit: 100 }).forEach(t => { mapa[normaliza_(t.name)] = t; });
+  return mapa;
 }
 
-// O que vai para o dashboard: as últimas NOTAS_LISTA de cada área (lista)
-// + as últimas NOTAS_POR_PESSOA de cada pessoa (média do pódio). `notas` já vem da mais recente.
+function normaliza_(txt) {
+  return String(txt || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+// Devolve a entrada da lista que corresponde ao nome da Salesbud, ou null.
+// Regra: mesmo primeiro nome e, se a lista tiver sobrenome, algum sobrenome do dono
+// começando pelas mesmas 4 letras.
+function pessoaDaLista_(nome, lista) {
+  const t = normaliza_(nome).split(' ');
+  for (const p of lista) {
+    const q = normaliza_(p).split(' ');
+    if (t[0] !== q[0]) continue;
+    if (q.length === 1) return p;
+    const sobrenome = q[q.length - 1].slice(0, 4);
+    if (t.slice(1).some(x => x.slice(0, 4) === sobrenome)) return p;
+  }
+  return null;
+}
+
+// O que vai para o dashboard: as últimas NOTAS_POR_PESSOA de cada pessoa. `notas` já vem da mais recente.
 function notasParaDashboard_(notas) {
-  const porPessoa = {}, porArea = {};
+  const porPessoa = {};
   return notas.filter(n => {
     if (n.area !== 'sdr' && n.area !== 'closer') return false;
-    const pessoa = n.area + '|' + (n.email || n.name).toLowerCase();
+    const pessoa = n.area + '|' + n.pessoa;
     porPessoa[pessoa] = (porPessoa[pessoa] || 0) + 1;
-    porArea[n.area] = (porArea[n.area] || 0) + 1;
-    return porArea[n.area] <= NOTAS_LISTA || porPessoa[pessoa] <= NOTAS_POR_PESSOA;
+    return porPessoa[pessoa] <= NOTAS_POR_PESSOA;
   }).map(n => ({ id: n.id, name: n.name, area: n.area, score: n.score, date: n.date, client: n.client, kind: n.kind }));
 }
 

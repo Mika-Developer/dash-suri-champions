@@ -1099,7 +1099,7 @@
     const FIELD_SDR   = 'd9c692b4d69e7178ccbc351b6d13ea925e26dbe5';
 
     // ===================== ESTADO =====================
-    let currentMode = 'closer';
+    let currentMode = null; // definido logo abaixo, pela 1ª tela visível
     let currentPlayers = [];
     let isPaused = false;
     let autoSwitchTimer = null;
@@ -1110,7 +1110,12 @@
     let notificationTimer   = null;
     let pipedrivePollingTimer = null;
 
-    const MODE_SEQUENCE = ['closer', 'sdr', 'podio', 'notas', 'ultima-venda'];
+    const ALL_MODES = ['closer', 'sdr', 'podio', 'notas', 'ultima-venda'];
+    // Telas OCULTAS do rodízio por enquanto (não foram apagadas: para voltar, tire o nome daqui).
+    // Ainda dá para abrir uma delas direto com ?view=closer, ?view=sdr ou ?view=podio.
+    const HIDDEN_MODES = ['closer', 'sdr', 'podio'];
+    const MODE_SEQUENCE = ALL_MODES.filter(m => !HIDDEN_MODES.includes(m));
+    currentMode = MODE_SEQUENCE[0];
     const SCREEN_DURATION = 15000; // tempo de cada tela no rodízio
     const MODE_DURATIONS = { closer: SCREEN_DURATION, sdr: SCREEN_DURATION, podio: SCREEN_DURATION, notas: SCREEN_DURATION, 'ultima-venda': SCREEN_DURATION };
 
@@ -2080,7 +2085,9 @@
     document.addEventListener('DOMContentLoaded', async function () {
         // ?view=notas (ou podio, sdr...) abre direto numa tela — útil para testar
         const startView = URL_PARAMS.get('view');
-        if (startView && MODE_SEQUENCE.includes(startView)) currentMode = startView;
+        if (startView && ALL_MODES.includes(startView)) currentMode = startView;
+        // As planilhas só alimentam Closer, SDR e Pódio: se essas telas estão ocultas, não busca
+        const needsSheets = [...MODE_SEQUENCE, currentMode].some(m => ['closer', 'sdr', 'podio'].includes(m));
 
         const cc = document.getElementById('contentContainer');
         cc.classList.add('fading');           // começa apagado até os dados chegarem
@@ -2094,7 +2101,7 @@
 
         // 1ª carga de tudo em paralelo (no máximo 8s de espera; o que faltar entra depois)
         await Promise.race([
-            Promise.all([refreshSheets(), refreshNotas(), checkNewSale()]),
+            Promise.all([needsSheets ? refreshSheets() : null, refreshNotas(), checkNewSale()]),
             sleep(8000)
         ]);
         renderMode(currentMode, { entering: true });
@@ -2103,7 +2110,7 @@
         scheduleNextSwitch();
 
         // Atualizações em segundo plano, independentes da tela visível
-        setInterval(refreshSheets, DATA_REFRESH_MS);
+        if (needsSheets) setInterval(refreshSheets, DATA_REFRESH_MS);
         setInterval(refreshNotas, NOTAS_REFRESH_MS);
         pipedrivePollingTimer = setInterval(checkNewSale, 30000);
     });
