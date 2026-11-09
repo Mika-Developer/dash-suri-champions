@@ -785,17 +785,17 @@
         .nt-card.place-1 .nt-avg { font-size:32px; }
         .nt-avg-label { font-size:11px;color:rgba(255,255,255,0.55); }
 
-        .notas-list { display:flex;flex-direction:column;gap:7px;flex:1;min-height:0; }
-        .nl-row { flex:1;max-height:96px;display:flex;align-items:center;gap:14px;padding:8px 16px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--nota-color,#00D4FF);animation:nlSlideIn 0.5s ease both; }
-        .nl-row:nth-child(2){animation-delay:0.08s}.nl-row:nth-child(3){animation-delay:0.16s}.nl-row:nth-child(4){animation-delay:0.24s}.nl-row:nth-child(5){animation-delay:0.32s}
+        .notas-list { display:flex;flex-direction:column;gap:5px;flex:1;min-height:0; }
+        .nl-row { flex:1;min-height:0;max-height:64px;display:flex;align-items:center;gap:12px;padding:4px 14px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--nota-color,#00D4FF);animation:nlSlideIn 0.5s ease both; }
+        .nl-row:nth-child(2){animation-delay:0.08s}.nl-row:nth-child(3){animation-delay:0.16s}.nl-row:nth-child(4){animation-delay:0.24s}.nl-row:nth-child(5){animation-delay:0.32s}.nl-row:nth-child(6){animation-delay:0.4s}.nl-row:nth-child(7){animation-delay:0.48s}.nl-row:nth-child(8){animation-delay:0.56s}.nl-row:nth-child(9){animation-delay:0.64s}.nl-row:nth-child(10){animation-delay:0.72s}
         .nl-row.latest { background:linear-gradient(90deg,rgba(0,240,255,0.12),rgba(139,92,246,0.06));box-shadow:0 0 18px rgba(0,240,255,0.15); }
         @keyframes nlSlideIn { from{opacity:0;transform:translateX(-16px);} to{opacity:1;transform:translateX(0);} }
-        .nl-row .nt-avatar { width:52px;height:52px;font-size:18px;border:2px solid rgba(0,240,255,0.5); }
+        .nl-row .nt-avatar { width:38px;height:38px;font-size:14px;border:2px solid rgba(0,240,255,0.5); }
         .nl-info { flex:1;min-width:0;display:flex;flex-direction:column;gap:2px; }
-        .nl-name { font-size:17px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-        .nl-meta { font-size:13px;color:rgba(255,255,255,0.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .nl-name { font-size:15px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .nl-meta { font-size:12px;color:rgba(255,255,255,0.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
         .nl-new { font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:#0a1628;background:#00F0FF;padding:2px 7px;border-radius:10px;margin-left:6px;letter-spacing:1px;vertical-align:middle;box-shadow:0 0 10px rgba(0,240,255,0.6); }
-        .nl-score { font-family:'Orbitron',sans-serif;font-size:30px;font-weight:900;min-width:110px;text-align:center;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,0.06);color:var(--nota-color,#00D4FF);text-shadow:0 0 12px var(--nota-glow,rgba(0,240,255,0.5)); }
+        .nl-score { font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;min-width:90px;text-align:center;padding:2px 10px;border-radius:10px;background:rgba(255,255,255,0.06);color:var(--nota-color,#00D4FF);text-shadow:0 0 12px var(--nota-glow,rgba(0,240,255,0.5)); }
         .nl-score small { font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-shadow:none; }
         .notas-empty { flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;color:rgba(255,255,255,0.5);padding:16px;border:1px dashed rgba(255,255,255,0.15);border-radius:12px; }
         .mode-indicator.notas-mode { background:rgba(139,92,246,0.3);border-color:rgba(139,92,246,0.6); }
@@ -976,21 +976,21 @@
             <div class="notas-header">
                 <div class="notas-kicker">Champions Suri</div>
                 <div class="notas-title">⭐ NOTAS SALESBUD ⭐</div>
-                <div class="notas-subtitle" id="notasSubtitle">Top 3 pela média das últimas 5 notas de cada um • últimas 5 notas registradas</div>
+                <div class="notas-subtitle" id="notasSubtitle">Pódio pela média das últimas 5 notas de cada um • últimas 10 notas registradas</div>
             </div>
             <div class="notas-grid">
                 <div class="notas-col sdr">
                     <div class="notas-col-title">🎯 PRÉ-VENDAS</div>
-                    <div class="notas-section-label">🏆 Top 3 — Média</div>
+                    <div class="notas-section-label">🏆 Pódio — Média das últimas 5</div>
                     <div class="notas-top3" id="notasTop3SDR"></div>
-                    <div class="notas-section-label">🕒 Últimas 5 notas</div>
+                    <div class="notas-section-label">🕒 Últimas 10 notas</div>
                     <div class="notas-list" id="notasListSDR"></div>
                 </div>
                 <div class="notas-col closer">
                     <div class="notas-col-title">⚡ VENDAS</div>
-                    <div class="notas-section-label">🏆 Top 3 — Média</div>
+                    <div class="notas-section-label">🏆 Pódio — Média das últimas 5</div>
                     <div class="notas-top3" id="notasTop3Closer"></div>
-                    <div class="notas-section-label">🕒 Últimas 5 notas</div>
+                    <div class="notas-section-label">🕒 Últimas 10 notas</div>
                     <div class="notas-list" id="notasListCloser"></div>
                 </div>
             </div>
@@ -1156,7 +1156,8 @@
     // Google Apps Script, que guarda o client_secret fora deste HTML público.
     // Código e passo a passo: apps-script/salesbud-proxy.gs → cole aqui a URL /exec da implantação.
     const SALESBUD_PROXY_URL = 'https://script.google.com/macros/s/AKfycbx9nYkBtK5lLPXl8wxFgD8q_LFVIL8MGWoobNFbcCKvinb5TrPqGh31EbMK9MLHP9exUA/exec';
-    const NOTAS_LIMIT = 5;   // quantas notas recentes mostrar / usar na média de cada pessoa
+    const NOTAS_LISTA = 10;  // quantas notas recentes mostrar na lista de cada coluna
+    const NOTAS_MEDIA = 5;   // quantas notas de cada pessoa entram na média do pódio
     let cachedNotas = [];
 
     function parseCSVLine(line) {
@@ -1474,7 +1475,13 @@
             ['Amanda Ribeiro','closer',9,20,'Clínica Sorriso'], ['Lucas Machado','closer',10,55,'Rede Farma'],
             ['Gleice Moraes','closer',7,95,'Academia Pulse'], ['Rafael Lima','closer',8,150,'Construtora Base'],
             ['Emerson Rocha','closer',5,210,'Moda & Cia'], ['Amanda Ribeiro','closer',8,280,'Hotel Mar'],
-            ['Lucas Machado','closer',9,350,'Contábil Prime'], ['Brena Carvalho','closer',8,420,'Vet Care']
+            ['Lucas Machado','closer',9,350,'Contábil Prime'], ['Brena Carvalho','closer',8,420,'Vet Care'],
+            ['Daniele Carvalho','sdr',8,470,'Padaria Pão'], ['Iara Jessica','sdr',9,520,'Loja Bella'],
+            ['Matheus Lima','sdr',7,580,'Grupo Norte'], ['Cida Gomes','sdr',10,640,'Clínica Vida'],
+            ['Lívia Acácio','sdr',6,700,'Farmácia Sol'], ['Pedro Roncalli','sdr',9,760,'Hotel Praia'],
+            ['Alex Uchoa','closer',9,480,'Rede Sabor'], ['Rafael Lima','closer',7,540,'Escola Ideal'],
+            ['Gleice Moraes','closer',8,600,'Auto Peças'], ['Amanda Ribeiro','closer',10,660,'Spa Zen'],
+            ['Jéssika Lima','closer',6,720,'Ótica Real'], ['Lucas Machado','closer',8,780,'Moda Fit']
         ];
         return rows.map(([name, area, nota, ago, client], i) => ({ name, area, nota, client, date: new Date(now - ago * m), order: -i }));
     }
@@ -1549,7 +1556,7 @@
         areaNotas.forEach(n => {
             const key = n.name.toLowerCase();
             if (!byPerson[key]) byPerson[key] = { name: n.name, notas: [] };
-            if (byPerson[key].notas.length < NOTAS_LIMIT) byPerson[key].notas.push(n.nota);
+            if (byPerson[key].notas.length < NOTAS_MEDIA) byPerson[key].notas.push(n.nota);
         });
         const ranking = Object.values(byPerson)
             .map(p => ({ ...p, avg: p.notas.reduce((s, v) => s + v, 0) / p.notas.length }))
@@ -1571,7 +1578,7 @@
         top3El.innerHTML = card(ranking[1], 2) + card(ranking[0], 1) + card(ranking[2], 3);
 
         // Últimas N notas (cronológico, mais recente no topo)
-        listEl.innerHTML = areaNotas.slice(0, NOTAS_LIMIT).map((n, i) => {
+        listEl.innerHTML = areaNotas.slice(0, NOTAS_LISTA).map((n, i) => {
             const [color, glow] = notaColor(n.nota, scale);
             const meta = [formatNotaWhen(n.date), n.client].filter(Boolean).map(escapeHTML).join(' • ');
             return `<div class="nl-row ${i === 0 ? 'latest' : ''}" style="--nota-color:${color};--nota-glow:${glow};">
