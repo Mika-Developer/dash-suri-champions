@@ -139,7 +139,7 @@ function notasParaDashboard_(notas) {
     porPessoa[pessoa] = (porPessoa[pessoa] || 0) + 1;
     porArea[n.area] = (porArea[n.area] || 0) + 1;
     return porArea[n.area] <= NOTAS_LISTA || porPessoa[pessoa] <= NOTAS_POR_PESSOA;
-  }).map(n => ({ name: n.name, area: n.area, score: n.score, date: n.date, client: n.client, kind: n.kind }));
+  }).map(n => ({ id: n.id, name: n.name, area: n.area, score: n.score, date: n.date, client: n.client, kind: n.kind }));
 }
 
 // Nome do cliente para exibir na TV — sem números de telefone e sem a própria Suri.
