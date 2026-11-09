@@ -47,7 +47,9 @@ const DURACAO_MINIMA_LIGACAO_SEG = 60; // ligações com menos de 1 minuto não 
 // Domínios da própria empresa: contas com esses domínios não são mostradas como "cliente".
 const DOMINIOS_INTERNOS = ['suri.ai', 'chatbotmaker.io'];
 
-// Quantas notas por pessoa enviar ao dashboard (a tela usa as 5 últimas de cada um).
+// O dashboard mostra as 10 últimas notas de cada coluna e monta o pódio com a média
+// das 5 últimas notas de cada pessoa. O proxy envia o suficiente para os dois.
+const NOTAS_LISTA = 10;
 const NOTAS_POR_PESSOA = 5;
 
 // Cache da resposta (segundos). O dashboard consulta a cada 10s; isso evita gastar a cota da API.
@@ -127,14 +129,16 @@ function timesAlvo_() {
   return times;
 }
 
-// O que vai para o dashboard: só as últimas N notas de cada pessoa.
+// O que vai para o dashboard: as últimas NOTAS_LISTA de cada área (lista)
+// + as últimas NOTAS_POR_PESSOA de cada pessoa (média do pódio). `notas` já vem da mais recente.
 function notasParaDashboard_(notas) {
-  const porPessoa = {};
+  const porPessoa = {}, porArea = {};
   return notas.filter(n => {
     if (n.area !== 'sdr' && n.area !== 'closer') return false;
-    const chave = n.area + '|' + (n.email || n.name).toLowerCase();
-    porPessoa[chave] = (porPessoa[chave] || 0) + 1;
-    return porPessoa[chave] <= NOTAS_POR_PESSOA;
+    const pessoa = n.area + '|' + (n.email || n.name).toLowerCase();
+    porPessoa[pessoa] = (porPessoa[pessoa] || 0) + 1;
+    porArea[n.area] = (porArea[n.area] || 0) + 1;
+    return porArea[n.area] <= NOTAS_LISTA || porPessoa[pessoa] <= NOTAS_POR_PESSOA;
   }).map(n => ({ name: n.name, area: n.area, score: n.score, date: n.date, client: n.client, kind: n.kind }));
 }
 
