@@ -134,7 +134,7 @@
 
         /* ===================== HEADER ===================== */
         .epic-header { display:flex;justify-content:space-between;align-items:center;padding:20px 30px;background:transparent;border-bottom:1px solid rgba(0,240,255,0.2); }
-        .suri-logo { height:40px;filter:drop-shadow(0 0 10px rgba(0,240,255,0.5)); }
+        .suri-logo { height:60px;width:auto;display:block; } /* logo oficial: sem sombra/brilho (manual de marca) */
         .mtd-metrics-header { width:100%;padding:12px 0;display:flex;justify-content:center; }
         .mtd-metrics-grid { display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:10px 18px;max-width:1200px; }
         .mtd-metric-item { display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;backdrop-filter:blur(10px);transition:all 0.3s ease; }
@@ -200,22 +200,26 @@
         .sidebar-section { display:flex;flex-direction:column;gap:10px;height:100%;overflow:hidden; }
         .glass-card { background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border-radius:16px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.3);flex:1;overflow:hidden; }
         .ranking-times-card { padding:0;background:transparent;border:none;box-shadow:none; }
-        .ranking-times-card .card-title { font-size:10px;margin-bottom:4px;font-family:'Orbitron',sans-serif;font-weight:700;text-align:center;color:#00D4FF;text-shadow:0 0 8px rgba(0,240,255,0.5); }
-        .ranking-times-card .icon-glow { font-size:11px;margin-right:4px; }
-        .time-card { padding:4px 6px;margin-bottom:2px;border-radius:8px;display:flex;align-items:center;gap:5px;transition:all 0.3s ease; }
-        .position-medal { font-size:13px;animation:float 3s ease-in-out infinite; }
-        .team-name    { font-size:9px;font-weight:700;font-family:'Orbitron',sans-serif;color:#ffffff; }
-        .team-count   { font-size:7px;color:rgba(255,255,255,0.6); }
-        .score-number { font-size:12px;font-weight:700;font-family:'Orbitron',sans-serif;color:#00D4FF; }
-        .score-avg    { font-size:7px;color:rgba(255,255,255,0.6); }
-        .team-badge-large { width:7px;height:7px;border-radius:50%;display:inline-block; }
+        .ranking-times-card .card-title { font-size:15px;margin-bottom:12px;font-family:'Orbitron',sans-serif;font-weight:700;text-align:center;color:#00D4FF;text-shadow:0 0 8px rgba(0,240,255,0.5); }
+        .ranking-times-card .icon-glow { font-size:16px;margin-right:6px; }
+        .time-card { padding:18px 16px;margin-bottom:12px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:18px;transition:all 0.3s ease;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px); }
+        .position-medal { font-size:30px;animation:float 3s ease-in-out infinite; }
+        .team-name    { font-size:20px;font-weight:700;font-family:'Orbitron',sans-serif;color:#ffffff; }
+        .team-count   { font-size:12px;color:rgba(255,255,255,0.6);margin-top:3px; }
+        .score-number { font-size:32px;font-weight:800;font-family:'Orbitron',sans-serif;color:#00D4FF;text-shadow:0 0 12px rgba(0,240,255,0.5);line-height:1; }
+        .score-avg    { font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px; }
+        .team-badge-large { width:12px;height:12px;border-radius:50%;display:inline-block; }
         .titans-glow     { background:#8B5CF6;box-shadow:0 0 10px rgba(139,92,246,0.5); }
         .maori-glow      { background:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.5); }
         .eagles-glow     { background:#FFD700;box-shadow:0 0 10px rgba(255,215,0,0.5); }
         .procurando-glow { background:#B026FF;box-shadow:0 0 10px rgba(176,38,255,0.5); }
-        .team-info    { display:flex;align-items:center;gap:5px;flex:1; }
+        .team-info    { display:flex;align-items:center;gap:10px; }
         .team-details { display:flex;flex-direction:column; }
-        .team-score-big { text-align:right; }
+        .team-score-big { text-align:left;padding-left:18px;border-left:1px solid rgba(255,255,255,0.15); }
+
+        /* SDR: não há mais times distintos → sem "Ranking por Times", tabelas na largura toda */
+        body.mode-sdr .table-layout-grid { grid-template-columns:1fr !important; }
+        body.mode-sdr .table-layout-grid > .sidebar-section { display:none; }
 
         /* ===================== DESTAQUES ===================== */
         .destaques-bottom { display:flex;flex-direction:row;gap:10px;padding:8px 12px;width:100%;overflow-x:auto; }
@@ -759,35 +763,39 @@
         .notas-header { display:flex;flex-direction:column;align-items:center;gap:2px; }
         .notas-kicker { font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:4px; }
         .notas-title { font-family:'Orbitron',sans-serif;font-size:30px;font-weight:900;background:linear-gradient(135deg,#00F0FF,#8B5CF6,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmerTitle 3s ease-in-out infinite;text-align:center; }
+        .notas-title-row { display:flex;align-items:center;gap:14px; }
+        .notas-title-emoji { font-size:28px;animation:floatMedal 2.5s ease-in-out infinite; }
         .notas-subtitle { font-size:12px;color:rgba(255,255,255,0.55); }
-        .notas-grid { flex:1;display:grid;grid-template-columns:1fr 1fr;gap:20px;min-height:0; }
-        .notas-col { display:flex;flex-direction:column;gap:12px;padding:16px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:16px;backdrop-filter:blur(10px);box-shadow:0 8px 32px rgba(0,0,0,0.3);min-height:0;overflow:hidden; }
-        .notas-col.sdr    { border-top:3px solid #10B981; }
-        .notas-col.closer { border-top:3px solid #00F0FF; }
-        .notas-col-title { font-family:'Orbitron',sans-serif;font-size:16px;font-weight:800;text-align:center;letter-spacing:2px; }
-        .notas-col.sdr .notas-col-title    { color:#10B981;text-shadow:0 0 12px rgba(16,185,129,0.6); }
-        .notas-col.closer .notas-col-title { color:#00F0FF;text-shadow:0 0 12px rgba(0,240,255,0.6); }
+        .notas-grid { flex:1;display:grid;grid-template-columns:1fr 1px 1fr;gap:28px;min-height:0; }
+        .notas-divider { background:linear-gradient(180deg,transparent,rgba(0,240,255,0.4),transparent); }
+        .notas-col { display:flex;flex-direction:column;gap:10px;min-height:0;overflow:hidden; }
+        .notas-col-title { font-family:'Orbitron',sans-serif;font-size:17px;font-weight:800;color:#FFD700;text-shadow:0 0 15px rgba(255,215,0,0.6);text-align:center;letter-spacing:2px; }
         .notas-section-label { font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:2px;display:flex;align-items:center;gap:8px; }
         .notas-section-label::after { content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(0,240,255,0.4),transparent); }
 
-        .notas-top3 { display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;align-items:end; }
-        .nt-card { display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border-radius:12px;text-align:center;min-width:0; }
-        .nt-card.place-1 { background:linear-gradient(180deg,rgba(255,215,0,0.22),rgba(255,165,0,0.06));border:1px solid rgba(255,215,0,0.5);box-shadow:0 0 20px rgba(255,215,0,0.2);padding-top:14px; }
-        .nt-card.place-2 { background:linear-gradient(180deg,rgba(192,192,192,0.16),rgba(169,169,169,0.04));border:1px solid rgba(192,192,192,0.35); }
-        .nt-card.place-3 { background:linear-gradient(180deg,rgba(205,127,50,0.16),rgba(184,115,51,0.04));border:1px solid rgba(205,127,50,0.35); }
-        .nt-medal { font-size:20px;animation:floatMedal 2.5s ease-in-out infinite; }
+        /* Pódio das notas — mesmo visual do Pódio do Mês */
+        .notas-top3 { display:flex;justify-content:center;align-items:flex-end;gap:14px; }
+        .ntp-player { display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0; }
+        .ntp-medal { font-size:22px;animation:floatMedal 2.5s ease-in-out infinite; }
+        .ntp-player.place-2 .ntp-medal { animation-delay:0.4s; }
+        .ntp-player.place-3 .ntp-medal { animation-delay:0.8s; }
         .nt-avatar { border-radius:50%;object-fit:cover;object-position:center top;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;background:linear-gradient(135deg,#00D4FF,#8B5CF6);flex-shrink:0; }
-        .nt-card .nt-avatar { width:64px;height:64px;font-size:20px;border:3px solid rgba(255,255,255,0.3); }
-        .nt-card.place-1 .nt-avatar { width:80px;height:80px;border-color:#FFD700;box-shadow:0 0 18px rgba(255,215,0,0.6); }
-        .nt-card.place-2 .nt-avatar { border-color:#C0C0C0; }
-        .nt-card.place-3 .nt-avatar { border-color:#CD7F32; }
-        .nt-name { font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
-        .nt-avg { font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;line-height:1; }
-        .nt-card.place-1 .nt-avg { font-size:32px; }
-        .nt-avg-label { font-size:11px;color:rgba(255,255,255,0.55); }
+        .ntp-player .nt-avatar { animation:floatAvatar 3s ease-in-out infinite; }
+        .ntp-player.place-1 .nt-avatar { width:86px;height:86px;font-size:30px;border:3px solid #FFD700;box-shadow:0 0 25px rgba(255,215,0,0.7),0 0 50px rgba(255,215,0,0.3); }
+        .ntp-player.place-2 .nt-avatar { width:68px;height:68px;font-size:24px;border:3px solid #C0C0C0;box-shadow:0 0 20px rgba(192,192,192,0.6);animation-delay:0.5s; }
+        .ntp-player.place-3 .nt-avatar { width:62px;height:62px;font-size:22px;border:3px solid #CD7F32;box-shadow:0 0 15px rgba(205,127,50,0.6);animation-delay:1s; }
+        .ntp-name { font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;text-align:center;font-size:12px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+        .ntp-player.place-1 .ntp-name { font-size:14px; }
+        .ntp-avg { font-family:'Orbitron',sans-serif;font-weight:700;color:#00D4FF;text-shadow:0 0 10px rgba(0,240,255,0.6);font-size:16px;line-height:1; }
+        .ntp-player.place-1 .ntp-avg { font-size:20px; }
+        .ntp-avg small { font-size:10px;font-weight:600;color:rgba(255,255,255,0.55);text-shadow:none;margin-left:4px; }
+        .ntp-pedestal { border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:rgba(255,255,255,0.5);margin-top:4px; }
+        .ntp-player.place-1 .ntp-pedestal { width:190px;height:92px;background:linear-gradient(180deg,rgba(255,215,0,0.3),rgba(255,165,0,0.15));border:2px solid rgba(255,215,0,0.5);box-shadow:0 0 20px rgba(255,215,0,0.3); }
+        .ntp-player.place-2 .ntp-pedestal { width:170px;height:64px;background:linear-gradient(180deg,rgba(192,192,192,0.2),rgba(169,169,169,0.1));border:2px solid rgba(192,192,192,0.4); }
+        .ntp-player.place-3 .ntp-pedestal { width:170px;height:42px;background:linear-gradient(180deg,rgba(205,127,50,0.2),rgba(184,115,51,0.1));border:2px solid rgba(205,127,50,0.4); }
 
         .notas-list { display:flex;flex-direction:column;gap:5px;flex:1;min-height:0; }
-        .nl-row { flex:1;min-height:0;max-height:64px;display:flex;align-items:center;gap:12px;padding:4px 14px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--nota-color,#00D4FF);animation:nlSlideIn 0.5s ease both; }
+        .nl-row { flex:1;min-height:0;max-height:54px;display:flex;align-items:center;gap:12px;padding:4px 14px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--nota-color,#00D4FF);animation:nlSlideIn 0.5s ease both; }
         .nl-row:nth-child(2){animation-delay:0.08s}.nl-row:nth-child(3){animation-delay:0.16s}.nl-row:nth-child(4){animation-delay:0.24s}.nl-row:nth-child(5){animation-delay:0.32s}.nl-row:nth-child(6){animation-delay:0.4s}.nl-row:nth-child(7){animation-delay:0.48s}.nl-row:nth-child(8){animation-delay:0.56s}.nl-row:nth-child(9){animation-delay:0.64s}.nl-row:nth-child(10){animation-delay:0.72s}
         .nl-row.latest { background:linear-gradient(90deg,rgba(0,240,255,0.12),rgba(139,92,246,0.06));box-shadow:0 0 18px rgba(0,240,255,0.15); }
         @keyframes nlSlideIn { from{opacity:0;transform:translateX(-16px);} to{opacity:1;transform:translateX(0);} }
@@ -929,7 +937,7 @@
         <!-- TABLE VIEW -->
         <header class="epic-header" id="mainHeader">
             <div class="logo-container">
-                <img src="https://cdn.prod.website-files.com/5f99af040fc8a6ae400fc29d/6673221b3ce01287894e61e3_suri_logo.png" alt="SURI" class="suri-logo">
+                <img src="assets/logo-suri-shop-totvs-branco.png" alt="Suri Shop by TOTVS" class="suri-logo">
             </div>
             <div class="title-section">
                 <div class="mtd-metrics-header">
@@ -952,7 +960,7 @@
         <div id="tableView">
             <div class="main-container" style="grid-template-columns:1fr;height:auto;">
                 <div class="table-section">
-                    <div style="display:grid;grid-template-columns:75% 25%;gap:12px;align-items:start;">
+                    <div class="table-layout-grid" style="display:grid;grid-template-columns:75% 25%;gap:12px;align-items:start;">
                         <div class="two-column-grid">
                             <div class="table-column">
                                 <table class="championship-table compact">
@@ -1021,24 +1029,23 @@
             </div>
         </div>
 
-        <!-- NOTAS SALESBUD VIEW -->
+        <!-- CRAQUES DA CALL (notas Salesbud) VIEW -->
         <div class="notas-view" id="notasView">
             <div class="notas-header">
-                <div class="notas-kicker">Champions Suri</div>
-                <div class="notas-title">⭐ NOTAS SALESBUD ⭐</div>
+                <div class="notas-kicker">Champions Suri • Avaliações Salesbud</div>
+                <div class="notas-title-row"><span class="notas-title-emoji">⚽</span><span class="notas-title">CRAQUES DA CALL</span><span class="notas-title-emoji">⚽</span></div>
                 <div class="notas-subtitle" id="notasSubtitle">Pódio pela média das últimas 5 notas de cada um • últimas 10 notas registradas</div>
             </div>
             <div class="notas-grid">
                 <div class="notas-col sdr">
-                    <div class="notas-col-title">🎯 PRÉ-VENDAS</div>
-                    <div class="notas-section-label">🏆 Pódio — Média das últimas 5</div>
+                    <div class="notas-col-title">🏆 PÓDIO — PRÉ-VENDAS</div>
                     <div class="notas-top3" id="notasTop3SDR"></div>
                     <div class="notas-section-label">🕒 Últimas 10 notas</div>
                     <div class="notas-list" id="notasListSDR"></div>
                 </div>
+                <div class="notas-divider"></div>
                 <div class="notas-col closer">
-                    <div class="notas-col-title">⚡ VENDAS</div>
-                    <div class="notas-section-label">🏆 Pódio — Média das últimas 5</div>
+                    <div class="notas-col-title">🏆 PÓDIO — VENDAS</div>
                     <div class="notas-top3" id="notasTop3Closer"></div>
                     <div class="notas-section-label">🕒 Últimas 10 notas</div>
                     <div class="notas-list" id="notasListCloser"></div>
@@ -1622,14 +1629,13 @@
 
         const medals = ['🥇', '🥈', '🥉'];
         const card = (p, place) => {
-            if (!p) return '<div></div>';
-            const [color, glow] = notaColor(p.avg, scale);
-            return `<div class="nt-card place-${place}">
-                <div class="nt-medal">${medals[place - 1]}</div>
+            if (!p) return '';
+            return `<div class="ntp-player place-${place}">
+                <div class="ntp-medal">${medals[place - 1]}</div>
                 ${notaAvatar(p.name, area)}
-                <div class="nt-name" title="${escapeHTML(p.name)}">${escapeHTML(p.name)}</div>
-                <div class="nt-avg" style="color:${color};text-shadow:0 0 12px ${glow};">${formatNota(p.avg, scale)}</div>
-                <div class="nt-avg-label">média de ${p.notas.length} nota${p.notas.length > 1 ? 's' : ''}</div>
+                <div class="ntp-name" title="${escapeHTML(p.name)}">${escapeHTML(p.name)}</div>
+                <div class="ntp-avg">${formatNota(p.avg, scale)}<small>média · ${p.notas.length} nota${p.notas.length > 1 ? 's' : ''}</small></div>
+                <div class="ntp-pedestal">${place}</div>
             </div>`;
         };
         top3El.innerHTML = card(ranking[1], 2) + card(ranking[0], 1) + card(ranking[2], 3);
@@ -1830,7 +1836,7 @@
         } else if (currentMode === 'podio') {
             document.body.classList.add('mode-podio'); indicator.classList.add('podio-mode'); modeText.textContent = 'PÓDIO';
         } else if (currentMode === 'notas') {
-            document.body.classList.add('mode-notas'); indicator.classList.add('notas-mode'); modeText.textContent = 'NOTAS SALESBUD';
+            document.body.classList.add('mode-notas'); indicator.classList.add('notas-mode'); modeText.textContent = 'CRAQUES DA CALL';
         } else if (currentMode === 'ultima-venda') {
             document.body.classList.add('mode-ultima-venda'); indicator.classList.add('venda-mode'); modeText.textContent = 'ÚLTIMA VENDA';
         } else {
