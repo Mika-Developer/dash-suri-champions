@@ -142,7 +142,7 @@ function buscarNotas_() {
           area: area,                        // 'sdr' (Pré-vendas) ou 'closer' (Vendas)
           score: score,                      // 0 a 10
           date: r.meeting_at,
-          client: clienteDe_(r)
+          client: clienteDe_(r, nome)
         });
       });
     });
@@ -188,23 +188,61 @@ function notasParaDashboard_(notas) {
   }).map(n => ({ id: n.id, name: n.name, area: n.area, score: n.score, date: n.date, client: n.client, kind: n.kind }));
 }
 
-// Nome do cliente para exibir na TV — sem números de telefone e sem a própria Suri.
-function clienteDe_(r) {
+// O que aparece como "cliente" na TV:
+//  - Ligação: nome do contato (se houver) + telefone formatado. Ex.: "Maria · +55 (11) 94193-6890"
+//  - Reunião: o título a partir da empresa. Ex.: "Reunião Suri [Br] -- Hadson + Adriano Belosofaclean"
+//    vira "Adriano Belosofaclean" (pega o que vem depois do "--" e tira o nome do próprio dono).
+function clienteDe_(r, nomeDono) {
   const interno = d => DOMINIOS_INTERNOS.some(x => String(d || '').toLowerCase().endsWith(x));
-  const candidatos = []
-    .concat((r.accounts || []).filter(a => !interno(a.domain)).map(a => a.name || a.domain))
-    .concat((r.participants || []).filter(p => !interno(p.email)).map(p => p.display_name));
-  for (const c of candidatos) {
-    const limpo = limpaTexto_(c);
-    if (limpo) return limpo;
+  const conta = (r.accounts || []).find(a => !interno(a.domain));
+  const participantes = (r.participants || []).filter(p => !interno(p.email));
+
+  if (r.object === 'call') {
+    const p = participantes[0] || {};
+    const fone = p.phone || extraiFone_(p.display_name) || extraiFone_(r.title);
+    const nome = (conta && (conta.name || conta.domain)) || (ehFone_(p.display_name) ? '' : String(p.display_name || '').trim());
+    return [nome, formataFone_(fone)].filter(Boolean).join(' · ') || 'Ligação';
   }
-  return r.object === 'call' ? 'Ligação' : 'Reunião';
+
+  const doTitulo = empresaDoTitulo_(r.title, nomeDono);
+  if (doTitulo) return doTitulo;
+  if (conta) return conta.name || conta.domain;
+  const p = participantes.find(x => x.display_name && !ehFone_(x.display_name));
+  if (p) return p.display_name.trim();
+  const titulo = String(r.title || '').replace(/^\s*reuni[aã]o\s+suri\s*(\[[^\]]*\])?\s*/i, '').trim();
+  return titulo || 'Reunião';
 }
 
-function limpaTexto_(txt) {
-  return String(txt || '')
-    .replace(/\+?\d[\d\s().-]{6,}\d/g, '')   // remove telefones
-    .replace(/\s{2,}/g, ' ').trim();
+// "Reunião Suri [Br] -- Hadson + Adriano Belosofaclean" → "Adriano Belosofaclean"
+function empresaDoTitulo_(titulo, nomeDono) {
+  // corta no PRIMEIRO separador ("--", "—" ou, na falta deles, " - ") e fica com o resto
+  const t = String(titulo || '');
+  const m = t.match(/\s(?:--|—|–)\s/) || t.match(/\s-\s/);
+  if (!m) return '';
+  const trecho = t.slice(m.index + m[0].length).trim();
+  if (!trecho) return '';
+  const primeiroNomeDono = normaliza_(nomeDono).split(' ')[0];
+  const pedacos = trecho.split('+').map(x => x.trim()).filter(Boolean)
+    .filter(x => normaliza_(x).split(' ')[0] !== primeiroNomeDono && !/\bsuri\b/i.test(x));
+  return pedacos.join(' + ') || trecho;
+}
+
+function ehFone_(txt) { return /^\s*\+?[\d\s().-]{8,}\s*$/.test(String(txt || '')); }
+
+function extraiFone_(txt) {
+  const m = String(txt || '').match(/\+?\d[\d\s().-]{7,}\d/);
+  return m ? m[0] : '';
+}
+
+// "+5511941936890" → "+55 (11) 94193-6890"
+function formataFone_(fone) {
+  let d = String(fone || '').replace(/\D/g, '');
+  if (!d) return '';
+  let ddi = '';
+  if (d.length >= 12 && d.startsWith('55')) { ddi = '+55 '; d = d.slice(2); }
+  if (d.length === 11) return ddi + '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+  if (d.length === 10) return ddi + '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+  return String(fone).trim();
 }
 
 // A listagem traz um resumo da avaliação; se a nota não vier nele, consulta a rota da avaliação
