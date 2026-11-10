@@ -62,7 +62,7 @@ const DURACAO_MINIMA_LIGACAO_SEG = 60; // ligações com menos de 1 minuto não 
 const DOMINIOS_INTERNOS = ['suri.ai', 'chatbotmaker.io'];
 
 // O dashboard usa a última nota de cada pessoa; o proxy envia as N mais recentes de cada uma
-// (as extras ajudam a detectar notas novas para o popup de nota 9/10).
+// (as extras ajudam a detectar notas novas para o popup de nota 8, 9 e 10).
 const NOTAS_POR_PESSOA = 3;
 
 // Cache da resposta (segundos). O dashboard consulta a cada 10s; isso evita gastar a cota da API.
