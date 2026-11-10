@@ -1149,8 +1149,8 @@
     const HIDDEN_MODES = ['closer', 'sdr', 'podio'];
     const MODE_SEQUENCE = ALL_MODES.filter(m => !HIDDEN_MODES.includes(m));
     currentMode = MODE_SEQUENCE[0];
-    const SCREEN_DURATION = 15000; // tempo de cada tela no rodízio
-    const MODE_DURATIONS = { closer: SCREEN_DURATION, sdr: SCREEN_DURATION, podio: SCREEN_DURATION, notas: SCREEN_DURATION, 'ultima-venda': SCREEN_DURATION };
+    const SCREEN_DURATION = 15000; // tempo padrão de cada tela no rodízio
+    const MODE_DURATIONS = { closer: SCREEN_DURATION, sdr: SCREEN_DURATION, podio: SCREEN_DURATION, notas: 20000, 'ultima-venda': 15000 };
 
     // ===================== FOTOS =====================
     const CLOSER_PHOTOS = {
