@@ -42,6 +42,10 @@
             border-radius: 20px; backdrop-filter: blur(10px);
             z-index: 100; cursor: pointer; font-size: 16px; color: #fff; transition: all 0.3s ease;
         }
+        /* Logo fixa no canto superior direito, ao lado do botão de pausa (sem efeitos, conforme o manual) */
+        .brand-logo { position:fixed;top:14px;right:84px;height:52px;width:auto;z-index:100;display:none; }
+        body.mode-notas .brand-logo, body.mode-podio .brand-logo, body.mode-ultima-venda .brand-logo { display:block; }
+        @media (max-height: 860px) { .brand-logo { height:42px;top:12px;right:76px; } }
         .pause-button:hover { background: rgba(0, 240, 255, 0.3); border-color: rgba(0, 240, 255, 0.6); transform: scale(1.05); }
         .pause-button.paused { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); }
 
@@ -885,6 +889,9 @@
     </div>
 
     <div class="pause-button" id="pauseButton"></div>
+
+    <!-- Logo nas telas sem cabeçalho (Craques da Call, Pódio, Última venda) -->
+    <img src="assets/logo-suri-shop-totvs-branco.png" alt="Suri Shop by TOTVS" class="brand-logo" id="brandLogo">
 
     <!-- OVERLAY blur -->
     <div class="rocket-overlay" id="rocketOverlay"></div>
