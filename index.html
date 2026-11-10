@@ -42,6 +42,9 @@
             border-radius: 20px; backdrop-filter: blur(10px);
             z-index: 100; cursor: pointer; font-size: 16px; color: #fff; transition: all 0.3s ease;
         }
+        .sound-hint { position:fixed;left:20px;bottom:16px;z-index:10000;display:none;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;color:#fff;background:rgba(239,68,68,0.25);border:1px solid rgba(239,68,68,0.6);backdrop-filter:blur(8px);cursor:pointer;animation:hintPulse 2s ease-in-out infinite; }
+        @keyframes hintPulse { 0%,100%{opacity:1;} 50%{opacity:0.55;} }
+        .sound-hint.visible { display:block; }
         /* Logo fixa no canto superior direito, ao lado do botão de pausa (sem efeitos, conforme o manual) */
         .brand-logo { position:fixed;top:14px;right:84px;height:52px;width:auto;z-index:100;display:none; }
         body.mode-notas .brand-logo, body.mode-podio .brand-logo, body.mode-ultima-venda .brand-logo { display:block; }
@@ -890,6 +893,9 @@
 
     <div class="pause-button" id="pauseButton"></div>
 
+    <!-- Aviso: o navegador só libera som depois de um clique -->
+    <div class="sound-hint" id="soundHint">🔇 Clique em qualquer lugar para ativar o som dos popups</div>
+
     <!-- Logo nas telas sem cabeçalho (Craques da Call, Pódio, Última venda) -->
     <img src="assets/logo-suri-shop-totvs-branco.png" alt="Suri Shop by TOTVS" class="brand-logo" id="brandLogo">
 
@@ -1534,9 +1540,10 @@
         }
     }
 
+    const SALE_SOUND_URL = 'https://mika-developer.github.io/dash-suri-champions/699465__m0ments__tpir-claxon.mp3';
     function playSaleSound() {
         try {
-            const audio = new Audio('https://mika-developer.github.io/dash-suri-champions/699465__m0ments__tpir-claxon.mp3');
+            const audio = new Audio(SALE_SOUND_URL);
             audio.volume = 0.8;
             audio.play().catch(e => console.warn('Audio blocked:', e));
         } catch(e) {
@@ -1851,20 +1858,50 @@
     }
 
     // Som curto de "conquista" (gerado no navegador, diferente da buzina de venda)
+    // ===================== SOM =====================
+    // O navegador só libera som depois de um clique/tecla na página. Até lá, mostramos um aviso;
+    // no primeiro clique o áudio é liberado e o aviso some.
+    let audioCtx = null;
+    function getAudioCtx() {
+        if (!audioCtx) { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} }
+        return audioCtx;
+    }
+    function refreshSoundHint() {
+        const ctx = getAudioCtx();
+        const liberado = ctx && ctx.state === 'running';
+        document.getElementById('soundHint').classList.toggle('visible', !liberado);
+    }
+    function unlockAudio() {
+        const ctx = getAudioCtx();
+        if (ctx && ctx.state !== 'running') ctx.resume().then(refreshSoundHint).catch(() => {});
+        // "aquece" o áudio da buzina de venda também
+        try { const a = new Audio(SALE_SOUND_URL); a.muted = true; a.play().then(() => a.pause()).catch(() => {}); } catch(e) {}
+        setTimeout(refreshSoundHint, 300);
+    }
+    ['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, unlockAudio, { passive: true }));
+
+    // Som do popup de nota: pequena fanfarra (arpejo + acorde final); na nota 10, com brilho extra
     function playNotaSound(isMax) {
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+        if (ctx.state !== 'running') { ctx.resume().catch(() => {}); }
         try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const notes = isMax ? [523.25, 659.25, 783.99, 1046.5, 1318.5] : [523.25, 659.25, 783.99, 1046.5];
-            notes.forEach((f, i) => {
+            const master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);
+            const tone = (freq, start, dur, vol, type = 'triangle') => {
                 const o = ctx.createOscillator(), g = ctx.createGain();
-                o.type = 'triangle'; o.frequency.value = f;
-                const t = ctx.currentTime + i * 0.12;
+                o.type = type; o.frequency.value = freq;
+                const t = ctx.currentTime + start;
                 g.gain.setValueAtTime(0.0001, t);
-                g.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
-                g.gain.exponentialRampToValueAtTime(0.0001, t + 0.45);
-                o.connect(g).connect(ctx.destination); o.start(t); o.stop(t + 0.5);
-            });
-            setTimeout(() => ctx.close(), 2000);
+                g.gain.exponentialRampToValueAtTime(vol, t + 0.02);
+                g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+                o.connect(g).connect(master); o.start(t); o.stop(t + dur + 0.05);
+            };
+            const arpejo = [523.25, 659.25, 783.99, 1046.5];                 // Dó Mi Sol Dó
+            arpejo.forEach((f, i) => { tone(f, i * 0.11, 0.35, 0.35); tone(f / 2, i * 0.11, 0.35, 0.12, 'square'); });
+            const fim = arpejo.length * 0.11;
+            [1046.5, 1318.5, 1567.98].forEach(f => tone(f, fim, 1.2, 0.22));   // acorde final sustentado
+            tone(523.25, fim, 1.2, 0.15, 'square');
+            if (isMax) [2093, 2637, 3136, 4186].forEach((f, i) => tone(f, fim + 0.25 + i * 0.08, 0.3, 0.12, 'sine'));
         } catch(e) { console.warn('Audio error:', e); }
     }
 
@@ -2133,6 +2170,7 @@
         updateModeIndicator();
         setActiveView(currentMode);
         preloadPhotos();
+        refreshSoundHint();
 
         document.getElementById('modeIndicator').addEventListener('click', () => switchModeWithTransition());
         document.getElementById('pauseButton').addEventListener('click', togglePause);
