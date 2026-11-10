@@ -191,7 +191,8 @@ function notasParaDashboard_(notas) {
 // O que aparece como "cliente" na TV:
 //  - Ligação: nome do contato (se houver) + telefone formatado. Ex.: "Maria · +55 (11) 94193-6890"
 //  - Reunião: o título a partir da empresa. Ex.: "Reunião Suri [Br] -- Hadson + Adriano Belosofaclean"
-//    vira "Adriano Belosofaclean" (pega o que vem depois do "--" e tira o nome do próprio dono).
+//    vira "Adriano Belosofaclean" (pega o que vem depois do "--" e tira o nome do próprio dono);
+//    "... -- Lizandra + Carla - Ótica Real" vira "Ótica Real" (contato - empresa → empresa).
 function clienteDe_(r, nomeDono) {
   const interno = d => DOMINIOS_INTERNOS.some(x => String(d || '').toLowerCase().endsWith(x));
   const conta = (r.accounts || []).find(a => !interno(a.domain));
@@ -224,7 +225,10 @@ function empresaDoTitulo_(titulo, nomeDono) {
   const primeiroNomeDono = normaliza_(nomeDono).split(' ')[0];
   const pedacos = trecho.split('+').map(x => x.trim()).filter(Boolean)
     .filter(x => normaliza_(x).split(' ')[0] !== primeiroNomeDono && !/\bsuri\b/i.test(x));
-  return pedacos.join(' + ') || trecho;
+  const resto = pedacos.join(' + ') || trecho;
+  // "Carla - Ótica Real" → "Ótica Real": se sobrar "contato - empresa", fica com a empresa
+  const ultimo = resto.split(/\s[-–—]\s/).pop().trim();
+  return ultimo || resto;
 }
 
 function ehFone_(txt) { return /^\s*\+?[\d\s().-]{8,}\s*$/.test(String(txt || '')); }
